@@ -1,16 +1,20 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
+using System.Collections.Generic;
 
 namespace Subby
 {
-    /// <summary>
-    /// This is the main type for your game.
-    /// </summary>
     public class Game1 : Game
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+
+        Player subby;
+
+        List<ISprite> allSprites;
+        List<ISprite> allSpriteObstakels;
 
         public Game1()
         {
@@ -18,66 +22,111 @@ namespace Subby
             Content.RootDirectory = "Content";
         }
 
-        /// <summary>
-        /// Allows the game to perform any initialization it needs to before starting to run.
-        /// This is where it can query for any required services and load any non-graphic
-        /// related content.  Calling base.Initialize will enumerate through any components
-        /// and initialize them as well.
-        /// </summary>
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
+            allSprites = new List<ISprite>();
+            allSpriteObstakels = new List<ISprite>();
+
+            subby = new Player();
+            subby.Color = Color.Black;
+            //allSprites.Add(subby);
 
             base.Initialize();
         }
 
-        /// <summary>
-        /// LoadContent will be called once per game and is the place to load
-        /// all of your content.
-        /// </summary>
         protected override void LoadContent()
         {
-            // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
-            // TODO: use this.Content to load your game content here
+            subby.Texture = Content.Load<Texture2D>("subby");
         }
 
-        /// <summary>
-        /// UnloadContent will be called once per game and is the place to unload
-        /// game-specific content.
-        /// </summary>
         protected override void UnloadContent()
         {
             // TODO: Unload any non ContentManager content here
         }
 
-        /// <summary>
-        /// Allows the game to run logic such as updating the world,
-        /// checking for collisions, gathering input, and playing audio.
-        /// </summary>
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+            if (Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            // TODO: Add your update logic here
+            checkKeys();
+
+            checkCollisions();
+
+            foreach (ISprite s in allSprites)
+            {
+                s.Update(gameTime);
+            }
+            subby.Update(gameTime);
 
             base.Update(gameTime);
         }
 
-        /// <summary>
-        /// This is called when the game should draw itself.
-        /// </summary>
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // TODO: Add your drawing code here
+            spriteBatch.Begin();
+
+            foreach (ISprite s in allSprites)
+            {
+                spriteBatch.Draw(s.Texture, s.Position, s.Color);
+            }
+            spriteBatch.Draw(subby.Texture,subby.Position, null,subby.Color,subby.Angle,new Vector2(subby.Texture.Width/2, subby.Texture.Height/2),1f,SpriteEffects.None,1);
+            spriteBatch.End();
 
             base.Draw(gameTime);
+        }
+
+        private Boolean checkKeys()
+        {
+            KeyboardState state = Keyboard.GetState();
+
+            if (state.IsKeyDown(Keys.Up))
+            {
+                subby.GoUp();
+            }
+            if (state.IsKeyDown(Keys.Down))
+            {
+                subby.GoDown();
+            }
+            if (state.IsKeyDown(Keys.Right))
+            {
+                subby.GoFaster();
+            }
+            if (state.IsKeyDown(Keys.Left))
+            {
+                subby.GoSlower();
+            }
+            if (state.IsKeyDown(Keys.S))
+            {
+                subby.Start();
+            }
+
+            return false;
+        }
+
+
+        private void checkCollisions()
+        {
+            Rectangle rectball1 = new Rectangle((int)subby.Position.X, (int)subby.Position.Y, 30, 29); //to refactor real size of ISprite (30, 29)
+
+            foreach (ISprite s in allSpriteObstakels)
+            {
+                Rectangle rectSprite = new Rectangle((int)s.Position.X, (int)s.Position.Y, 82, 46); //to refactor get property of ISprite
+
+                Rectangle overlap = Rectangle.Intersect(rectball1, rectSprite);
+                if (!overlap.IsEmpty)
+                {
+                    //collision
+                    s.CollisionWith(subby);
+                    subby.CollisionWith(s);
+
+
+                }
+
+            }
         }
     }
 }
