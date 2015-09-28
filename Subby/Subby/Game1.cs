@@ -30,14 +30,14 @@ namespace Subby
             subby = new Player();
             subby.Color = Color.Black;
             //allSprites.Add(subby);
-
             base.Initialize();
         }
-
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
             subby.Texture = Content.Load<Texture2D>("subby");
+
+            InitializeLevel1();
         }
 
         protected override void UnloadContent()
@@ -71,7 +71,7 @@ namespace Subby
 
             foreach (ISprite s in allSprites)
             {
-                spriteBatch.Draw(s.Texture, s.Position, s.Color);
+                spriteBatch.Draw(s.Texture, new Rectangle((int)s.Position.X, (int)s.Position.Y, s.Texture.Width, s.Texture.Height), s.Color);
             }
             spriteBatch.Draw(subby.Texture,subby.Position, null,subby.Color,subby.Angle,new Vector2(subby.Texture.Width/2, subby.Texture.Height/2),1f,SpriteEffects.None,1);
             spriteBatch.End();
@@ -110,11 +110,11 @@ namespace Subby
 
         private void checkCollisions()
         {
-            Rectangle rectball1 = new Rectangle((int)subby.Position.X, (int)subby.Position.Y, 30, 29); //to refactor real size of ISprite (30, 29)
+            Rectangle rectball1 = new Rectangle((int)subby.Position.X, (int)subby.Position.Y, subby.Texture.Width, subby.Texture.Height); //to refactor real size of ISprite (30, 29)
 
-            foreach (ISprite s in allSpriteObstakels)
+            foreach (ISprite s in allSprites)
             {
-                Rectangle rectSprite = new Rectangle((int)s.Position.X, (int)s.Position.Y, 82, 46); //to refactor get property of ISprite
+                Rectangle rectSprite = new Rectangle((int)s.Position.X, (int)s.Position.Y, s.Texture.Width, s.Texture.Height); //to refactor get property of ISprite
 
                 Rectangle overlap = Rectangle.Intersect(rectball1, rectSprite);
                 if (!overlap.IsEmpty)
@@ -122,11 +122,18 @@ namespace Subby
                     //collision
                     s.CollisionWith(subby);
                     subby.CollisionWith(s);
-
-
                 }
-
             }
+        }
+
+        private void InitializeLevel1()
+        {
+            TankStation t1 = new TankStation();
+            t1.Color = Color.White;
+            t1.Texture = Content.Load<Texture2D>("tankstation");
+            t1.Tank = 300;
+            t1.Position = new Vector2 (300, 300);
+            allSprites.Add(t1);
         }
     }
 }

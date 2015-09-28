@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <SourceFile>D:/git/kb24subby/Subby/Subby/Content/subby.png</SourceFile>
-  <SourceTime>2015-09-20T13:04:06.9748022+02:00</SourceTime>
+  <SourceTime>2015-09-24T15:56:26.779039+02:00</SourceTime>
   <DestFile>D:/git/kb24subby/Subby/Subby/Content/bin/Windows/subby.xnb</DestFile>
-  <DestTime>2015-09-20T21:36:10.5781162+02:00</DestTime>
+  <DestTime>2015-09-24T17:35:10.4151125+02:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2015-09-01T05:13:38+02:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

@@ -13,11 +13,24 @@ namespace Subby
         public Vector2 Position { get; set; }
         public Color Color { get; set; }
         public Texture2D Texture { get; set; }
+        private int _health;
+
+        public int Health
+        {
+            get { return _health; }
+            set { _health = value; }
+        }
+
+        private int _fuel;
+
         public int Fuel
         {
             get { return _fuel; }
             set { _fuel = value; }
         }
+
+        private float _angle; // in degrees
+
         public float Angle
         {
             get
@@ -25,31 +38,53 @@ namespace Subby
                 return ((float)Math.PI) * _angle / 180.0f;
             }
         }
+
+        private float _speed;
+
         public float Speed
         {
             get { return _speed; }
             set { _speed = value; }
         }
-        
-
-        private float _speed;
-        private float _angle; // in degrees
-        private int _fuel;
 
         public Player()
         {
-            Fuel = 1000;
+            Fuel = 10000;
+            Health = 100;
         }
         public void Update(GameTime gameTime)
         {
-
+            System.Diagnostics.Debug.WriteLine(_fuel);
             if (_fuel > 0)
             {
                 Position += new Vector2(_speed * (float)Math.Cos(Angle), (_speed * (float)Math.Sin(Angle)));
             }
+            if (_speed > 0)
+            {
+                _speed -= 0.01f;
+            }
+            IsDamaged();
             return;
         }
-
+        public void IsDamaged()
+        {
+            if (_health < 80)
+            {
+                Position += new Vector2(0, 0.1f);
+            }
+            if (_health < 60)
+            {
+                Position += new Vector2(0, 0.15f);
+            }
+            if (_health < 40)
+            {
+                Position += new Vector2(0, 0.2f);
+            }
+            if (_health < 20)
+            {
+                Position += new Vector2(0, 0.25f);
+            }
+        }
         public void GoUp()
         {
             if (UseFuel(1))
@@ -93,6 +128,9 @@ namespace Subby
         {
             // geen start implemented
         }
-        
+        public void fillTank(int fuel)
+        {
+            _fuel += fuel;
+        }
     }
 }
