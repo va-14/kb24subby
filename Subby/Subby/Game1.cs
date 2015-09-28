@@ -157,5 +157,15 @@ namespace Subby
 
             //}
         //}
+
+        private void InitializeLevel1()
+        {
+            TankStation t1 = new TankStation();
+            t1.color = Color.White;
+            t1.texture = Content.Load<Texture2D>("tankstation");
+            t1.Tank = 300;
+            t1.position = new Vector2 (300, 300);
+            allSprites.Add(t1);
+        }
     }
 }

@@ -50,6 +50,5 @@ C:\Users\Kevin\Documents\GitHub\kb24subby\Subby\Subby\bin\Windows\Debug\SharpDX.
 C:\Users\Kevin\Documents\GitHub\kb24subby\Subby\Subby\bin\Windows\Debug\SharpDX.Direct2D1.xml
 C:\Users\Kevin\Documents\GitHub\kb24subby\Subby\Subby\bin\Windows\Debug\SharpDX.XInput.xml
 C:\Users\Kevin\Documents\GitHub\kb24subby\Subby\Subby\bin\Windows\Debug\SharpDX.RawInput.xml
-C:\Users\Kevin\Documents\GitHub\kb24subby\Subby\Subby\obj\x86\Debug\Subby.csprojResolveAssemblyReference.cache
 C:\Users\Kevin\Documents\GitHub\kb24subby\Subby\Subby\obj\x86\Debug\Subby.exe
 C:\Users\Kevin\Documents\GitHub\kb24subby\Subby\Subby\obj\x86\Debug\Subby.pdb

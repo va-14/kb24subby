@@ -13,32 +13,41 @@ namespace Subby
         public Vector2 position { get; set; }
         public Color color { get; set; }
         public Texture2D texture { get; set; }
-        public int fuel
+        private int _health;
+
+        public int Health
+        {
+            get { return _health; }
+            set { _health = value; }
+        }
+
+        private int _fuel;
+
+        public int Fuel
         {
             get { return _fuel; }
             set { _fuel = value; }
         }
-        public float angle
+
+        private float _angle; // in degrees
+
+        public float Angle
         {
-            get
-            {
-                return ((float)Math.PI) * _angle / 180.0f;
-            }
+            get { return ((float)Math.PI) * _angle / 180.0f; }
         }
-        public float speed
+
+        private float _speed;
+
+        public float Speed
         {
             get { return _speed; }
             set { _speed = value; }
         }
-        
-
-        private float _speed;
-        private float _angle; // in degrees
-        private int _fuel;
 
         public void Initialize()
         {
-            fuel = 1000;
+            Fuel = 10000;
+            Health = 100;
             color = Color.White;
             position = new Vector2(960, 590);
         }
@@ -50,19 +59,42 @@ namespace Subby
 
         public void Update(GameTime gameTime)
         {
-
+            System.Diagnostics.Debug.WriteLine(_fuel);
             if (_fuel > 0)
             {
-                position += new Vector2(_speed * (float)Math.Cos(angle), (_speed * (float)Math.Sin(angle)));
+                position += new Vector2(_speed * (float)Math.Cos(_angle), (_speed * (float)Math.Sin(_angle)));
             }
+            if (_speed > 0)
+            {
+                _speed -= 0.01f;
+            }
+            IsDamaged();
             return;
         }
 
         public void Draw(SpriteBatch batch)
         {
-            batch.Draw(texture, position, null, color, angle, new Vector2(texture.Width / 2, texture.Height / 2), 1f, SpriteEffects.None, 1);
+            batch.Draw(texture, position, null, color, _angle, new Vector2(texture.Width / 2, texture.Height / 2), 1f, SpriteEffects.None, 1);
         }
-
+        public void IsDamaged()
+        {
+            if (_health < 80)
+            {
+                position += new Vector2(0, 0.1f);
+            }
+            if (_health < 60)
+            {
+                position += new Vector2(0, 0.15f);
+            }
+            if (_health < 40)
+            {
+                position += new Vector2(0, 0.2f);
+            }
+            if (_health < 20)
+            {
+                position += new Vector2(0, 0.25f);
+            }
+        }
         public void GoUp()
         {
             if (UseFuel(1))
@@ -106,6 +138,9 @@ namespace Subby
         {
             // geen start implemented
         }
-        
+        public void fillTank(int fuel)
+        {
+            _fuel += fuel;
+        }
     }
 }
