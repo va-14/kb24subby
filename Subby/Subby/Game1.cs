@@ -12,6 +12,10 @@ namespace Subby
         SpriteBatch spriteBatch;
 
         Player subby;
+        Waves waves;
+        ScrollingBackground scrollingBackground;
+
+        Texture2D sky;
 
         List<ISprite> allSprites;
         List<ISprite> allSpriteObstakels;
@@ -19,6 +23,9 @@ namespace Subby
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
+            graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+            graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+            //graphics.IsFullScreen = true;
             Content.RootDirectory = "Content";
         }
 
@@ -28,16 +35,33 @@ namespace Subby
             allSpriteObstakels = new List<ISprite>();
 
             subby = new Player();
-            subby.Color = Color.Black;
-            //allSprites.Add(subby);
+            subby.Initialize();
+            
 
+            waves = new Waves();
+            waves.Initialize();
+
+            allSprites.Add(waves);
+            allSprites.Add(subby);
+
+            scrollingBackground = new ScrollingBackground();
             base.Initialize();
         }
 
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            subby.Texture = Content.Load<Texture2D>("subby");
+
+            Texture2D subbyTexture = Content.Load<Texture2D>("subby");
+            subby.Load(subbyTexture);
+
+            Texture2D wavesTexture = Content.Load<Texture2D>("waves");
+            waves.Load(wavesTexture);
+
+            Texture2D scrollingBackgroundTexture = Content.Load<Texture2D>("ocean3");
+            scrollingBackground.Load(GraphicsDevice, scrollingBackgroundTexture);
+
+            sky = Content.Load<Texture2D>("sky");
         }
 
         protected override void UnloadContent()
@@ -52,13 +76,14 @@ namespace Subby
 
             checkKeys();
 
-            checkCollisions();
+            //checkCollisions();
 
             foreach (ISprite s in allSprites)
             {
                 s.Update(gameTime);
             }
-            subby.Update(gameTime);
+
+            scrollingBackground.Update(subby.position);
 
             base.Update(gameTime);
         }
@@ -68,12 +93,16 @@ namespace Subby
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             spriteBatch.Begin();
-
+            spriteBatch.Draw(sky, new Vector2(0, 0), Color.White);
+            scrollingBackground.Draw(spriteBatch);
+            
             foreach (ISprite s in allSprites)
             {
-                spriteBatch.Draw(s.Texture, s.Position, s.Color);
+                //spriteBatch.Draw(s.Texture, s.Position, s.Color);
+                s.Draw(spriteBatch);
             }
-            spriteBatch.Draw(subby.Texture,subby.Position, null,subby.Color,subby.Angle,new Vector2(subby.Texture.Width/2, subby.Texture.Height/2),1f,SpriteEffects.None,1);
+            
+            //spriteBatch.Draw(subby.Texture,subby.Position, null,subby.Color,subby.Angle,new Vector2(subby.Texture.Width/2, subby.Texture.Height/2),1f,SpriteEffects.None,1);
             spriteBatch.End();
 
             base.Draw(gameTime);
@@ -108,25 +137,25 @@ namespace Subby
         }
 
 
-        private void checkCollisions()
-        {
-            Rectangle rectball1 = new Rectangle((int)subby.Position.X, (int)subby.Position.Y, 30, 29); //to refactor real size of ISprite (30, 29)
+        //private void checkCollisions()
+        //{
+        //    Rectangle rectball1 = new Rectangle((int)subby.Position.X, (int)subby.Position.Y, 30, 29); //to refactor real size of ISprite (30, 29)
 
-            foreach (ISprite s in allSpriteObstakels)
-            {
-                Rectangle rectSprite = new Rectangle((int)s.Position.X, (int)s.Position.Y, 82, 46); //to refactor get property of ISprite
+        //    foreach (ISprite s in allSpriteObstakels)
+        //    {
+        //        Rectangle rectSprite = new Rectangle((int)s.Position.X, (int)s.Position.Y, 82, 46); //to refactor get property of ISprite
 
-                Rectangle overlap = Rectangle.Intersect(rectball1, rectSprite);
-                if (!overlap.IsEmpty)
-                {
-                    //collision
-                    s.CollisionWith(subby);
-                    subby.CollisionWith(s);
+        //        Rectangle overlap = Rectangle.Intersect(rectball1, rectSprite);
+        //        if (!overlap.IsEmpty)
+        //        {
+        //            //collision
+        //            s.CollisionWith(subby);
+        //            subby.CollisionWith(s);
 
 
-                }
+        //        }
 
-            }
-        }
+            //}
+        //}
     }
 }
