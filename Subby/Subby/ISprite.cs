@@ -9,9 +9,9 @@ namespace Subby
 {
     interface ISprite
     {
-        Vector2 position { get; set; }
-        Color color { get; set; }
-        Texture2D texture { get; set; }
+        Vector2 Position { get; set; }
+        Color Color { get; set; }
+        Texture2D Texture { get; set; }
 
         void Initialize();
         void Load(Texture2D texture);

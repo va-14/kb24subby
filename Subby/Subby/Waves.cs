@@ -1,4 +1,4 @@
-﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -9,38 +9,38 @@ namespace Subby
 {
     class Waves : ISprite
     {
-        public Vector2 position { get; set; }
-        public Color color { get; set; }
-        public Texture2D texture { get; set; }
+        public Vector2 Position { get; set; }
+        public Color Color { get; set; }
+        public Texture2D Texture { get; set; }
 
         public void Initialize()
         {
-            color = Color.White;
-            position = new Vector2(960, 270);
+            Color = Color.White;
+            Position = new Vector2(960, 270);
         }
 
         public void Load(Texture2D _texture)
         {
-            texture = _texture;
+            Texture = _texture;
         }
 
         public void Update(GameTime gameTime)
         {
             float deltaX = (float)gameTime.ElapsedGameTime.TotalSeconds * 50;
-            position = new Vector2(position.X + deltaX, position.Y);
-            position = new Vector2(position.X % texture.Width, position.Y);
+            Position = new Vector2(Position.X + deltaX, Position.Y);
+            Position = new Vector2(Position.X % Texture.Width, Position.Y);
         }
 
         public void Draw(SpriteBatch batch)
         {
             // Draw the texture, if it is still onscreen.
-            if (position.X < 1920)
+            if (Position.X < 1920)
             {
-                batch.Draw(texture, position, color);
+                batch.Draw(Texture, Position, Color);
             }
             // Draw the texture a second time, behind the first,
             // to create the scrolling illusion.
-            batch.Draw(texture, position - new Vector2(texture.Width, 0), color);
+            batch.Draw(Texture, Position - new Vector2(Texture.Width, 0), Color);
         }
 
         public void CollisionWith(ISprite s)
@@ -48,4 +48,4 @@ namespace Subby
 
         }
     }
-}
+}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            

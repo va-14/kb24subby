@@ -4,12 +4,13 @@
   <Platform>Windows</Platform>
   <Config />
   <SourceFiles>
-    <File>C:/Users/Kevin/Documents/GitHub/kb24subby/Subby/Subby/Content/subby.png</File>
-    <File>C:/Users/Kevin/Documents/GitHub/kb24subby/Subby/Subby/Content/tankstation.png</File>
-    <File>C:/Users/Kevin/Documents/GitHub/kb24subby/Subby/Subby/Content/waves.png</File>
-    <File>C:/Users/Kevin/Documents/GitHub/kb24subby/Subby/Subby/Content/ocean.png</File>
-    <File>C:/Users/Kevin/Documents/GitHub/kb24subby/Subby/Subby/Content/ocean2.png</File>
-    <File>C:/Users/Kevin/Documents/GitHub/kb24subby/Subby/Subby/Content/ocean3.png</File>
-    <File>C:/Users/Kevin/Documents/GitHub/kb24subby/Subby/Subby/Content/sky.png</File>
+    <File>D:/git/kb24subby/Subby/Subby/Content/subby.png</File>
+    <File>D:/git/kb24subby/Subby/Subby/Content/tankstation.png</File>
+    <File>D:/git/kb24subby/Subby/Subby/Content/waves.png</File>
+    <File>D:/git/kb24subby/Subby/Subby/Content/ocean.png</File>
+    <File>D:/git/kb24subby/Subby/Subby/Content/ocean2.png</File>
+    <File>D:/git/kb24subby/Subby/Subby/Content/ocean3.png</File>
+    <File>D:/git/kb24subby/Subby/Subby/Content/sky.png</File>
+    <File>D:/git/kb24subby/Subby/Subby/Content/wrak.png</File>
   </SourceFiles>
 </SourceFileCollection>

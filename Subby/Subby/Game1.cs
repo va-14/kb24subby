@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
+using Subby.Sprites;
 
 namespace Subby
 {
@@ -62,6 +63,8 @@ namespace Subby
             scrollingBackground.Load(GraphicsDevice, scrollingBackgroundTexture);
 
             sky = Content.Load<Texture2D>("sky");
+
+            InitializeLevel1();
         }
 
         protected override void UnloadContent()
@@ -76,14 +79,14 @@ namespace Subby
 
             checkKeys();
 
-            //checkCollisions();
+            checkCollisions();
 
             foreach (ISprite s in allSprites)
             {
                 s.Update(gameTime);
             }
 
-            scrollingBackground.Update(subby.position);
+            scrollingBackground.Update(subby.Position);
 
             base.Update(gameTime);
         }
@@ -137,35 +140,39 @@ namespace Subby
         }
 
 
-        //private void checkCollisions()
-        //{
-        //    Rectangle rectball1 = new Rectangle((int)subby.Position.X, (int)subby.Position.Y, 30, 29); //to refactor real size of ISprite (30, 29)
+        private void checkCollisions()
+        {
+            Rectangle rectball1 = new Rectangle((int)subby.Position.X, (int)subby.Position.Y, subby.Texture.Width, subby.Texture.Height); //to refactor real size of ISprite (30, 29)
 
-        //    foreach (ISprite s in allSpriteObstakels)
-        //    {
-        //        Rectangle rectSprite = new Rectangle((int)s.Position.X, (int)s.Position.Y, 82, 46); //to refactor get property of ISprite
+            foreach (ISprite s in allSprites)
+            {
+                Rectangle rectSprite = new Rectangle((int)s.Position.X, (int)s.Position.Y, s.Texture.Width, s.Texture.Height); //to refactor get property of ISprite
 
-        //        Rectangle overlap = Rectangle.Intersect(rectball1, rectSprite);
-        //        if (!overlap.IsEmpty)
-        //        {
-        //            //collision
-        //            s.CollisionWith(subby);
-        //            subby.CollisionWith(s);
-
-
-        //        }
-
-            //}
-        //}
+                Rectangle overlap = Rectangle.Intersect(rectball1, rectSprite);
+                if (!overlap.IsEmpty)
+                {
+                    //collision
+                    s.CollisionWith(subby);
+                    subby.CollisionWith(s);
+                }
+            }
+        }
 
         private void InitializeLevel1()
         {
             TankStation t1 = new TankStation();
-            t1.color = Color.White;
-            t1.texture = Content.Load<Texture2D>("tankstation");
+            t1.Color = Color.White;
+            t1.Texture = Content.Load<Texture2D>("tankstation");
             t1.Tank = 300;
-            t1.position = new Vector2 (300, 300);
+            t1.Position = new Vector2(300, 300);
             allSprites.Add(t1);
+
+            Wrak w1 = new Wrak();
+            w1.Color = Color.White;
+            w1.Texture = Content.Load<Texture2D>("wrak");
+            w1.Schade = 1;
+            w1.Position = new Vector2(400, 350);
+            allSprites.Add(w1);
         }
     }
 }

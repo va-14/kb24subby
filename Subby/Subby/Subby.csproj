@@ -40,10 +40,11 @@
   <ItemGroup>
     <Compile Include="Game1.cs" />
     <Compile Include="ISprite.cs" />
-    <Compile Include="Player.cs" />
+    <Compile Include="Sprites\Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TankStation.cs" />
+    <Compile Include="Sprites\TankStation.cs" />
+    <Compile Include="Sprites\Wrak.cs" />
     <Compile Include="ScrollingBackground.cs" />
     <Compile Include="Waves.cs" />
   </ItemGroup>
