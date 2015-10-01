@@ -44,7 +44,7 @@ namespace Subby
             waves.Initialize();
 
             allSprites.Add(waves);
-            allSprites.Add(subby);
+            //allSprites.Add(subby);
 
             scrollingBackground = new ScrollingBackground();
             base.Initialize();
@@ -81,13 +81,13 @@ namespace Subby
             checkKeys();
 
             checkCollisions();
-
+            subby.Update(gameTime);
             foreach (ISprite s in allSprites)
             {
                 s.Update(gameTime);
             }
 
-            scrollingBackground.Update(GetDeflectedPlayerPosition());
+            scrollingBackground.UpdatePosition(GetDeflectedPlayerPosition());
 
             base.Update(gameTime);
         }
@@ -102,11 +102,11 @@ namespace Subby
             spriteBatch.Begin();
             spriteBatch.Draw(sky, new Vector2(0, 0), Color.White);
             scrollingBackground.Draw(spriteBatch);
-            
+            subby.Draw(spriteBatch);
             foreach (ISprite s in allSprites)
             {
                 //spriteBatch.Draw(s.Texture, s.Position, s.Color);
-                s.Draw(spriteBatch);
+                s.Draw(spriteBatch, GetDeflectedPlayerPosition());
             }
             
             //spriteBatch.Draw(subby.Texture,subby.Position, null,subby.Color,subby.Angle,new Vector2(subby.Texture.Width/2, subby.Texture.Height/2),1f,SpriteEffects.None,1);

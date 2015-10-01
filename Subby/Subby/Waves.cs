@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Subby.Sprites;
 
 namespace Subby
 {
@@ -31,7 +32,7 @@ namespace Subby
             Position = new Vector2(Position.X % Texture.Width, Position.Y);
         }
 
-        public void Draw(SpriteBatch batch)
+        public void Draw(SpriteBatch batch, Vector2 positionDeflection)
         {
             // Draw the texture, if it is still onscreen.
             if (Position.X < 1920)
@@ -43,7 +44,7 @@ namespace Subby
             batch.Draw(Texture, Position - new Vector2(Texture.Width, 0), Color);
         }
 
-        public void CollisionWith(ISprite s)
+        public void CollisionWith(Player s)
         {
 
         }

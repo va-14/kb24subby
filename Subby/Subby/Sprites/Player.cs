@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Subby.Sprites
 {
-    class Player : ISprite
+    class Player
     {
 
         public Vector2 Position { get; set; }
@@ -63,7 +63,7 @@ namespace Subby.Sprites
             Fuel = 10000;
             Health = 1000;
             Color = Color.White;
-            Position = new Vector2(960, 590);
+            Position = new Vector2(120, 590);
         }
 
         public void Load(Texture2D _texture)

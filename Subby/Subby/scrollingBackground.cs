@@ -20,7 +20,7 @@ namespace Subby
             screenWidth = device.Viewport.Width;
         }
 
-        public void Update(Vector2 landerPosition)
+        public void UpdatePosition(Vector2 landerPosition)
         {
             position = new Vector2(-landerPosition.X % texture.Width, 312);
         }
