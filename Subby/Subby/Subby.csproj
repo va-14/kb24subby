@@ -39,6 +39,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Game1.cs" />
+    <Compile Include="GameBoundaries.cs" />
     <Compile Include="ISprite.cs" />
     <Compile Include="Sprites\Player.cs" />
     <Compile Include="Program.cs" />

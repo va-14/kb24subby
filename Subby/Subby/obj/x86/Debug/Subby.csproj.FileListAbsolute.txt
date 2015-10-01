@@ -57,3 +57,4 @@ D:\git\kb24subby\Subby\Subby\bin\Windows\Debug\SharpDX.XInput.xml
 D:\git\kb24subby\Subby\Subby\bin\Windows\Debug\SharpDX.RawInput.xml
 D:\git\kb24subby\Subby\Subby\obj\x86\Debug\Subby.exe
 D:\git\kb24subby\Subby\Subby\obj\x86\Debug\Subby.pdb
+D:\git\kb24subby\Subby\Subby\obj\x86\Debug\Subby.csprojResolveAssemblyReference.cache

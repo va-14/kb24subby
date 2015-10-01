@@ -37,6 +37,7 @@ namespace Subby
 
             subby = new Player();
             subby.Initialize();
+            subby.SetBoundaries(new GameBoundaries { Bottom = graphics.PreferredBackBufferHeight, Top = 200, Left = 20, Right = graphics.PreferredBackBufferWidth - 200 });
             
 
             waves = new Waves();
@@ -86,11 +87,14 @@ namespace Subby
                 s.Update(gameTime);
             }
 
-            scrollingBackground.Update(subby.Position);
+            scrollingBackground.Update(GetDeflectedPlayerPosition());
 
             base.Update(gameTime);
         }
-
+        private Vector2 GetDeflectedPlayerPosition()
+        {
+            return new Vector2(subby.Position.X + subby.PositionDeflection, subby.Position.Y);
+        }
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);

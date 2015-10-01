@@ -13,7 +13,14 @@ namespace Subby.Sprites
         public Vector2 Position { get; set; }
         public Color Color { get; set; }
         public Texture2D Texture { get; set; }
+        private float _positionDeflection;
 
+        public float PositionDeflection
+        {
+            get { return _positionDeflection; }
+            set { _positionDeflection = value; }
+        }
+        
         private int _health;
         public int Health
         {
@@ -44,10 +51,17 @@ namespace Subby.Sprites
             set { _speed = value; }
         }
 
+        private GameBoundaries _boundaries;
+
+        public void SetBoundaries(GameBoundaries boundaries)
+        {
+            _boundaries = boundaries;
+        }
+
         public void Initialize()
         {
             Fuel = 10000;
-            Health = 100;
+            Health = 1000;
             Color = Color.White;
             Position = new Vector2(960, 590);
         }
@@ -56,13 +70,8 @@ namespace Subby.Sprites
         {
             Texture = _texture;
         }
-
-        public void Update(GameTime gameTime)
+        private void UpdatePosition()
         {
-            System.Diagnostics.Debug.WriteLine(_fuel);
-
-            Position += new Vector2(_speed * (float)Math.Cos(Angle), (_speed * (float)Math.Sin(Angle)));
-
             if (_speed > 0.01)
             {
                 _speed -= 0.01f;
@@ -71,7 +80,27 @@ namespace Subby.Sprites
             {
                 _speed += 0.01f;
             }
+
             IsDamaged();
+
+            Position += new Vector2(_speed * (float)Math.Cos(Angle), (_speed * (float)Math.Sin(Angle)));
+
+            if (Position.Y >= _boundaries.Bottom || Position.Y <= _boundaries.Top || Position.X <= _boundaries.Left)
+            {
+                _speed = 0;
+            }
+            if (Position.X >= _boundaries.Right)
+            {
+                _positionDeflection += Position.X -_boundaries.Right;
+                Position = new Vector2(_boundaries.Right, Position.Y);
+            }
+            System.Diagnostics.Debug.WriteLine(_positionDeflection);
+        }
+        public void Update(GameTime gameTime)
+        {
+            System.Diagnostics.Debug.WriteLine(_fuel);
+
+            UpdatePosition();
             return;
         }
 
@@ -81,19 +110,21 @@ namespace Subby.Sprites
         }
         public void IsDamaged()
         {
-            if (_health < 80)
+
+            System.Diagnostics.Debug.WriteLine(_health);
+            if (_health < 800)
             {
                 Position += new Vector2(0, 0.1f);
             }
-            if (_health < 60)
+            if (_health < 600)
             {
                 Position += new Vector2(0, 0.15f);
             }
-            if (_health < 40)
+            if (_health < 400)
             {
                 Position += new Vector2(0, 0.2f);
             }
-            if (_health < 20)
+            if (_health < 200)
             {
                 Position += new Vector2(0, 0.25f);
             }

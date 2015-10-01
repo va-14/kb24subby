@@ -31,7 +31,7 @@ namespace Subby.Sprites
         public void Initialize()
         {
             Color = Color.White;
-            Position = new Vector2(960, 270);
+            //Position = new Vector2(960, 270);
         }
 
         public void Load(Texture2D _texture)
