@@ -15,7 +15,8 @@ namespace Subby
         Player subby;
         Waves waves;
         ScrollingBackground scrollingBackground;
-
+        int scrollingPosition;
+        GameBoundaries levelBoundaries;
         Texture2D sky;
 
         List<ISprite> allSprites;
@@ -37,7 +38,7 @@ namespace Subby
 
             subby = new Player();
             subby.Initialize();
-            subby.SetBoundaries(new GameBoundaries { Bottom = graphics.PreferredBackBufferHeight, Top = 200, Left = 20, Right = graphics.PreferredBackBufferWidth - 200 });
+            levelBoundaries = new GameBoundaries { Left = 20, Right = (float)graphics.PreferredBackBufferWidth - 200, Top = 200, Bottom = (float)graphics.PreferredBackBufferHeight };
             
 
             waves = new Waves();
@@ -82,18 +83,28 @@ namespace Subby
 
             checkCollisions();
             subby.Update(gameTime);
+            UpdateScrollingPosition();
             foreach (ISprite s in allSprites)
             {
                 s.Update(gameTime);
             }
 
-            scrollingBackground.UpdatePosition(GetDeflectedPlayerPosition());
+            scrollingBackground.UpdatePosition(scrollingPosition);
 
             base.Update(gameTime);
         }
-        private Vector2 GetDeflectedPlayerPosition()
+        private void UpdateScrollingPosition()
         {
-            return new Vector2(subby.Position.X + subby.PositionDeflection, subby.Position.Y);
+            Vector2 positionSubby = subby.Position;
+            if (subby.Position.Y >= levelBoundaries.Bottom || subby.Position.Y <= levelBoundaries.Top || subby.Position.X <= levelBoundaries.Left)
+            {
+                subby.Speed = 0;
+            }
+            if (subby.Position.X >= levelBoundaries.Right)
+            {
+                scrollingPosition += (int)subby.Position.X - (int)levelBoundaries.Right;
+                subby.Position = new Vector2(levelBoundaries.Right, subby.Position.Y);
+            }
         }
         protected override void Draw(GameTime gameTime)
         {
@@ -101,20 +112,34 @@ namespace Subby
 
             spriteBatch.Begin();
             spriteBatch.Draw(sky, new Vector2(0, 0), Color.White);
-            scrollingBackground.Draw(spriteBatch);
+            DrawBackground(spriteBatch);
             subby.Draw(spriteBatch);
             foreach (ISprite s in allSprites)
             {
-                //spriteBatch.Draw(s.Texture, s.Position, s.Color);
-                s.Draw(spriteBatch, GetDeflectedPlayerPosition());
+                spriteBatch.Draw(s.Texture, new Vector2(s.Position.X - (float)scrollingPosition, s.Position.Y), s.Color);
+                //s.Draw(spriteBatch, GetDeflectedPlayerPosition());
             }
             
-            //spriteBatch.Draw(subby.Texture,subby.Position, null,subby.Color,subby.Angle,new Vector2(subby.Texture.Width/2, subby.Texture.Height/2),1f,SpriteEffects.None,1);
+            spriteBatch.Draw(subby.Texture,subby.Position, null,subby.Color,subby.Angle,new Vector2(subby.Texture.Width/2, subby.Texture.Height/2),1f,SpriteEffects.None,1);
             spriteBatch.End();
 
             base.Draw(gameTime);
         }
 
+        private void DrawBackground(SpriteBatch batch)
+        {
+            batch.Draw(scrollingBackground.texture, scrollingBackground.position, null, Color.White, 0, scrollingBackground.origin, 1.0f, SpriteEffects.None, 0f);
+            batch.Draw(scrollingBackground.texture, new Vector2(scrollingBackground.position.X + scrollingBackground.texture.Width, scrollingBackground.position.Y), null, Color.White, 0, scrollingBackground.origin, 1.0f, SpriteEffects.None, 0f);
+            batch.Draw(scrollingBackground.texture, new Vector2(scrollingBackground.position.X + 2 * scrollingBackground.texture.Width, scrollingBackground.position.Y), null, Color.White, 0, scrollingBackground.origin, 1.0f, SpriteEffects.None, 0f);
+            if (waves.Position.X < 1920)
+            {
+                batch.Draw(waves.Texture, waves.Position, waves.Color);
+            }
+            // Draw the texture a second time, behind the first,
+            // to create the scrolling illusion.
+            batch.Draw(waves.Texture, waves.Position - new Vector2(waves.Texture.Width, 0), waves.Color);
+        
+        }
         private Boolean checkKeys()
         {
             KeyboardState state = Keyboard.GetState();

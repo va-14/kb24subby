@@ -23,7 +23,7 @@ namespace Subby.Sprites
 
         public void Update(GameTime gameTime) { }
 
-        public void CollisionWith(Player s)
+        public void CollisionWith(ISprite s)
         {
 
         }

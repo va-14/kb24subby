@@ -9,9 +9,9 @@ namespace Subby
 {
     class ScrollingBackground
     {
-        private Vector2 position, origin;
-        private Texture2D texture;
-        private int screenWidth, screenHeight;
+        public Vector2 position, origin;
+        public Texture2D texture;
+        public int screenWidth, screenHeight;
 
         public void Load(GraphicsDevice device, Texture2D surfaceTexture)
         {
@@ -20,9 +20,9 @@ namespace Subby
             screenWidth = device.Viewport.Width;
         }
 
-        public void UpdatePosition(Vector2 landerPosition)
+        public void UpdatePosition(int scrollingPosition)
         {
-            position = new Vector2(-landerPosition.X % texture.Width, 312);
+            position = new Vector2((float)-scrollingPosition % texture.Width, 312);
         }
 
         public void Draw(SpriteBatch batch)

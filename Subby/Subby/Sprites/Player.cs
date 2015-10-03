@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Subby.Sprites
 {
-    class Player
+    class Player : ISprite
     {
 
         public Vector2 Position { get; set; }
@@ -51,9 +51,9 @@ namespace Subby.Sprites
             set { _speed = value; }
         }
 
-        private GameBoundaries _boundaries;
+        private Vector4 _boundaries;
 
-        public void SetBoundaries(GameBoundaries boundaries)
+        public void SetBoundaries(Vector4 boundaries)
         {
             _boundaries = boundaries;
         }
@@ -85,15 +85,6 @@ namespace Subby.Sprites
 
             Position += new Vector2(_speed * (float)Math.Cos(Angle), (_speed * (float)Math.Sin(Angle)));
 
-            if (Position.Y >= _boundaries.Bottom || Position.Y <= _boundaries.Top || Position.X <= _boundaries.Left)
-            {
-                _speed = 0;
-            }
-            if (Position.X >= _boundaries.Right)
-            {
-                _positionDeflection += Position.X -_boundaries.Right;
-                Position = new Vector2(_boundaries.Right, Position.Y);
-            }
             System.Diagnostics.Debug.WriteLine(_positionDeflection);
         }
         public void Update(GameTime gameTime)

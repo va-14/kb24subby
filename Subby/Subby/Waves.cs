@@ -44,7 +44,7 @@ namespace Subby
             batch.Draw(Texture, Position - new Vector2(Texture.Width, 0), Color);
         }
 
-        public void CollisionWith(Player s)
+        public void CollisionWith(ISprite s)
         {
 
         }
