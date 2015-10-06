@@ -113,14 +113,13 @@ namespace Subby
             spriteBatch.Begin();
             spriteBatch.Draw(sky, new Vector2(0, 0), Color.White);
             DrawBackground(spriteBatch);
-            subby.Draw(spriteBatch);
             foreach (ISprite s in allSprites)
             {
                 spriteBatch.Draw(s.Texture, new Vector2(s.Position.X - (float)scrollingPosition, s.Position.Y), s.Color);
-                //s.Draw(spriteBatch, GetDeflectedPlayerPosition());
             }
             
             spriteBatch.Draw(subby.Texture,subby.Position, null,subby.Color,subby.Angle,new Vector2(subby.Texture.Width/2, subby.Texture.Height/2),1f,SpriteEffects.None,1);
+
             spriteBatch.End();
 
             base.Draw(gameTime);
@@ -164,6 +163,13 @@ namespace Subby
             {
                 subby.Start();
             }
+            if (state.IsKeyDown(Keys.Space))
+            {
+                Missile s = subby.Shoot();
+                s.Texture = Content.Load<Texture2D>("missile");
+                s.Position = new Vector2(subby.Position.X + scrollingPosition, subby.Position.Y);
+                allSprites.Add(s);
+            }
 
             return false;
         }
@@ -175,7 +181,7 @@ namespace Subby
 
             foreach (ISprite s in allSprites)
             {
-                Rectangle rectSprite = new Rectangle((int)s.Position.X, (int)s.Position.Y, s.Texture.Width, s.Texture.Height); //to refactor get property of ISprite
+                Rectangle rectSprite = new Rectangle((int)s.Position.X - scrollingPosition, (int)s.Position.Y, s.Texture.Width, s.Texture.Height); //to refactor get property of ISprite
 
                 Rectangle overlap = Rectangle.Intersect(rectball1, rectSprite);
                 if (!overlap.IsEmpty)
@@ -189,19 +195,10 @@ namespace Subby
 
         private void InitializeLevel1()
         {
-            TankStation t1 = new TankStation();
-            t1.Color = Color.White;
-            t1.Texture = Content.Load<Texture2D>("tankstation");
-            t1.Tank = 300;
-            t1.Position = new Vector2(300, 300);
-            allSprites.Add(t1);
-
-            Wrak w1 = new Wrak();
-            w1.Color = Color.White;
-            w1.Texture = Content.Load<Texture2D>("wrak");
-            w1.Schade = 1;
-            w1.Position = new Vector2(400, 350);
-            allSprites.Add(w1);
+            allSprites.Add(new TankStation { Color = Color.White, Position = new Vector2(600, 450), Tank = 300, Texture = Content.Load<Texture2D>("tankstation") });
+            allSprites.Add(new Wrak { Color = Color.White, Position = new Vector2(400, 350), Schade = 1, Texture = Content.Load<Texture2D>("wrak") });
+            allSprites.Add(new Wrak { Color = Color.White, Position = new Vector2(3000, 550), Schade = 1, Texture = Content.Load<Texture2D>("wrak") });
+            allSprites.Add(new Wrak { Color = Color.White, Position = new Vector2(5000, 550), Schade = 1, Texture = Content.Load<Texture2D>("wrak") });
         }
     }
 }

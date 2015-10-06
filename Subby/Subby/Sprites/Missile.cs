@@ -28,6 +28,10 @@ namespace Subby.Sprites
         private float _angle; // in degrees
         public float Angle
         {
+            set
+            {
+                _angle = value;
+            }
             get
             {
                 return ((float)Math.PI) * _angle / 180.0f;
@@ -44,8 +48,6 @@ namespace Subby.Sprites
 
         public void Initialize()
         {
-            _damage = 50;
-            //Texture = .Load<Texture2D>("wrak");
         }
 
         public void Load(Texture2D texture)
@@ -55,11 +57,10 @@ namespace Subby.Sprites
 
         public void Update(GameTime gameTime)
         {
+
+            Position += new Vector2(_speed * (float)Math.Cos(Angle), (_speed * (float)Math.Sin(Angle)));
         }
 
-        public void Draw(SpriteBatch batch, Vector2 positionDeflection)
-        {
-        }
 
         public void CollisionWith(ISprite s)
         {

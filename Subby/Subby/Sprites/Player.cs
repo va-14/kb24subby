@@ -10,6 +10,14 @@ namespace Subby.Sprites
     class Player : ISprite
     {
 
+        private int Bullits;
+
+        public int _bullits
+        {
+            get { return Bullits; }
+            set { Bullits = value; }
+        }
+        
         public Vector2 Position { get; set; }
         public Color Color { get; set; }
         public Texture2D Texture { get; set; }
@@ -64,11 +72,18 @@ namespace Subby.Sprites
             Health = 1000;
             Color = Color.White;
             Position = new Vector2(120, 590);
+            _bullits = 100;
         }
 
         public void Load(Texture2D _texture)
         {
             Texture = _texture;
+        }
+
+        public Missile Shoot()
+        {
+            _bullits--;
+            return new Missile { Speed = 5f, Damage = 50, Angle = this._angle, Color = Color.White};
         }
         private void UpdatePosition()
         {
@@ -95,10 +110,6 @@ namespace Subby.Sprites
             return;
         }
 
-        public void Draw(SpriteBatch batch)
-        {
-            batch.Draw(Texture, Position, null, Color, Angle, new Vector2(Texture.Width / 2, Texture.Height / 2), 1f, SpriteEffects.None, 1);
-        }
         public void IsDamaged()
         {
 
