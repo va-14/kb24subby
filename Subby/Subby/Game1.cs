@@ -4,6 +4,8 @@ using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using Subby.Sprites;
+using System.Xml.Serialization;
+using System.IO;
 
 namespace Subby
 {
@@ -15,6 +17,7 @@ namespace Subby
         Player subby;
         Waves waves;
         ScrollingBackground scrollingBackground;
+        Level level;
 
         Texture2D sky;
 
@@ -177,6 +180,33 @@ namespace Subby
             w1.Schade = 1;
             w1.Position = new Vector2(400, 350);
             allSprites.Add(w1);
+        }
+
+        public void Serialize(string filename, Level level)
+        {
+            XmlSerializer serializer = new XmlSerializer(typeof(Level));
+            try
+            {
+                using (TextWriter writer = new StreamWriter(filename + ".xml"))
+                {
+                    serializer.Serialize(writer, level);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("The file could not be read:");
+                Console.WriteLine(e.Message);
+            }
+            
+        }
+
+        public void Deserialize(string filename, Level level)
+        {
+            XmlSerializer deserializer = new XmlSerializer(typeof(Level));
+            TextReader reader = new StreamReader(filename + ".xml");
+            object obj = deserializer.Deserialize(reader);
+            level = (Level)obj;
+            reader.Close();
         }
     }
 }

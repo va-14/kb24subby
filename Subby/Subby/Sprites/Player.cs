@@ -4,14 +4,17 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Xml.Serialization;
 
 namespace Subby.Sprites
 {
-    class Player : ISprite
+    [Serializable]
+    public class Player : ISprite
     {
 
         public Vector2 Position { get; set; }
         public Color Color { get; set; }
+        [XmlIgnore]
         public Texture2D Texture { get; set; }
         private float _positionDeflection;
 

@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Subby
 {
-    interface ISprite
+    public interface ISprite
     {
         Vector2 Position { get; set; }
         Color Color { get; set; }
