@@ -17,8 +17,8 @@ namespace Subby
         Player subby;
         Waves waves;
         ScrollingBackground scrollingBackground;
-        Level level;
-
+        int scrollingPosition;
+        GameBoundaries levelBoundaries;
         Texture2D sky;
 
         List<ISprite> allSprites;
@@ -40,14 +40,14 @@ namespace Subby
 
             subby = new Player();
             subby.Initialize();
-            subby.SetBoundaries(new GameBoundaries { Bottom = graphics.PreferredBackBufferHeight, Top = 200, Left = 20, Right = graphics.PreferredBackBufferWidth - 200 });
+            levelBoundaries = new GameBoundaries { Left = 20, Right = (float)graphics.PreferredBackBufferWidth - 200, Top = 200, Bottom = (float)graphics.PreferredBackBufferHeight };
             
 
             waves = new Waves();
             waves.Initialize();
 
             allSprites.Add(waves);
-            allSprites.Add(subby);
+            //allSprites.Add(subby);
 
             scrollingBackground = new ScrollingBackground();
             base.Initialize();
@@ -84,19 +84,29 @@ namespace Subby
             checkKeys();
 
             checkCollisions();
-
+            subby.Update(gameTime);
+            UpdateScrollingPosition();
             foreach (ISprite s in allSprites)
             {
                 s.Update(gameTime);
             }
 
-            scrollingBackground.Update(GetDeflectedPlayerPosition());
+            scrollingBackground.UpdatePosition(scrollingPosition);
 
             base.Update(gameTime);
         }
-        private Vector2 GetDeflectedPlayerPosition()
+        private void UpdateScrollingPosition()
         {
-            return new Vector2(subby.Position.X + subby.PositionDeflection, subby.Position.Y);
+            Vector2 positionSubby = subby.Position;
+            if (subby.Position.Y >= levelBoundaries.Bottom || subby.Position.Y <= levelBoundaries.Top || subby.Position.X <= levelBoundaries.Left)
+            {
+                subby.Speed = 0;
+            }
+            if (subby.Position.X >= levelBoundaries.Right)
+            {
+                scrollingPosition += (int)subby.Position.X - (int)levelBoundaries.Right;
+                subby.Position = new Vector2(levelBoundaries.Right, subby.Position.Y);
+            }
         }
         protected override void Draw(GameTime gameTime)
         {
@@ -104,20 +114,33 @@ namespace Subby
 
             spriteBatch.Begin();
             spriteBatch.Draw(sky, new Vector2(0, 0), Color.White);
-            scrollingBackground.Draw(spriteBatch);
-            
+            DrawBackground(spriteBatch);
             foreach (ISprite s in allSprites)
             {
-                //spriteBatch.Draw(s.Texture, s.Position, s.Color);
-                s.Draw(spriteBatch);
+                spriteBatch.Draw(s.Texture, new Vector2(s.Position.X - (float)scrollingPosition, s.Position.Y), s.Color);
             }
             
-            //spriteBatch.Draw(subby.Texture,subby.Position, null,subby.Color,subby.Angle,new Vector2(subby.Texture.Width/2, subby.Texture.Height/2),1f,SpriteEffects.None,1);
+            spriteBatch.Draw(subby.Texture,subby.Position, null,subby.Color,subby.Angle,new Vector2(subby.Texture.Width/2, subby.Texture.Height/2),1f,SpriteEffects.None,1);
+
             spriteBatch.End();
 
             base.Draw(gameTime);
         }
 
+        private void DrawBackground(SpriteBatch batch)
+        {
+            batch.Draw(scrollingBackground.texture, scrollingBackground.position, null, Color.White, 0, scrollingBackground.origin, 1.0f, SpriteEffects.None, 0f);
+            batch.Draw(scrollingBackground.texture, new Vector2(scrollingBackground.position.X + scrollingBackground.texture.Width, scrollingBackground.position.Y), null, Color.White, 0, scrollingBackground.origin, 1.0f, SpriteEffects.None, 0f);
+            batch.Draw(scrollingBackground.texture, new Vector2(scrollingBackground.position.X + 2 * scrollingBackground.texture.Width, scrollingBackground.position.Y), null, Color.White, 0, scrollingBackground.origin, 1.0f, SpriteEffects.None, 0f);
+            if (waves.Position.X < 1920)
+            {
+                batch.Draw(waves.Texture, waves.Position, waves.Color);
+            }
+            // Draw the texture a second time, behind the first,
+            // to create the scrolling illusion.
+            batch.Draw(waves.Texture, waves.Position - new Vector2(waves.Texture.Width, 0), waves.Color);
+        
+        }
         private Boolean checkKeys()
         {
             KeyboardState state = Keyboard.GetState();
@@ -142,6 +165,13 @@ namespace Subby
             {
                 subby.Start();
             }
+            if (state.IsKeyDown(Keys.Space))
+            {
+                Missile s = subby.Shoot();
+                s.Texture = Content.Load<Texture2D>("missile");
+                s.Position = new Vector2(subby.Position.X + scrollingPosition, subby.Position.Y);
+                allSprites.Add(s);
+            }
 
             return false;
         }
@@ -153,7 +183,7 @@ namespace Subby
 
             foreach (ISprite s in allSprites)
             {
-                Rectangle rectSprite = new Rectangle((int)s.Position.X, (int)s.Position.Y, s.Texture.Width, s.Texture.Height); //to refactor get property of ISprite
+                Rectangle rectSprite = new Rectangle((int)s.Position.X - scrollingPosition, (int)s.Position.Y, s.Texture.Width, s.Texture.Height); //to refactor get property of ISprite
 
                 Rectangle overlap = Rectangle.Intersect(rectball1, rectSprite);
                 if (!overlap.IsEmpty)
@@ -167,19 +197,10 @@ namespace Subby
 
         private void InitializeLevel1()
         {
-            TankStation t1 = new TankStation();
-            t1.Color = Color.White;
-            t1.Texture = Content.Load<Texture2D>("tankstation");
-            t1.Tank = 300;
-            t1.Position = new Vector2(300, 300);
-            allSprites.Add(t1);
-
-            Wrak w1 = new Wrak();
-            w1.Color = Color.White;
-            w1.Texture = Content.Load<Texture2D>("wrak");
-            w1.Schade = 1;
-            w1.Position = new Vector2(400, 350);
-            allSprites.Add(w1);
+            allSprites.Add(new TankStation { Color = Color.White, Position = new Vector2(600, 450), Tank = 300, Texture = Content.Load<Texture2D>("tankstation") });
+            allSprites.Add(new Wrak { Color = Color.White, Position = new Vector2(400, 350), Schade = 1, Texture = Content.Load<Texture2D>("wrak") });
+            allSprites.Add(new Wrak { Color = Color.White, Position = new Vector2(3000, 550), Schade = 1, Texture = Content.Load<Texture2D>("wrak") });
+            allSprites.Add(new Wrak { Color = Color.White, Position = new Vector2(5000, 550), Schade = 1, Texture = Content.Load<Texture2D>("wrak") });
         }
 
         public void Serialize(string filename, Level level)

@@ -50,9 +50,9 @@ namespace Subby.Sprites
         }
 
 
-        public void Draw(SpriteBatch batch)
+        public void Draw(SpriteBatch batch, Vector2 positionDeflection)
         {
-            batch.Draw(Texture, Position, Color);
+            batch.Draw(Texture, new Vector2(Position.X - positionDeflection.X, Position.Y), Color);
         }
 
     }

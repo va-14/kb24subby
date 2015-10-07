@@ -12,6 +12,14 @@ namespace Subby.Sprites
     public class Player : ISprite
     {
 
+        private int Bullits;
+
+        public int _bullits
+        {
+            get { return Bullits; }
+            set { Bullits = value; }
+        }
+        
         public Vector2 Position { get; set; }
         public Color Color { get; set; }
         [XmlIgnore]
@@ -54,9 +62,9 @@ namespace Subby.Sprites
             set { _speed = value; }
         }
 
-        private GameBoundaries _boundaries;
+        private Vector4 _boundaries;
 
-        public void SetBoundaries(GameBoundaries boundaries)
+        public void SetBoundaries(Vector4 boundaries)
         {
             _boundaries = boundaries;
         }
@@ -66,12 +74,19 @@ namespace Subby.Sprites
             Fuel = 10000;
             Health = 1000;
             Color = Color.White;
-            Position = new Vector2(960, 590);
+            Position = new Vector2(120, 590);
+            _bullits = 100;
         }
 
         public void Load(Texture2D _texture)
         {
             Texture = _texture;
+        }
+
+        public Missile Shoot()
+        {
+            _bullits--;
+            return new Missile { Speed = 5f, Damage = 50, Angle = this._angle, Color = Color.White};
         }
         private void UpdatePosition()
         {
@@ -88,15 +103,6 @@ namespace Subby.Sprites
 
             Position += new Vector2(_speed * (float)Math.Cos(Angle), (_speed * (float)Math.Sin(Angle)));
 
-            if (Position.Y >= _boundaries.Bottom || Position.Y <= _boundaries.Top || Position.X <= _boundaries.Left)
-            {
-                _speed = 0;
-            }
-            if (Position.X >= _boundaries.Right)
-            {
-                _positionDeflection += Position.X -_boundaries.Right;
-                Position = new Vector2(_boundaries.Right, Position.Y);
-            }
             System.Diagnostics.Debug.WriteLine(_positionDeflection);
         }
         public void Update(GameTime gameTime)
@@ -107,10 +113,6 @@ namespace Subby.Sprites
             return;
         }
 
-        public void Draw(SpriteBatch batch)
-        {
-            batch.Draw(Texture, Position, null, Color, Angle, new Vector2(Texture.Width / 2, Texture.Height / 2), 1f, SpriteEffects.None, 1);
-        }
         public void IsDamaged()
         {
 
