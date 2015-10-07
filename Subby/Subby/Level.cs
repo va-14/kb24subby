@@ -43,11 +43,7 @@ namespace Subby
 
         public void Draw(SpriteBatch batch)
         {
-            Subby.Draw(batch);
-            foreach (ISprite sprite in SpriteList)
-            {
-                sprite.Draw(batch);
-            }
+            
         }
 
     }
