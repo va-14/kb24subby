@@ -38,17 +38,22 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Background.cs" />
     <Compile Include="Game1.cs" />
+    <Compile Include="GameBoundaries.cs" />
     <Compile Include="ISprite.cs" />
-    <Compile Include="Player.cs" />
+<<<<<<< HEAD
+    <Compile Include="Level.cs" />
+=======
+    <Compile Include="Sprites\Missile.cs" />
+>>>>>>> 1672a7ab039c838668515b689bf58e2b351213b0
+    <Compile Include="Sprites\Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-<<<<<<< HEAD
+    <Compile Include="Sprites\TankStation.cs" />
+    <Compile Include="Sprites\Wrak.cs" />
     <Compile Include="ScrollingBackground.cs" />
     <Compile Include="Waves.cs" />
-=======
-    <Compile Include="TankStation.cs" />
->>>>>>> origin/master
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">

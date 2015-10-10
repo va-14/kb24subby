@@ -38,11 +38,16 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+<<<<<<< HEAD
     <Compile Include="Collision.cs" />
+=======
+    <Compile Include="Background.cs" />
+>>>>>>> origin/master
     <Compile Include="Game1.cs" />
     <Compile Include="GameBoundaries.cs" />
     <Compile Include="ISprite.cs" />
     <Compile Include="Sprites\Missile.cs" />
+	<Compile Include="Level.cs" />
     <Compile Include="Sprites\Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
