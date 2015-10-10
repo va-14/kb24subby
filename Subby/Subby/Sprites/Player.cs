@@ -10,6 +10,14 @@ namespace Subby.Sprites
     class Player : ISprite
     {
 
+        private Color[] _textureData;
+
+	    public Color[] TextureData
+	    {
+		    get { return _textureData;}
+	    }
+
+
         private int Bullits;
 
         public int _bullits
@@ -17,10 +25,29 @@ namespace Subby.Sprites
             get { return Bullits; }
             set { Bullits = value; }
         }
+        private Vector2 _origin;
+
+        public Vector2 Origin
+        {
+            get { return _origin; }
+            set { _origin = value; }
+        }
         
         public Vector2 Position { get; set; }
         public Color Color { get; set; }
-        public Texture2D Texture { get; set; }
+        private Texture2D _texture;
+        public Texture2D Texture {
+            get
+            {
+                return _texture;
+            }
+            set
+            {
+                _texture = value;
+                _textureData = new Color[value.Width * value.Height];
+                _origin = new Vector2(value.Width / 2, value.Height / 2);
+            }
+        }
         private float _positionDeflection;
 
         public float PositionDeflection
@@ -46,9 +73,16 @@ namespace Subby.Sprites
         private float _angle; // in degrees
         public float Angle
         {
+            get 
+            {
+                return ((float)Math.PI) * _angle / 180f;;  
+            }
+        }
+        public float AngleDegrees
+        {
             get
             {
-                return ((float)Math.PI) * _angle / 180.0f;
+                return _angle;
             }
         }
 
@@ -134,15 +168,21 @@ namespace Subby.Sprites
         public void GoUp()
         {
             if (UseFuel(1))
-            _angle -= 1;
+            Rotate(-1);
         }
 
         public void GoDown()
         {
             if (UseFuel(1))
-            _angle += 1;
+            Rotate(1);
         }
 
+        private void Rotate(int degrees)
+        {
+            _angle += degrees;
+            while (this._angle < 0) this._angle += 360;
+            while (this._angle > 359) this._angle -= 360;
+        }
         public void GoFaster()
         {
             if (UseFuel(2))
