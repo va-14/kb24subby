@@ -24,7 +24,6 @@ namespace Subby
 
         List<ISprite> allSprites;
         List<ISprite> allSpriteObstakels;
-        List<Rectangle> subbyRects;
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -123,11 +122,8 @@ namespace Subby
             
             spriteBatch.Draw(subby.Texture, subby.Position, null, subby.Color, subby.Angle, new Vector2(subby.Texture.Width / 2, subby.Texture.Height / 2), 1f, SpriteEffects.None, 1);
 
+            /*Dit is om de colision te zien
             subbyRects = calculateSubbyRect();
-
-            /*
-             * Dit is om de colision te zien
-             * subbyRects = calculateSubbyRect();
             Texture2D dummyTexture = new Texture2D(GraphicsDevice, 1, 1);
             dummyTexture.SetData(new Color[] { Color.White });
             foreach (Rectangle r in subbyRects)
@@ -190,7 +186,7 @@ namespace Subby
 
         private List<Rectangle> calculateSubbyRect()
         {
-            int pixels = 1; // deze kan maximaal op 10 voor een goede collision
+            int pixels = 10; // deze kan maximaal op 10 voor een goede collision
             int widthRadius = subby.Texture.Width/2;
             int heightRadius = subby.Texture.Height/2;
             List<Rectangle> values = new List<Rectangle>();
