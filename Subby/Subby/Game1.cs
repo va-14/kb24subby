@@ -24,7 +24,11 @@ namespace Subby
 
         List<ISprite> allSprites;
         List<ISprite> allSpriteObstakels;
+<<<<<<< HEAD
         List<Rectangle> subbyRects;
+=======
+        //List<Rectangle> subbyRects;
+>>>>>>> origin/master
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -123,13 +127,23 @@ namespace Subby
             
             spriteBatch.Draw(subby.Texture, subby.Position, null, subby.Color, subby.Angle, new Vector2(subby.Texture.Width / 2, subby.Texture.Height / 2), 1f, SpriteEffects.None, 1);
 
+<<<<<<< HEAD
             subbyRects = calculateSubbyRect();
+=======
+            /*
+             * Dit is om de colision te zien
+             * subbyRects = calculateSubbyRect();
+>>>>>>> origin/master
             Texture2D dummyTexture = new Texture2D(GraphicsDevice, 1, 1);
             dummyTexture.SetData(new Color[] { Color.White });
             foreach (Rectangle r in subbyRects)
             {
                 spriteBatch.Draw(dummyTexture, r, Color.White);
+<<<<<<< HEAD
             }
+=======
+            }*/
+>>>>>>> origin/master
             spriteBatch.End();
 
             base.Draw(gameTime);
@@ -189,6 +203,7 @@ namespace Subby
             int widthRadius = subby.Texture.Width/2;
             int heightRadius = subby.Texture.Height/2;
             List<Rectangle> values = new List<Rectangle>();
+<<<<<<< HEAD
 
             for (int x = 0; x < widthRadius; x = x + pixels)
             {
@@ -216,6 +231,35 @@ namespace Subby
             int x = (int)(radius * Math.Cos(angleInDegrees * Math.PI / 180F)) + origin.X;
             int y = (int)(radius * Math.Sin(angleInDegrees * Math.PI / 180F)) + origin.Y;
 
+=======
+
+            for (int x = 0; x < widthRadius; x = x + pixels)
+            {
+                for (int y = 0; y < heightRadius; y = y + pixels)
+                {
+                    Point radiusPoint = PointOnCircle(x, (int)subby.AngleDegrees, new Point((int)subby.Position.X, (int)subby.Position.Y));
+                    Point point = PointOnCircle(y, (int)subby.AngleDegrees - 90, new Point((int)radiusPoint.X, (int)radiusPoint.Y));
+                    values.Add(new Rectangle(point.X, point.Y, pixels, pixels));
+                    radiusPoint = PointOnCircle(x, (int)subby.AngleDegrees, new Point((int)subby.Position.X, (int)subby.Position.Y));
+                    point = PointOnCircle(y, (int)subby.AngleDegrees + 90, new Point((int)radiusPoint.X, (int)radiusPoint.Y));
+                    values.Add(new Rectangle(point.X, point.Y, pixels, pixels));
+                    radiusPoint = PointOnCircle(-x, (int)subby.AngleDegrees, new Point((int)subby.Position.X, (int)subby.Position.Y));
+                    point = PointOnCircle(y, (int)subby.AngleDegrees - 90, new Point((int)radiusPoint.X, (int)radiusPoint.Y));
+                    values.Add(new Rectangle(point.X, point.Y, pixels, pixels));
+                    radiusPoint = PointOnCircle(-x, (int)subby.AngleDegrees, new Point((int)subby.Position.X, (int)subby.Position.Y));
+                    point = PointOnCircle(y, (int)subby.AngleDegrees + 90, new Point((int)radiusPoint.X, (int)radiusPoint.Y));
+                    values.Add(new Rectangle(point.X, point.Y, pixels, pixels));
+                }
+            }
+            return values;
+        }
+        public static Point PointOnCircle(int radius, int angleInDegrees, Point origin)
+        {
+            // Convert from degrees to radians via multiplication by PI/180        
+            int x = (int)(radius * Math.Cos(angleInDegrees * Math.PI / 180F)) + origin.X;
+            int y = (int)(radius * Math.Sin(angleInDegrees * Math.PI / 180F)) + origin.Y;
+
+>>>>>>> origin/master
             return new Point(x,y);
         }
         private void checkCollisions()
@@ -231,7 +275,11 @@ namespace Subby
             }
             Rectangle rectSubby = new Rectangle((int)subby.Position.X - (boundingLength/2), (int)subby.Position.Y - (boundingLength/2), boundingLength, boundingLength);
 
+<<<<<<< HEAD
            // List<Rectangle> subbyRects = calculateSubbyRect();
+=======
+            List<Rectangle> subbyRects = calculateSubbyRect();
+>>>>>>> origin/master
             foreach (ISprite s in allSprites)
             {
                 Rectangle rectSprite = new Rectangle((int)s.Position.X - scrollingPosition, (int)s.Position.Y, s.Texture.Width, s.Texture.Height); 
@@ -260,6 +308,10 @@ namespace Subby
             allSprites.Add(new Wrak { Color = Color.White, Position = new Vector2(3000, 550), Schade = 1, Texture = Content.Load<Texture2D>("wrak") });
             allSprites.Add(new Wrak { Color = Color.White, Position = new Vector2(5000, 550), Schade = 1, Texture = Content.Load<Texture2D>("wrak") });
         }
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/master
         public void Serialize(string filename, Level level)
         {
             XmlSerializer serializer = new XmlSerializer(typeof(Level));
@@ -285,6 +337,10 @@ namespace Subby
             object obj = deserializer.Deserialize(reader);
             level = (Level)obj;
             reader.Close();
+<<<<<<< HEAD
          }
+=======
+        }
+>>>>>>> origin/master
     }
 }

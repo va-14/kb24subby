@@ -43,6 +43,7 @@ namespace Subby
 
         public void Draw(SpriteBatch batch)
         {
+<<<<<<< HEAD
             //Subby.Draw(batch);
             foreach (ISprite sprite in SpriteList)
             {
@@ -52,3 +53,10 @@ namespace Subby
 
     }
 }
+=======
+            
+        }
+
+    }
+}
+>>>>>>> origin/master
