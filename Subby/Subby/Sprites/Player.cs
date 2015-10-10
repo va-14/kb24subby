@@ -37,15 +37,10 @@ namespace Subby.Sprites
         
         public Vector2 Position { get; set; }
         public Color Color { get; set; }
-<<<<<<< HEAD
         
         [XmlIgnore]
         private Texture2D _texture;
         [XmlIgnore]
-=======
-<<<<<<< HEAD
-        private Texture2D _texture;
->>>>>>> origin/master
         public Texture2D Texture {
             get
             {
@@ -58,13 +53,6 @@ namespace Subby.Sprites
                 _origin = new Vector2(value.Width / 2, value.Height / 2);
             }
         }
-<<<<<<< HEAD
-=======
-=======
-        [XmlIgnore]
-        public Texture2D Texture { get; set; }
->>>>>>> origin/master
->>>>>>> origin/master
         private float _positionDeflection;
 
         public float PositionDeflection
