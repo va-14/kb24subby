@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Subby
 {
-    class GameBoundaries
+    public class GameBoundaries
     {
         private float _top;
 

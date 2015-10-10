@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Content;
 
 namespace Subby.Sprites
 {
-    class Missile : ISprite
+    public class Missile : ISprite
     {
         public Vector2 Position { get; set; }
 

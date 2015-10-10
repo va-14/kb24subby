@@ -8,15 +8,19 @@ using Subby.Sprites;
 
 namespace Subby
 {
-    interface ISprite
+    public interface ISprite
     {
         Vector2 Position { get; set; }
         Color Color { get; set; }
         Texture2D Texture { get; set; }
+        //Color[] TextureData { get; set; }
 
+       // Vector2 Origin { get; set; }
+        //float Angle { get; set; }
         void Initialize();
         void Load(Texture2D texture);
         void Update(GameTime gameTime);
+        
 
         void CollisionWith(ISprite s);
     }
