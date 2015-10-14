@@ -13,6 +13,14 @@ namespace Subby.Sprites
     public class Player : ISprite
     {
 
+        private Color[] _textureData;
+
+	    public Color[] TextureData
+	    {
+		    get { return _textureData;}
+	    }
+
+
         private int Bullits;
         [DataMember]
         public int _bullits
@@ -21,15 +29,30 @@ namespace Subby.Sprites
             set { Bullits = value; }
         }
         [DataMember]
+
+        public Vector2 Origin
+        {
+            get { return _origin; }
+            set { _origin = value; }
+        }
         public Vector2 Position { get; set; }
         [DataMember]
         public Color Color { get; set; }
-        public Texture2D Texture { get; set; }
+        
+        private Texture2D _texture;
         public Texture2D TorpedoTexture { get; set; }
         [DataMember]
         public string TextureName { get; set; }
         [DataMember]
         public Vector2 PivotPoint { get; set; }
+            }
+            set
+            {
+                _texture = value;
+                _textureData = new Color[value.Width * value.Height];
+                _origin = new Vector2(value.Width / 2, value.Height / 2);
+            }
+        }
         private float _positionDeflection;
         [DataMember]
         public float PositionDeflection
@@ -58,9 +81,16 @@ namespace Subby.Sprites
         [DataMember]
         public float Rotation
         {
+            get 
+            {
+                return ((float)Math.PI) * _angle / 180f;;  
+            }
+        }
+        public float AngleDegrees
+        {
             get
             {
-                return ((float)Math.PI) * _angle / 180.0f;
+                return _angle;
             }
             set 
             {
@@ -153,15 +183,21 @@ namespace Subby.Sprites
         public void GoUp()
         {
             if (UseFuel(1))
-            _angle -= 1;
+            Rotate(-1);
         }
 
         public void GoDown()
         {
             if (UseFuel(1))
-            _angle += 1;
+            Rotate(1);
         }
 
+        private void Rotate(int degrees)
+        {
+            _angle += degrees;
+            while (this._angle < 0) this._angle += 360;
+            while (this._angle > 359) this._angle -= 360;
+        }
         public void GoFaster()
         {
             if (UseFuel(2))

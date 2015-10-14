@@ -19,10 +19,10 @@ namespace Subby
         int scrollingPosition;
         GameBoundaries levelBoundaries;
         Background background;
+        Level level;
 
         List<ISprite> allSprites;
         List<ISprite> allSpriteObstakels;
-
         Level level1;
 
         public Game1()
@@ -123,13 +123,21 @@ namespace Subby
             //    spriteBatch.Draw(s.Texture, new Vector2(s.Position.X - (float)scrollingPosition, s.Position.Y), s.Color);
             //}
 
-            //spriteBatch.Draw(subby.Texture, subby.Position, null, subby.Color, subby.Rotation, new Vector2(subby.Texture.Width / 2, subby.Texture.Height / 2), 1f, SpriteEffects.None, 1);
+            //spriteBatch.Draw(subby.Texture, subby.Position, null, subby.Color, subby.Angle, new Vector2(subby.Texture.Width / 2, subby.Texture.Height / 2), 1f, SpriteEffects.None, 1);
             level1.Draw(spriteBatch);
+            /*Dit is om de colision te zien
+            subbyRects = calculateSubbyRect();
+            Texture2D dummyTexture = new Texture2D(GraphicsDevice, 1, 1);
+            dummyTexture.SetData(new Color[] { Color.White });
+            foreach (Rectangle r in subbyRects)
+            {
+                spriteBatch.Draw(dummyTexture, r, Color.White);
+            }
+            }*/
             spriteBatch.End();
 
             base.Draw(gameTime);
         }
-
         private void DrawBackground(SpriteBatch batch)
         {
             batch.Draw(background.WaterTexture, background.WaterPosition, null, Color.White, 0, background.WaterOrigin, 1.0f, SpriteEffects.None, 0f);
@@ -199,28 +207,78 @@ namespace Subby
             return false;
         }
 
+        private List<Rectangle> calculateSubbyRect()
+        {
+            int pixels = 10; // deze kan maximaal op 10 voor een goede collision
+            int widthRadius = subby.Texture.Width/2;
+            int heightRadius = subby.Texture.Height/2;
+            List<Rectangle> values = new List<Rectangle>();
 
+            for (int x = 0; x < widthRadius; x = x + pixels)
+            {
+                for (int y = 0; y < heightRadius; y = y + pixels)
+                {
+                    Point radiusPoint = PointOnCircle(x, (int)subby.AngleDegrees, new Point((int)subby.Position.X, (int)subby.Position.Y));
+                    Point point = PointOnCircle(y, (int)subby.AngleDegrees - 90, new Point((int)radiusPoint.X, (int)radiusPoint.Y));
+                    values.Add(new Rectangle(point.X, point.Y, pixels, pixels));
+                    radiusPoint = PointOnCircle(x, (int)subby.AngleDegrees, new Point((int)subby.Position.X, (int)subby.Position.Y));
+                    point = PointOnCircle(y, (int)subby.AngleDegrees + 90, new Point((int)radiusPoint.X, (int)radiusPoint.Y));
+                    values.Add(new Rectangle(point.X, point.Y, pixels, pixels));
+                    radiusPoint = PointOnCircle(-x, (int)subby.AngleDegrees, new Point((int)subby.Position.X, (int)subby.Position.Y));
+                    point = PointOnCircle(y, (int)subby.AngleDegrees - 90, new Point((int)radiusPoint.X, (int)radiusPoint.Y));
+                    values.Add(new Rectangle(point.X, point.Y, pixels, pixels));
+                    radiusPoint = PointOnCircle(-x, (int)subby.AngleDegrees, new Point((int)subby.Position.X, (int)subby.Position.Y));
+                    point = PointOnCircle(y, (int)subby.AngleDegrees + 90, new Point((int)radiusPoint.X, (int)radiusPoint.Y));
+                    values.Add(new Rectangle(point.X, point.Y, pixels, pixels));
+                }
+            }
+            return values;
+        }
+        public static Point PointOnCircle(int radius, int angleInDegrees, Point origin)
+        {
+            // Convert from degrees to radians via multiplication by PI/180        
+            int x = (int)(radius * Math.Cos(angleInDegrees * Math.PI / 180F)) + origin.X;
+            int y = (int)(radius * Math.Sin(angleInDegrees * Math.PI / 180F)) + origin.Y;
+            return new Point(x,y);
+        }
         private void checkCollisions()
         {
-            Rectangle rectball1 = new Rectangle((int)subby.Position.X, (int)subby.Position.Y, subby.Texture.Width, subby.Texture.Height); //to refactor real size of ISprite (30, 29)
+            int boundingLength;
+            if (subby.Texture.Width > subby.Texture.Height)
+            {
+                boundingLength = subby.Texture.Width;
+            }
+            else
+            {
+                boundingLength = subby.Texture.Height;
+            }
+            Rectangle rectSubby = new Rectangle((int)subby.Position.X - (boundingLength/2), (int)subby.Position.Y - (boundingLength/2), boundingLength, boundingLength);
 
+            List<Rectangle> subbyRects = calculateSubbyRect();
             foreach (ISprite s in allSprites)
             {
-                Rectangle rectSprite = new Rectangle((int)s.Position.X - scrollingPosition, (int)s.Position.Y, s.Texture.Width, s.Texture.Height); //to refactor get property of ISprite
+                Rectangle rectSprite = new Rectangle((int)s.Position.X - scrollingPosition, (int)s.Position.Y, s.Texture.Width, s.Texture.Height); 
 
-                Rectangle overlap = Rectangle.Intersect(rectball1, rectSprite);
+                Rectangle overlap = Rectangle.Intersect(rectSubby, rectSprite);
                 if (!overlap.IsEmpty)
                 {
                     //collision
-                    s.CollisionWith(subby);
-                    subby.CollisionWith(s);
+                    foreach (Rectangle r in subbyRects)
+                    {
+                        Rectangle collisionCheck = Rectangle.Intersect(r, rectSprite);
+                        if(!collisionCheck.IsEmpty)
+                        {
+                            s.CollisionWith(subby);
+                            subby.CollisionWith(s);
+                        }
+                    }
                 }
             }
         }
 
         private void InitializeLevel1()
         {
-            allSprites.Add(new TankStation { Color = Color.White, Position = new Vector2(600, 450), Tank = 300, Texture = Content.Load<Texture2D>("tankstation") });
+            allSprites.Add(new TankStation { Color = Color.White, Position = new Vector2(800, 500), Tank = 300, Texture = Content.Load<Texture2D>("tankstation") });
             allSprites.Add(new Wrak { Color = Color.White, Position = new Vector2(400, 350), Schade = 1, Texture = Content.Load<Texture2D>("wrak") });
             allSprites.Add(new Wrak { Color = Color.White, Position = new Vector2(3000, 550), Schade = 1, Texture = Content.Load<Texture2D>("wrak") });
             allSprites.Add(new Wrak { Color = Color.White, Position = new Vector2(5000, 550), Schade = 1, Texture = Content.Load<Texture2D>("wrak") });
