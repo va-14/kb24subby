@@ -11,8 +11,11 @@ namespace Subby
     public interface ISprite
     {
         Vector2 Position { get; set; }
+        float Rotation { get; set; }
         Color Color { get; set; }
         Texture2D Texture { get; set; }
+        string TextureName { get; set; }
+        Vector2 PivotPoint { get; set; }
 
         void Initialize();
         void Load(Texture2D texture);

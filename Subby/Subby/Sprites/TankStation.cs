@@ -1,19 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace Subby.Sprites
 {
+    [DataContract]
     class TankStation : ISprite
     {
+        [DataMember]
         public Vector2 Position { get; set; }
+        [DataMember]
         public Color Color { get; set; }
         public Texture2D Texture { get; set; }
+        [DataMember]
+        public string TextureName { get; set; }
+        [DataMember]
+        public float Rotation { get; set; }
+        [DataMember]
+        public Vector2 PivotPoint { get; set; }
         private int _tank;
-
+        [DataMember]
         public int Tank
         {
             get { return _tank; }

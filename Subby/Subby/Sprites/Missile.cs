@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -8,16 +9,23 @@ using Microsoft.Xna.Framework.Content;
 
 namespace Subby.Sprites
 {
+    [DataContract]
     public class Missile : ISprite
     {
+        [DataMember]
         public Vector2 Position { get; set; }
-
+        [DataMember]
         public Color Color { get; set; }
-
         public Texture2D Texture { get; set; }
+        [DataMember]
+        public string TextureName { get; set; }
+        [DataMember]
+        public float Rotation { get; set; }
+        [DataMember]
+        public Vector2 PivotPoint { get; set; }
 
         private int _damage;
-
+        [DataMember]
         public int Damage
         {
             get { return _damage; }
@@ -26,6 +34,7 @@ namespace Subby.Sprites
         
 
         private float _angle; // in degrees
+        [DataMember]
         public float Angle
         {
             set
@@ -39,6 +48,7 @@ namespace Subby.Sprites
         }
 
         private float _speed;
+        [DataMember]
         public float Speed
         {
             get { return _speed; }
