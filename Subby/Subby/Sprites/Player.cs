@@ -28,7 +28,8 @@ namespace Subby.Sprites
             get { return Bullits; }
             set { Bullits = value; }
         }
-        [DataMember]
+
+        private Vector2 _origin;
 
         public Vector2 Origin
         {
@@ -45,6 +46,11 @@ namespace Subby.Sprites
         public string TextureName { get; set; }
         [DataMember]
         public Vector2 PivotPoint { get; set; }
+        [DataMember]
+        public Texture2D Texture {
+            get
+            {
+                return _texture;
             }
             set
             {
@@ -84,6 +90,10 @@ namespace Subby.Sprites
             get 
             {
                 return ((float)Math.PI) * _angle / 180f;;  
+            }
+            set
+            {
+                _angle = value * 180.0f / ((float)Math.PI);
             }
         }
         public float AngleDegrees

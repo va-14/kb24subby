@@ -39,14 +39,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Background.cs" />
+    <Compile Include="Collision.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="GameBoundaries.cs" />
     <Compile Include="ISprite.cs" />
-<<<<<<< HEAD
-    <Compile Include="Level.cs" />
-=======
     <Compile Include="Sprites\Missile.cs" />
->>>>>>> 1672a7ab039c838668515b689bf58e2b351213b0
+    <Compile Include="Level.cs" />
     <Compile Include="Sprites\Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -60,10 +58,18 @@
       <HintPath>$(MSBuildProgramFiles32)\MonoGame\v3.0\Assemblies\Windows\MonoGame.Framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+<<<<<<< HEAD
+    <Reference Include="System.Runtime.Serialization" />
+=======
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+>>>>>>> d7401b2213876991de73cff699176b398470c7b0
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Icon.ico" />
+    <Content Include="level1.xml" />
   </ItemGroup>
   <ItemGroup>
     <MonoGameContentReference Include="Content\Content.mgcb" />
