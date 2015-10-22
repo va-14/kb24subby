@@ -39,12 +39,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Background.cs" />
-    <Compile Include="Collision.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="GameBoundaries.cs" />
     <Compile Include="ISprite.cs" />
+    <Compile Include="Sprites\Mine.cs" />
     <Compile Include="Sprites\Missile.cs" />
-	<Compile Include="Level.cs" />
+    <Compile Include="Level.cs" />
     <Compile Include="Sprites\Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -65,7 +65,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Icon.ico" />
-    <Content Include="level1.xml" />
+    <Content Include="level1.xml">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <MonoGameContentReference Include="Content\Content.mgcb" />
