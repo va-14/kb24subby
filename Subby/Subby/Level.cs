@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Subby.Sprites;
 using System;
@@ -6,47 +7,94 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Xml.Serialization;
+using System.Runtime.Serialization;
 
 namespace Subby
 {
-    [Serializable]
+    [KnownType(typeof(Player))]
+    [KnownType(typeof(Missile))]
+    [KnownType(typeof(TankStation))]
+    [KnownType(typeof(Wrak))]
+    [KnownType(typeof(Mine))]
+    [DataContract]
     public class Level
     {
-        public Player Subby;
-        [XmlIgnore]
+        [DataMember]
         public List<ISprite> SpriteList;
-        [XmlIgnore]
-        public Background Background;
+        [DataMember]
+        public List<Missile> MissileList;
+        [DataMember]
         public int[] Highscores;
-        public string SubbyTextureName;
+        [DataMember]
+        public Background Background;
+        [DataMember]
+        public GameBoundaries LevelBoundaries;
+        [DataMember]
+        public int ScrollingPosition;
 
         public void Initialize()
         {
             SpriteList = new List<ISprite>();
+            MissileList = new List<Missile>();
             Highscores = new int[10];
-            Subby = new Player();
+            Background = new Background();
+            Background.Initialize();
         }
 
-        public void Load()
+        public void Load(ContentManager manager, GraphicsDevice graphicsDevice)
         {
+            foreach (ISprite sprite in SpriteList)
+            {
+                Texture2D texture = manager.Load<Texture2D>(sprite.TextureName);
+                sprite.Texture = texture;
+            }
+
+            Texture2D waterTexture = manager.Load<Texture2D>(Background.WaterTextureName);
+            Texture2D wavesTexture = manager.Load<Texture2D>(Background.WavesTextureName);
+            Texture2D skyTexture = manager.Load<Texture2D>(Background.SkyTextureName);
+            Background.Load(graphicsDevice, waterTexture, wavesTexture, skyTexture);
 
         }
 
         public void Update(GameTime gameTime)
         {
-            Subby.Update(gameTime);
             foreach (ISprite sprite in SpriteList)
             {
                 sprite.Update(gameTime);
+
+                if (sprite is Player )
+                {
+                    UpdateScrollingPosition((Player)sprite);
+                    Background.UpdatePosition(ScrollingPosition, gameTime);
+                }
             }
         }
 
         public void Draw(SpriteBatch batch)
         {
-            //Subby.Draw(batch);
+            Background.Draw(batch);
             foreach (ISprite sprite in SpriteList)
             {
-              //  sprite.Draw(batch);
+                if (sprite is Player)
+                {
+                    batch.Draw(sprite.Texture, sprite.Position, null, sprite.Color, sprite.Rotation, sprite.PivotPoint, 1f, SpriteEffects.None, 1);
+                }
+                else
+                {
+                    batch.Draw(sprite.Texture, new Vector2(sprite.Position.X - (float)ScrollingPosition, sprite.Position.Y), null, sprite.Color, sprite.Rotation, sprite.PivotPoint, 1f, SpriteEffects.None, 1);
+                }
+            }
+        }
+        private void UpdateScrollingPosition(Player subby)
+        {
+            if (subby.Position.Y >= LevelBoundaries.Bottom || subby.Position.Y <= LevelBoundaries.Top || subby.Position.X <= LevelBoundaries.Left)
+            {
+                subby.Speed = -subby.Speed / 4;
+            }
+            if (subby.Position.X >= LevelBoundaries.Right)
+            {
+                ScrollingPosition += (int)subby.Position.X - (int)LevelBoundaries.Right;
+                subby.Position = new Vector2(LevelBoundaries.Right, subby.Position.Y);
             }
         }
 

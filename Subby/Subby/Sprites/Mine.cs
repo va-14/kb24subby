@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Runtime.Serialization;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
@@ -9,6 +10,7 @@ using Subby;
 
 namespace Subby.Sprites
 {
+     [DataContract]
     public class Mine : ISprite
     {
         private Vector2 _position;
@@ -29,6 +31,13 @@ namespace Subby.Sprites
             get { return _delay; }
             set { _delay = value; }
         }
+
+        [DataMember]
+        public string TextureName { get; set; }
+        [DataMember]
+        public float Rotation { get; set; }
+        [DataMember]
+        public Vector2 PivotPoint { get; set; }
 
         public Boolean exploded { get; set; }
 
@@ -51,6 +60,7 @@ namespace Subby.Sprites
 
         private int _damage;
 
+        [DataMember]
         public int Damage
         {
             get {

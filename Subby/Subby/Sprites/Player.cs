@@ -5,10 +5,11 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Xml.Serialization;
+using System.Runtime.Serialization;
 
 namespace Subby.Sprites
 {
-    [Serializable]
+    [DataContract]
     public class Player : ISprite
     {
 
@@ -36,12 +37,13 @@ namespace Subby.Sprites
             get { return Texture.Height; }
         }
         private int Bullits;
-
+        [DataMember]
         public int _bullits
         {
             get { return Bullits; }
             set { Bullits = value; }
         }
+
         private Vector2 _origin;
 
         public Vector2 Origin
@@ -49,13 +51,19 @@ namespace Subby.Sprites
             get { return _origin; }
             set { _origin = value; }
         }
-        
+
+        [DataMember]
         public Vector2 Position { get; set; }
+        [DataMember]
         public Color Color { get; set; }
         
-        [XmlIgnore]
         private Texture2D _texture;
-        [XmlIgnore]
+        public Texture2D TorpedoTexture { get; set; }
+        [DataMember]
+        public string TextureName { get; set; }
+        [DataMember]
+        public Vector2 PivotPoint { get; set; }
+        [DataMember]
         public Texture2D Texture {
             get
             {
@@ -69,7 +77,7 @@ namespace Subby.Sprites
             }
         }
         private float _positionDeflection;
-
+        [DataMember]
         public float PositionDeflection
         {
             get { return _positionDeflection; }
@@ -77,6 +85,7 @@ namespace Subby.Sprites
         }
         
         private int _health;
+        [DataMember]
         public int Health
         {
             get { return _health; }
@@ -84,6 +93,7 @@ namespace Subby.Sprites
         }
 
         private int _fuel;
+        [DataMember]
         public int Fuel
         {
             get { return _fuel; }
@@ -91,11 +101,16 @@ namespace Subby.Sprites
         }
 
         private float _angle; // in degrees
-        public float Angle
+        [DataMember]
+        public float Rotation
         {
             get 
             {
                 return ((float)Math.PI) * _angle / 180f;;  
+            }
+            set
+            {
+                _angle = value * 180.0f / ((float)Math.PI);
             }
         }
         public float AngleDegrees
@@ -104,9 +119,14 @@ namespace Subby.Sprites
             {
                 return _angle;
             }
+            set 
+            {
+                _angle = value * 180.0f / ((float)Math.PI);
+            }
         }
 
         private float _speed;
+        [DataMember]
         public float Speed
         {
             get { return _speed; }
@@ -115,16 +135,13 @@ namespace Subby.Sprites
 
         public void Initialize()
         {
-            Fuel = 10000;
-            Health = 1000;
-            Color = Color.White;
-            Position = new Vector2(120, 590);
-            _bullits = 100;
+            
         }
 
         public void Load(Texture2D _texture)
         {
             Texture = _texture;
+            PivotPoint = new Vector2(Texture.Width / 2, Texture.Height / 2);
         }
 
         public Missile Shoot()
@@ -145,7 +162,7 @@ namespace Subby.Sprites
 
             IsDamaged();
 
-            Position += new Vector2(_speed * (float)Math.Cos(Angle), (_speed * (float)Math.Sin(Angle)));
+            Position += new Vector2(_speed * (float)Math.Cos(Rotation), (_speed * (float)Math.Sin(Rotation)));
 
             System.Diagnostics.Debug.WriteLine(_positionDeflection);
         }

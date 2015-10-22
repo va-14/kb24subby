@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using Subby.Sprites;
 using System.Xml.Serialization;
 using System.IO;
+using System.Runtime.Serialization;
 
 namespace Subby
 {
@@ -17,18 +18,11 @@ namespace Subby
         SpriteFont font;
 
         Player subby;
-        Waves waves;
-        ScrollingBackground scrollingBackground;
-        int scrollingPosition;
-        GameBoundaries levelBoundaries;
-        Texture2D sky;
+        Background background;
         Level level;
 
         KeyboardState oldState;
-        public List<ISprite> allSprites;
-        List<Missile> allMissiles;
-        List<ISprite> allSpriteObstakels;
-        //List<Rectangle> subbyRects;
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -40,21 +34,18 @@ namespace Subby
 
         protected override void Initialize()
         {
-            allSprites = new List<ISprite>();
-            allSpriteObstakels = new List<ISprite>();
-
-            subby = new Player();
-            subby.Initialize();
-            levelBoundaries = new GameBoundaries { Left = 20, Right = (float)graphics.PreferredBackBufferWidth/2, Top = 300, Bottom = (float)graphics.PreferredBackBufferHeight };
-            
-
-            waves = new Waves();
-            waves.Initialize();
-            allMissiles = new List<Missile>();
-            //allSprites.Add(waves);
-            //allSprites.Add(subby);
-
-            scrollingBackground = new ScrollingBackground();
+            using (FileStream reader = new FileStream("level1.xml", FileMode.Open, FileAccess.Read))
+            {
+                DataContractSerializer ser = new DataContractSerializer(typeof(Level));
+                level = (Level)ser.ReadObject(reader);
+            }
+            foreach (ISprite sprite in level.SpriteList)
+            {
+                if (sprite is Player)
+                {
+                    subby = (Player)sprite;
+                }
+            }
             base.Initialize();
         }
 
@@ -62,19 +53,8 @@ namespace Subby
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            Texture2D subbyTexture = Content.Load<Texture2D>("subby");
-            subby.Load(subbyTexture);
-
-            Texture2D wavesTexture = Content.Load<Texture2D>("waves");
-            waves.Load(wavesTexture);
-
-            Texture2D scrollingBackgroundTexture = Content.Load<Texture2D>("ocean3");
-            scrollingBackground.Load(GraphicsDevice, scrollingBackgroundTexture);
-
-            sky = Content.Load<Texture2D>("sky");
-           font = Content.Load<SpriteFont>("SpriteFontTemPlate");
-
-            InitializeLevel1();
+            font = Content.Load<SpriteFont>("SpriteFontTemPlate");
+            level.Load(Content, GraphicsDevice);
         }
 
         protected override void UnloadContent()
@@ -88,16 +68,8 @@ namespace Subby
                 Exit();
 
             checkKeys();
-
             checkCollisions();
-            subby.Update(gameTime);
-            UpdateScrollingPosition();
-            foreach (ISprite s in allSprites)
-            {
-                s.Update(gameTime);
-            }
-            waves.Update(gameTime);
-            scrollingBackground.UpdatePosition(scrollingPosition);
+            level.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -106,67 +78,17 @@ namespace Subby
             spriteBatch.DrawString(font, "Health: " + subby.Health, new Vector2(20, 45), Color.White);
             spriteBatch.DrawString(font, "Fuel: " + subby.Fuel, new Vector2(20, 70), Color.White);
         }
-        private void UpdateScrollingPosition()
-        {
-            Vector2 positionSubby = subby.Position;
-            if (subby.Position.Y >= levelBoundaries.Bottom || subby.Position.Y <= levelBoundaries.Top || subby.Position.X <= levelBoundaries.Left)
-            {
-                subby.Speed = -subby.Speed/4;
-            }
-            if (subby.Position.X >= levelBoundaries.Right)
-            {
-                scrollingPosition += (int)subby.Position.X - (int)levelBoundaries.Right;
-                subby.Position = new Vector2(levelBoundaries.Right, subby.Position.Y);
-            }
-        }
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            spriteBatch.Begin();
-            spriteBatch.Draw(sky, new Vector2(0, 0), Color.White);
-            DrawBackground(spriteBatch);
-            DrawText();
-            foreach (ISprite s in allSprites)
-            {
-                if (s.GetType().Name.Equals("Mine"))
-                {
-                    Mine m = (Mine)s;
-                    spriteBatch.Draw(s.Texture, new Vector2(s.Position.X - (float)scrollingPosition + (m.Range / 2), s.Position.Y + (m.Range / 2)), s.Color);
-                }
-                else
-                {
-                    spriteBatch.Draw(s.Texture, new Vector2(s.Position.X - (float)scrollingPosition, s.Position.Y), s.Color);
-                }
-            }
+            spriteBatch.Begin(); 
             
-            spriteBatch.Draw(subby.Texture, subby.Position, null, subby.Color, subby.Angle, new Vector2(subby.Width / 2, subby.Height / 2), 1f, SpriteEffects.None, 1);
-
-            //Dit is om de colision te zien
-            /*subbyRects = calculateSubbyRect();
-            Texture2D dummyTexture = new Texture2D(GraphicsDevice, 1, 1);
-            dummyTexture.SetData(new Color[] { Color.White });
-            foreach (Rectangle r in subbyRects)
-            {
-                spriteBatch.Draw(dummyTexture, r, Color.White);
-            }*/
+            level.Draw(spriteBatch);
+            DrawText();
             spriteBatch.End();
 
             base.Draw(gameTime);
-        }
-        private void DrawBackground(SpriteBatch batch)
-        {
-            batch.Draw(scrollingBackground.texture, scrollingBackground.position, null, Color.White, 0, scrollingBackground.origin, 1.0f, SpriteEffects.None, 0f);
-            batch.Draw(scrollingBackground.texture, new Vector2(scrollingBackground.position.X + scrollingBackground.texture.Width, scrollingBackground.position.Y), null, Color.White, 0, scrollingBackground.origin, 1.0f, SpriteEffects.None, 0f);
-            batch.Draw(scrollingBackground.texture, new Vector2(scrollingBackground.position.X + 2 * scrollingBackground.texture.Width, scrollingBackground.position.Y), null, Color.White, 0, scrollingBackground.origin, 1.0f, SpriteEffects.None, 0f);
-            if (waves.Position.X < 1920)
-            {
-                batch.Draw(waves.Texture, waves.Position, waves.Color);
-            }
-            // Draw the texture a second time, behind the first,
-            // to create the scrolling illusion.
-            batch.Draw(waves.Texture, waves.Position - new Vector2(waves.Texture.Width, 0), waves.Color);
-        
         }
         private Boolean checkKeys()
         {
@@ -199,6 +121,14 @@ namespace Subby
                     createMissile();
                 }
             }
+            if (state.IsKeyDown(Keys.P))
+            {
+                using (FileStream writer = new FileStream("level1.xml", FileMode.Create, FileAccess.Write))
+                {
+                    DataContractSerializer ser = new DataContractSerializer(typeof(Level));
+                    ser.WriteObject(writer, level);
+                }
+            }
 
             oldState = state;
 
@@ -209,9 +139,11 @@ namespace Subby
         {
             Missile s = subby.Shoot();
             s.Texture = Content.Load<Texture2D>("missile");
-            s.Position = new Vector2(subby.Position.X + scrollingPosition, subby.Position.Y);
-            allSprites.Add(s);
-            allMissiles.Add(s);
+            s.Position = new Vector2(subby.Position.X + level.ScrollingPosition, subby.Position.Y);
+            level.SpriteList.Add(s);
+            if (level.MissileList == null)
+                level.MissileList = new List<Missile>();
+            level.MissileList.Add(s);
         }
         private List<Rectangle> calculateSubbyRect()
         {
@@ -251,6 +183,7 @@ namespace Subby
         }
         private void checkCollisions()
         {
+            
             int boundingLength;
             if (subby.Width > subby.Height)
             {
@@ -262,11 +195,11 @@ namespace Subby
             }
             Rectangle rectSubby = new Rectangle((int)subby.Position.X - (boundingLength/2), (int)subby.Position.Y - (boundingLength/2), boundingLength, boundingLength);
             
-            foreach (ISprite sprite in allSprites)
+            foreach (ISprite sprite in level.SpriteList)
             {
 
                 //collision voor subby is apart, want deze wordt opgedeeld in meerdere vierkantjes
-                Rectangle rectSprite = new Rectangle((int)sprite.Position.X - scrollingPosition, (int)sprite.Position.Y, sprite.Width, sprite.Height); 
+                Rectangle rectSprite = new Rectangle((int)sprite.Position.X - level.ScrollingPosition, (int)sprite.Position.Y, sprite.Width, sprite.Height); 
                 Rectangle overlap = Rectangle.Intersect(rectSubby, rectSprite);
                 if (!overlap.IsEmpty)
                 {
@@ -282,11 +215,13 @@ namespace Subby
                         }
                     }
                 }
-
-                foreach (ISprite missile in allMissiles)
+                if (level.MissileList != null)
                 {
-                    if (!sprite.GetType().Name.Equals("Missile"))
-                    checkCollisionRectangleAction(missile, sprite);
+                    foreach (ISprite missile in level.MissileList)
+                    {
+                        if (!sprite.GetType().Name.Equals("Missile"))
+                            checkCollisionRectangleAction(missile, sprite);
+                    }
                 }
             }
             
@@ -294,8 +229,8 @@ namespace Subby
         }
         private void checkCollisionRectangleAction(ISprite s1, ISprite s2)
         {
-            Rectangle r1 = new Rectangle((int)s1.Position.X - scrollingPosition, (int)s1.Position.Y, s1.Width, s1.Height);
-            Rectangle r2 = new Rectangle((int)s2.Position.X - scrollingPosition, (int)s2.Position.Y, s2.Width, s2.Height); 
+            Rectangle r1 = new Rectangle((int)s1.Position.X - level.ScrollingPosition, (int)s1.Position.Y, s1.Width, s1.Height);
+            Rectangle r2 = new Rectangle((int)s2.Position.X - level.ScrollingPosition, (int)s2.Position.Y, s2.Width, s2.Height); 
 
             Rectangle collisionCheck = Rectangle.Intersect(r1, r2);
             if (!collisionCheck.IsEmpty)
@@ -305,39 +240,6 @@ namespace Subby
             }
         }
 
-        private void InitializeLevel1()
-        {
-            allSprites.Add(new TankStation { Color = Color.White, Position = new Vector2(800, 500), Tank = 1000, Texture = Content.Load<Texture2D>("tankstation") });
-            allSprites.Add(new Wrak { Color = Color.White, Position = new Vector2(400, 350), Schade = 1, Texture = Content.Load<Texture2D>("wrak") });
-            allSprites.Add(new Mine { Color = Color.White, Position = new Vector2(470, 600),  Texture = Content.Load<Texture2D>("Mine") });
-            allSprites.Add(new Wrak { Color = Color.White, Position = new Vector2(3000, 550), Schade = 1, Texture = Content.Load<Texture2D>("wrak") });
-            allSprites.Add(new Wrak { Color = Color.White, Position = new Vector2(5000, 550), Schade = 1, Texture = Content.Load<Texture2D>("wrak") });
-        }
-        public void Serialize(string filename, Level level)
-        {
-            XmlSerializer serializer = new XmlSerializer(typeof(Level));
-            try
-            {
-                using (TextWriter writer = new StreamWriter(filename + ".xml"))
-                {
-                    serializer.Serialize(writer, level);
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("The file could not be read:");
-                Console.WriteLine(e.Message);
-            }
-            
-        }
 
-        public void Deserialize(string filename, Level level)
-        {
-            XmlSerializer deserializer = new XmlSerializer(typeof(Level));
-            TextReader reader = new StreamReader(filename + ".xml");
-            object obj = deserializer.Deserialize(reader);
-            level = (Level)obj;
-            reader.Close();
-        }
     }
 }

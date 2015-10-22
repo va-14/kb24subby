@@ -13,6 +13,9 @@ namespace Subby
         public Vector2 Position { get; set; }
         public Color Color { get; set; }
         public Texture2D Texture { get; set; }
+        public string TextureName { get; set; }
+        public float Rotation { get; set; }
+        public Vector2 PivotPoint { get; set; }
 
         public void Initialize()
         {
