@@ -36,12 +36,12 @@ namespace Subby.Sprites
         {
             get { return Texture.Height; }
         }
-        private int Bullits;
+        private int _bullits;
         [DataMember]
-        public int _bullits
+        public int Bullits
         {
-            get { return Bullits; }
-            set { Bullits = value; }
+            get { return _bullits; }
+            set { _bullits = value; }
         }
 
         private Vector2 _origin;
@@ -143,11 +143,19 @@ namespace Subby.Sprites
             Texture = _texture;
             PivotPoint = new Vector2(Texture.Width / 2, Texture.Height / 2);
         }
+        private Missile getBullit()
+        {
+            if (Bullits > 0)
+            {
+                Bullits--;
+                return new Missile { Speed = 5f, Damage = 50, Angle = this._angle, Color = Color.White };
+            }
+            return null;
+        }
 
         public Missile Shoot()
         {
-            _bullits--;
-            return new Missile { Speed = 5f, Damage = 50, Angle = this._angle, Color = Color.White };
+            return getBullit();
         }
         private void UpdatePosition()
         {

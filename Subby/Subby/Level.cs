@@ -11,7 +11,7 @@ using System.Runtime.Serialization;
 
 namespace Subby
 {
-    [KnownType(typeof(Player))]
+    //[KnownType(typeof(Player))]
     [KnownType(typeof(Missile))]
     [KnownType(typeof(TankStation))]
     [KnownType(typeof(Wrak))]
@@ -31,6 +31,9 @@ namespace Subby
         public GameBoundaries LevelBoundaries;
         [DataMember]
         public int ScrollingPosition;
+        [DataMember]
+        public Player Subby;
+
 
         public void Initialize()
         {
@@ -43,12 +46,12 @@ namespace Subby
 
         public void Load(ContentManager manager, GraphicsDevice graphicsDevice)
         {
+            Subby.Texture = manager.Load<Texture2D>(Subby.TextureName);
             foreach (ISprite sprite in SpriteList)
             {
-                Texture2D texture = manager.Load<Texture2D>(sprite.TextureName);
-                sprite.Texture = texture;
+                sprite.Texture = manager.Load<Texture2D>(sprite.TextureName);
             }
-
+            
             Texture2D waterTexture = manager.Load<Texture2D>(Background.WaterTextureName);
             Texture2D wavesTexture = manager.Load<Texture2D>(Background.WavesTextureName);
             Texture2D skyTexture = manager.Load<Texture2D>(Background.SkyTextureName);
@@ -58,26 +61,24 @@ namespace Subby
 
         public void Update(GameTime gameTime)
         {
+            Subby.Update(gameTime);
             foreach (ISprite sprite in SpriteList)
             {
                 sprite.Update(gameTime);
-
-                if (sprite is Player )
-                {
-                    UpdateScrollingPosition((Player)sprite);
-                    Background.UpdatePosition(ScrollingPosition, gameTime);
-                }
             }
+            UpdateScrollingPosition(Subby);
+            Background.UpdatePosition(ScrollingPosition, gameTime);
         }
 
         public void Draw(SpriteBatch batch)
         {
             Background.Draw(batch);
+            batch.Draw(Subby.Texture, Subby.Position, null, Subby.Color, Subby.Rotation, Subby.PivotPoint, 1f, SpriteEffects.None, 1);
             foreach (ISprite sprite in SpriteList)
             {
                 if (sprite is Player)
                 {
-                    batch.Draw(sprite.Texture, sprite.Position, null, sprite.Color, sprite.Rotation, sprite.PivotPoint, 1f, SpriteEffects.None, 1);
+                   
                 }
                 else
                 {
