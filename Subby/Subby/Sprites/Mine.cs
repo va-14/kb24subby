@@ -11,21 +11,19 @@ using Subby;
 namespace Subby.Sprites
 {
      [DataContract]
-    public class Mine : ISprite
+    class Mine : ISprite
     {
         private Vector2 _position;
-        public Vector2 Position {
-            get {
-                return new Vector2(_position.X, _position.Y);
-            }
-            set
-            {
-                _position = value;
-            } 
+
+        [DataMember]
+        public Vector2 Position
+        {
+            get; set;
         }
 
         private float _delay;
 
+        [DataMember]
         public float Delay
         {
             get { return _delay; }
@@ -39,12 +37,16 @@ namespace Subby.Sprites
         [DataMember]
         public Vector2 PivotPoint { get; set; }
 
-        public Boolean exploded { get; set; }
+
+        [DataMember]
+        public Boolean Exploded { get; set; }
 
         private float _timeSinceActivated;
 
-        private Boolean activated;
 
+        [DataMember]
+        private Boolean _activated;
+        [DataMember]
         public Color Color { get; set; }
 
         public Texture2D Texture { get; set; }
@@ -72,6 +74,7 @@ namespace Subby.Sprites
 
         private int _range;
 
+        [DataMember]
         public int Range
         {
             get {
@@ -104,21 +107,33 @@ namespace Subby.Sprites
 
         public int Width
         {
-            get { return Texture.Width + Range; }
+            get
+            {
+                if (Texture != null) 
+                    return Texture.Width + Range; 
+                else
+                    return 0; 
+            }
         }
 
         public int Height
         {
-            get { return Texture.Height + Range; }
+            get
+            {
+                if (Texture != null)
+                    return Texture.Height + Range;
+                else
+                    return 0;
+            }
         }
 
         public Mine()
         {
-            activated = false;
+           /* activated = false;
             Range = 200;
             _delay = 2f;
             exploded = false;
-            _damage = 2000;
+            _damage = 2000;*/
         }
         public void Initialize()
         {
@@ -132,13 +147,13 @@ namespace Subby.Sprites
         public void Update(GameTime gameTime)
         {
             
-            if (activated)
+            if (_activated)
             {
                 _timeSinceActivated += (float)gameTime.ElapsedGameTime.TotalSeconds;
                 if (_timeSinceActivated > Delay)
                 {
                     //mine is exploated
-                    exploded = true;
+                    Exploded = true;
                     this.Color = Color.Black;
                 }
                 else
@@ -153,14 +168,14 @@ namespace Subby.Sprites
 
         public void CollisionWith(ISprite s)
         {
-            activated = true;
-            if (activated && exploded)
+
+            _activated = true;
+            if (Exploded && _timeSinceActivated < Delay +0.5 && _timeSinceActivated > Delay)
             {
-                int damage = Damage;
                 if (s.GetType().Name.Equals("Player"))
                 {
                     Player p = (Player)s;
-                    p.SchadeAanBoot(damage);
+                    p.SchadeAanBoot(Damage);
                 }
             }
 

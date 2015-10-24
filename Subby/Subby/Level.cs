@@ -81,7 +81,15 @@ namespace Subby
                 }
                 else
                 {
-                    batch.Draw(sprite.Texture, new Vector2(sprite.Position.X - (float)ScrollingPosition, sprite.Position.Y), null, sprite.Color, sprite.Rotation, sprite.PivotPoint, 1f, SpriteEffects.None, 1);
+                    if (sprite.GetType().Name.Equals("Mine"))
+                    {
+                        Mine m = (Mine)sprite;
+                        batch.Draw(sprite.Texture, new Vector2(sprite.Position.X - (float)ScrollingPosition + (m.Range / 2), sprite.Position.Y + (m.Range / 2)), sprite.Color);
+                    }
+                    else
+                    {
+                        batch.Draw(sprite.Texture, new Vector2(sprite.Position.X - (float)ScrollingPosition, sprite.Position.Y), null, sprite.Color, sprite.Rotation, sprite.PivotPoint, 1f, SpriteEffects.None, 1);
+                    }
                 }
             }
         }
