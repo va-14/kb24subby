@@ -42,6 +42,7 @@
     <Compile Include="Game1.cs" />
     <Compile Include="GameBoundaries.cs" />
     <Compile Include="ISprite.cs" />
+    <Compile Include="Sprites\Chopper.cs" />
     <Compile Include="Sprites\Mine.cs" />
     <Compile Include="Sprites\Missile.cs" />
     <Compile Include="Level.cs" />

@@ -35,12 +35,17 @@ namespace Subby
         public Player Subby;
 
 
+        private Texture2D _chopperTexture;
+        private Texture2D _missileTexture;
+        private int _spawnChopperSecond;
+
         public void Initialize()
         {
             SpriteList = new List<ISprite>();
             MissileList = new List<Missile>();
             Highscores = new int[10];
             Background = new Background();
+            _spawnChopperSecond = 0;
             Background.Initialize();
         }
 
@@ -51,7 +56,9 @@ namespace Subby
             {
                 sprite.Texture = manager.Load<Texture2D>(sprite.TextureName);
             }
-            
+
+            _chopperTexture = manager.Load<Texture2D>("chopper");
+            _missileTexture = manager.Load<Texture2D>("missile");
             Texture2D waterTexture = manager.Load<Texture2D>(Background.WaterTextureName);
             Texture2D wavesTexture = manager.Load<Texture2D>(Background.WavesTextureName);
             Texture2D skyTexture = manager.Load<Texture2D>(Background.SkyTextureName);
@@ -68,8 +75,30 @@ namespace Subby
             }
             UpdateScrollingPosition(Subby);
             Background.UpdatePosition(ScrollingPosition, gameTime);
+            ChopperGenerator(gameTime);
         }
+        private void ChopperGenerator(GameTime gameTime)
+        {
+            if (gameTime.TotalGameTime.Seconds >= _spawnChopperSecond)
+            {
+                _spawnChopperSecond = NewRandom(_spawnChopperSecond);
+                Chopper chopper = new Chopper() {
+                    Texture = _chopperTexture, 
+                    Color = Color.White, 
+                    Damage = 300, 
+                    Position = new Vector2(ScrollingPosition-70, 60), 
+                    Speed = 6f
+                };
 
+                SpriteList.Add(chopper);
+            }
+        }
+        private int NewRandom(int lastRandomSecond){
+            Random random = new Random();
+            int minSeconds = lastRandomSecond + 2;
+
+            return random.Next(minSeconds, minSeconds + 3);
+        }
         public void Draw(SpriteBatch batch)
         {
             Background.Draw(batch);

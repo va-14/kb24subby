@@ -21,7 +21,6 @@ namespace Subby
         Level level;
 
         KeyboardState oldState;
-
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
