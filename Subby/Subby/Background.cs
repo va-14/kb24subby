@@ -53,6 +53,8 @@ namespace Subby
             batch.Draw(WaterTexture, new Vector2(WaterPosition.X + WaterTexture.Width, WaterPosition.Y), null, Color.White, 0, WaterOrigin, 1.0f, SpriteEffects.None, 0f);
             batch.Draw(WaterTexture, new Vector2(WaterPosition.X + 2 * WaterTexture.Width, WaterPosition.Y), null, Color.White, 0, WaterOrigin, 1.0f, SpriteEffects.None, 0f);
 
+            batch.Draw(SkyTexture, new Vector2(0, 0), Color.White);
+
             if (WavesPosition.X < ScreenWidth)
             {
                 batch.Draw(WavesTexture, WavesPosition, Color.White);
@@ -60,7 +62,6 @@ namespace Subby
             // Draw the texture a second time, behind the first,
             // to create the scrolling illusion.
             batch.Draw(WavesTexture, WavesPosition - new Vector2(WavesTexture.Width, 0), Color.White);
-            batch.Draw(SkyTexture, new Vector2(0, 0), Color.White);
         }
     }
 }
