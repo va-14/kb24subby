@@ -36,6 +36,7 @@ namespace Subby.Sprites
             get { return _origin; }
             set { _origin = value; }
         }
+        [DataMember]
         public Vector2 Position { get; set; }
         [DataMember]
         public Color Color { get; set; }
