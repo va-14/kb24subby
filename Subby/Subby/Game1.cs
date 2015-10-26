@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Content;
 using System;
 using System.Collections.Generic;
 using Subby.Sprites;
@@ -14,16 +15,12 @@ namespace Subby
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        SpriteFont font;
 
-        Player subby;
-        int scrollingPosition;
-        GameBoundaries levelBoundaries;
         Background background;
         Level level;
 
-        List<ISprite> allSprites;
-        List<ISprite> allSpriteObstakels;
-        Level level1;
+        KeyboardState oldState;
 
         public Game1()
         {
@@ -36,25 +33,11 @@ namespace Subby
 
         protected override void Initialize()
         {
-            allSprites = new List<ISprite>();
-            allSpriteObstakels = new List<ISprite>();
-            //level1 = new Level();
-            //level1.Initialize();
-            //subby = new Player();
-            //level1.SpriteList.Add(subby);
-            //subby.Initialize();
-            //levelBoundaries = new GameBoundaries { Left = 20, Right = (float)graphics.PreferredBackBufferWidth - 200, Top = 200, Bottom = (float)graphics.PreferredBackBufferHeight };
-            //level1.LevelBoundaries = new Vector4((float)graphics.PreferredBackBufferWidth - 200, 200, (float)graphics.PreferredBackBufferHeight, 20);
-            //background = new Background();
-            //background.Initialize();
-            //level1.Background = background;
-
             using (FileStream reader = new FileStream("level1.xml", FileMode.Open, FileAccess.Read))
             {
                 DataContractSerializer ser = new DataContractSerializer(typeof(Level));
-                level1 = (Level)ser.ReadObject(reader);
+                level = (Level)ser.ReadObject(reader);
             }
-            
             base.Initialize();
         }
 
@@ -62,14 +45,8 @@ namespace Subby
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            //Texture2D subbyTexture = Content.Load<Texture2D>("subby");
-            //Texture2D wavesTexture = Content.Load<Texture2D>("waves");
-            //Texture2D scrollingBackgroundTexture = Content.Load<Texture2D>("ocean3");
-            //Texture2D sky = Content.Load<Texture2D>("sky");
-            //subby.Load(subbyTexture);
-            //background.Load(GraphicsDevice, scrollingBackgroundTexture, wavesTexture, sky);
-            //InitializeLevel1();
-            level1.Load(Content, GraphicsDevice);
+            font = Content.Load<SpriteFont>("SpriteFontTemPlate");
+            level.Load(Content, GraphicsDevice);
         }
 
         protected override void UnloadContent()
@@ -83,157 +60,117 @@ namespace Subby
                 Exit();
 
             checkKeys();
-
-            //checkCollisions();
-            //subby.Update(gameTime);
-            //UpdateScrollingPosition();
-            //foreach (ISprite s in allSprites)
-            //{
-            //    s.Update(gameTime);
-            //}
-
-            //background.UpdatePosition(scrollingPosition, gameTime);
-
-            level1.Update(gameTime);
+            checkCollisions();
+            level.Update(gameTime);
 
             base.Update(gameTime);
         }
-        private void UpdateScrollingPosition()
+        private void DrawText()
         {
-            Vector2 positionSubby = subby.Position;
-            if (subby.Position.Y >= levelBoundaries.Bottom || subby.Position.Y <= levelBoundaries.Top || subby.Position.X <= levelBoundaries.Left)
-            {
-                subby.Speed = 0;
-            }
-            if (subby.Position.X >= levelBoundaries.Right)
-            {
-                scrollingPosition += (int)subby.Position.X - (int)levelBoundaries.Right;
-                subby.Position = new Vector2(levelBoundaries.Right, subby.Position.Y);
-            }
+            spriteBatch.DrawString(font, "Health: " + level.Subby.Health, new Vector2(20, 45), Color.White);
+            spriteBatch.DrawString(font, "Fuel: " + level.Subby.Fuel, new Vector2(20, 70), Color.White);
+            spriteBatch.DrawString(font, "Bullits: " + level.Subby.Bullits, new Vector2(20, 95), Color.White);
         }
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            spriteBatch.Begin();
-            //DrawBackground(spriteBatch);
-            ////background.Draw(spriteBatch);
-            //foreach (ISprite s in allSprites)
-            //{
-            //    spriteBatch.Draw(s.Texture, new Vector2(s.Position.X - (float)scrollingPosition, s.Position.Y), s.Color);
-            //}
-
-            //spriteBatch.Draw(subby.Texture, subby.Position, null, subby.Color, subby.Angle, new Vector2(subby.Texture.Width / 2, subby.Texture.Height / 2), 1f, SpriteEffects.None, 1);
-            level1.Draw(spriteBatch);
-            /*Dit is om de colision te zien
-            subbyRects = calculateSubbyRect();
-            Texture2D dummyTexture = new Texture2D(GraphicsDevice, 1, 1);
-            dummyTexture.SetData(new Color[] { Color.White });
-            foreach (Rectangle r in subbyRects)
-            {
-                spriteBatch.Draw(dummyTexture, r, Color.White);
-            }
-            }*/
+            spriteBatch.Begin(); 
+            
+            level.Draw(spriteBatch);
+            DrawText();
             spriteBatch.End();
 
             base.Draw(gameTime);
-        }
-        private void DrawBackground(SpriteBatch batch)
-        {
-            batch.Draw(background.WaterTexture, background.WaterPosition, null, Color.White, 0, background.WaterOrigin, 1.0f, SpriteEffects.None, 0f);
-            batch.Draw(background.WaterTexture, new Vector2(background.WaterPosition.X + background.WaterTexture.Width, background.WaterPosition.Y), null, Color.White, 0, background.WaterOrigin, 1.0f, SpriteEffects.None, 0f);
-            batch.Draw(background.WaterTexture, new Vector2(background.WaterPosition.X + 2 * background.WaterTexture.Width, background.WaterPosition.Y), null, Color.White, 0, background.WaterOrigin, 1.0f, SpriteEffects.None, 0f);
-            if (background.WavesPosition.X < GraphicsDevice.Viewport.Width)
-            {
-                batch.Draw(background.WavesTexture, background.WavesPosition, Color.White);
-            }
-            // Draw the texture a second time, behind the first,
-            // to create the scrolling illusion.
-            batch.Draw(background.WavesTexture, background.WavesPosition - new Vector2(background.WavesTexture.Width, 0), Color.White);
-            batch.Draw(background.SkyTexture, new Vector2(0, 0), Color.White);
-        
         }
         private Boolean checkKeys()
         {
             KeyboardState state = Keyboard.GetState();
 
-            Player subby = null;
-
-            foreach (ISprite sprite in level1.SpriteList)
-            {
-                if (sprite is Player)
-                {
-                    subby = (Player)sprite;
-                }
-            }
-
             if (state.IsKeyDown(Keys.Up))
             {
-                subby.GoUp();
+                level.Subby.GoUp();
             }
             if (state.IsKeyDown(Keys.Down))
             {
-                subby.GoDown();
+                level.Subby.GoDown();
             }
             if (state.IsKeyDown(Keys.Right))
             {
-                subby.GoFaster();
+                level.Subby.GoFaster();
             }
             if (state.IsKeyDown(Keys.Left))
             {
-                subby.GoSlower();
+                level.Subby.GoSlower();
             }
             if (state.IsKeyDown(Keys.S))
             {
-                subby.Start();
+                level.Subby.Start();
             }
             if (state.IsKeyDown(Keys.Space))
             {
-                Missile s = subby.Shoot();
-                s.Texture = Content.Load<Texture2D>("missile");
-                s.Position = new Vector2(subby.Position.X + scrollingPosition, subby.Position.Y);
-                level1.SpriteList.Add(s);
-                allSprites.Add(s);
+                if (!oldState.IsKeyDown(Keys.Space))
+                {
+                    createMissile();
+                }
             }
             if (state.IsKeyDown(Keys.P))
             {
                 using (FileStream writer = new FileStream("level1.xml", FileMode.Create, FileAccess.Write))
                 {
                     DataContractSerializer ser = new DataContractSerializer(typeof(Level));
-                    ser.WriteObject(writer, level1);
+                    ser.WriteObject(writer, level);
                 }
             }
+
+            oldState = state;
 
             return false;
         }
 
+        private void createMissile()
+        {
+            Missile missile = level.Subby.Shoot();
+            if (missile != null)
+            {
+                missile.Texture = Content.Load<Texture2D>("missile");
+                Point afterSubby = PointOnCircle((level.Subby.Texture.Width + 2) / 2, (int)level.Subby.AngleDegrees, new Point((int)level.Subby.Position.X, (int)level.Subby.Position.Y));
+                missile.Position = new Vector2(afterSubby.X + level.ScrollingPosition, afterSubby.Y);
+                level.SpriteList.Add(missile);
+                if (level.MissileList == null)
+                    level.MissileList = new List<Missile>();
+                level.MissileList.Add(missile);
+            }
+        }
         private List<Rectangle> calculateSubbyRect()
         {
             int pixels = 10; // deze kan maximaal op 10 voor een goede collision
-            int widthRadius = subby.Texture.Width/2;
-            int heightRadius = subby.Texture.Height/2;
+            Point size = new Point(pixels, pixels);
+            int widthRadius = level.Subby.Texture.Width / 2;
+            int heightRadius = level.Subby.Texture.Height / 2;
             List<Rectangle> values = new List<Rectangle>();
 
             for (int x = 0; x < widthRadius; x = x + pixels)
             {
                 for (int y = 0; y < heightRadius; y = y + pixels)
                 {
-                    Point radiusPoint = PointOnCircle(x, (int)subby.AngleDegrees, new Point((int)subby.Position.X, (int)subby.Position.Y));
-                    Point point = PointOnCircle(y, (int)subby.AngleDegrees - 90, new Point((int)radiusPoint.X, (int)radiusPoint.Y));
-                    values.Add(new Rectangle(point.X, point.Y, pixels, pixels));
-                    radiusPoint = PointOnCircle(x, (int)subby.AngleDegrees, new Point((int)subby.Position.X, (int)subby.Position.Y));
-                    point = PointOnCircle(y, (int)subby.AngleDegrees + 90, new Point((int)radiusPoint.X, (int)radiusPoint.Y));
-                    values.Add(new Rectangle(point.X, point.Y, pixels, pixels));
-                    radiusPoint = PointOnCircle(-x, (int)subby.AngleDegrees, new Point((int)subby.Position.X, (int)subby.Position.Y));
-                    point = PointOnCircle(y, (int)subby.AngleDegrees - 90, new Point((int)radiusPoint.X, (int)radiusPoint.Y));
-                    values.Add(new Rectangle(point.X, point.Y, pixels, pixels));
-                    radiusPoint = PointOnCircle(-x, (int)subby.AngleDegrees, new Point((int)subby.Position.X, (int)subby.Position.Y));
-                    point = PointOnCircle(y, (int)subby.AngleDegrees + 90, new Point((int)radiusPoint.X, (int)radiusPoint.Y));
-                    values.Add(new Rectangle(point.X, point.Y, pixels, pixels));
+                    Point radiusPoint = PointOnCircle(x, (int)level.Subby.AngleDegrees, new Point((int)level.Subby.Position.X, (int)level.Subby.Position.Y));
+                    Point point = PointOnCircle(y, (int)level.Subby.AngleDegrees - 90, new Point((int)radiusPoint.X, (int)radiusPoint.Y));
+                    values.Add(new Rectangle(point, size));
+                    radiusPoint = PointOnCircle(x, (int)level.Subby.AngleDegrees, new Point((int)level.Subby.Position.X, (int)level.Subby.Position.Y));
+                    point = PointOnCircle(y, (int)level.Subby.AngleDegrees + 90, new Point((int)radiusPoint.X, (int)radiusPoint.Y));
+                    values.Add(new Rectangle(point, size));
+                    radiusPoint = PointOnCircle(-x, (int)level.Subby.AngleDegrees, new Point((int)level.Subby.Position.X, (int)level.Subby.Position.Y));
+                    point = PointOnCircle(y, (int)level.Subby.AngleDegrees - 90, new Point((int)radiusPoint.X, (int)radiusPoint.Y));
+                    values.Add(new Rectangle(point, size));
+                    radiusPoint = PointOnCircle(-x, (int)level.Subby.AngleDegrees, new Point((int)level.Subby.Position.X, (int)level.Subby.Position.Y));
+                    point = PointOnCircle(y, (int)level.Subby.AngleDegrees + 90, new Point((int)radiusPoint.X, (int)radiusPoint.Y));
+                    values.Add(new Rectangle(point, size));
                 }
             }
             return values;
         }
+        
         public static Point PointOnCircle(int radius, int angleInDegrees, Point origin)
         {
             // Convert from degrees to radians via multiplication by PI/180        
@@ -243,51 +180,68 @@ namespace Subby
         }
         private void checkCollisions()
         {
+            
             int boundingLength;
-            if (subby.Texture.Width > subby.Texture.Height)
+            if (level.Subby.Width > level.Subby.Height)
             {
-                boundingLength = subby.Texture.Width;
+                boundingLength = level.Subby.Width;
             }
             else
             {
-                boundingLength = subby.Texture.Height;
+                boundingLength = level.Subby.Height;
             }
-            Rectangle rectSubby = new Rectangle((int)subby.Position.X - (boundingLength/2), (int)subby.Position.Y - (boundingLength/2), boundingLength, boundingLength);
-
-            List<Rectangle> subbyRects = calculateSubbyRect();
-            foreach (ISprite s in allSprites)
+            Rectangle rectSubby = new Rectangle((int)level.Subby.Position.X - (boundingLength/2), (int)level.Subby.Position.Y - (boundingLength/2), boundingLength, boundingLength);
+            
+            foreach (ISprite sprite in level.SpriteList)
             {
-                Rectangle rectSprite = new Rectangle((int)s.Position.X - scrollingPosition, (int)s.Position.Y, s.Texture.Width, s.Texture.Height); 
 
+                //collision voor subby is apart, want deze wordt opgedeeld in meerdere vierkantjes
+                Rectangle rectSprite = new Rectangle((int)sprite.Position.X - level.ScrollingPosition, (int)sprite.Position.Y, sprite.Width, sprite.Height); 
                 Rectangle overlap = Rectangle.Intersect(rectSubby, rectSprite);
                 if (!overlap.IsEmpty)
                 {
-                    //collision
-                    foreach (Rectangle r in subbyRects)
+                    List<Rectangle> partRectsSubby = calculateSubbyRect();
+                    
+                    foreach (Rectangle partRectSubby in partRectsSubby)
                     {
-                        Rectangle collisionCheck = Rectangle.Intersect(r, rectSprite);
-                        if(!collisionCheck.IsEmpty)
+                        Rectangle collisionCheck = Rectangle.Intersect(partRectSubby, rectSprite);
+                        if (!collisionCheck.IsEmpty)
                         {
-                            s.CollisionWith(subby);
-                            subby.CollisionWith(s);
+                            // checkt alle collision met level.Subby
+                            level.Subby.CollisionWith(sprite);
+                            sprite.CollisionWith(level.Subby);
+                        }
+                    }
+                }
+                if (!(sprite is Missile))
+                {
+                    if (level.MissileList != null)
+                    {
+                        foreach (ISprite missile in level.MissileList)
+                        {
+                            // checkt alle collison met missiles
+                            if (!sprite.GetType().Name.Equals("Missile"))
+                                checkCollisionRectangleAction(missile, sprite);
                         }
                     }
                 }
             }
+            
+            
         }
-
-        private void InitializeLevel1()
+        private void checkCollisionRectangleAction(ISprite s1, ISprite s2)
         {
-            allSprites.Add(new TankStation { Color = Color.White, Position = new Vector2(800, 500), Tank = 300, Texture = Content.Load<Texture2D>("tankstation") });
-            allSprites.Add(new Wrak { Color = Color.White, Position = new Vector2(400, 350), Schade = 1, Texture = Content.Load<Texture2D>("wrak") });
-            allSprites.Add(new Wrak { Color = Color.White, Position = new Vector2(3000, 550), Schade = 1, Texture = Content.Load<Texture2D>("wrak") });
-            allSprites.Add(new Wrak { Color = Color.White, Position = new Vector2(5000, 550), Schade = 1, Texture = Content.Load<Texture2D>("wrak") });
+            Rectangle r1 = new Rectangle((int)s1.Position.X - level.ScrollingPosition, (int)s1.Position.Y, s1.Width, s1.Height);
+            Rectangle r2 = new Rectangle((int)s2.Position.X - level.ScrollingPosition, (int)s2.Position.Y, s2.Width, s2.Height); 
 
-            level1.SpriteList.Add(new TankStation { Color = Color.White, Position = new Vector2(600, 450), PivotPoint = new Vector2(0, 0), Tank = 300, TextureName = "tankstation", Texture = Content.Load<Texture2D>("tankstation") });
-            level1.SpriteList.Add(new Wrak { Color = Color.White, Position = new Vector2(400, 350), PivotPoint = new Vector2(0, 0), Schade = 1, TextureName = "wrak", Texture = Content.Load<Texture2D>("wrak") });
-            level1.SpriteList.Add(new Wrak { Color = Color.White, Position = new Vector2(3000, 550), PivotPoint = new Vector2(0, 0), Schade = 1, TextureName = "wrak", Texture = Content.Load<Texture2D>("wrak") });
-            level1.SpriteList.Add(new Wrak { Color = Color.White, Position = new Vector2(5000, 550), PivotPoint = new Vector2(0, 0), Schade = 1, TextureName = "wrak", Texture = Content.Load<Texture2D>("wrak") });
+            Rectangle collisionCheck = Rectangle.Intersect(r1, r2);
+            if (!collisionCheck.IsEmpty)
+            {
+                s2.CollisionWith(s1);
+                s1.CollisionWith(s2);
+            }
         }
+
 
     }
 }

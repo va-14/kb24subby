@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Content;
 
 namespace Subby.Sprites
 {
+
     [DataContract]
     public class Missile : ISprite
     {
@@ -16,6 +17,25 @@ namespace Subby.Sprites
         public Vector2 Position { get; set; }
         [DataMember]
         public Color Color { get; set; }
+
+        public int Width
+        {
+            get { return Texture.Width; }
+        }
+
+        public int Height
+        {
+            get { return Texture.Height; }
+        }
+
+        private int _health;
+
+        public int Health
+        {
+            get { return _health; }
+            set { _health = value; }
+        }
+        
         public Texture2D Texture { get; set; }
         [DataMember]
         public string TextureName { get; set; }
@@ -74,6 +94,7 @@ namespace Subby.Sprites
 
         public void CollisionWith(ISprite s)
         {
+            this.Color = new Color(0.5f, 1, 1);
         }
     }
 }

@@ -11,27 +11,34 @@ using System.Runtime.Serialization;
 
 namespace Subby
 {
-    [KnownType(typeof(Player))]
+    //[KnownType(typeof(Player))]
     [KnownType(typeof(Missile))]
     [KnownType(typeof(TankStation))]
     [KnownType(typeof(Wrak))]
+    [KnownType(typeof(Mine))]
     [DataContract]
     public class Level
     {
         [DataMember]
         public List<ISprite> SpriteList;
         [DataMember]
+        public List<Missile> MissileList;
+        [DataMember]
         public int[] Highscores;
         [DataMember]
         public Background Background;
         [DataMember]
-        public Vector4 LevelBoundaries;
+        public GameBoundaries LevelBoundaries;
         [DataMember]
         public int ScrollingPosition;
+        [DataMember]
+        public Player Subby;
+
 
         public void Initialize()
         {
             SpriteList = new List<ISprite>();
+            MissileList = new List<Missile>();
             Highscores = new int[10];
             Background = new Background();
             Background.Initialize();
@@ -39,12 +46,12 @@ namespace Subby
 
         public void Load(ContentManager manager, GraphicsDevice graphicsDevice)
         {
+            Subby.Texture = manager.Load<Texture2D>(Subby.TextureName);
             foreach (ISprite sprite in SpriteList)
             {
-                Texture2D texture = manager.Load<Texture2D>(sprite.TextureName);
-                sprite.Texture = texture;
+                sprite.Texture = manager.Load<Texture2D>(sprite.TextureName);
             }
-
+            
             Texture2D waterTexture = manager.Load<Texture2D>(Background.WaterTextureName);
             Texture2D wavesTexture = manager.Load<Texture2D>(Background.WavesTextureName);
             Texture2D skyTexture = manager.Load<Texture2D>(Background.SkyTextureName);
@@ -54,45 +61,49 @@ namespace Subby
 
         public void Update(GameTime gameTime)
         {
+            Subby.Update(gameTime);
             foreach (ISprite sprite in SpriteList)
             {
                 sprite.Update(gameTime);
-
-                if (sprite is Player )
-                {
-                    UpdateScrollingPosition((Player)sprite);
-                    Background.UpdatePosition(ScrollingPosition, gameTime);
-                }
             }
-
+            UpdateScrollingPosition(Subby);
+            Background.UpdatePosition(ScrollingPosition, gameTime);
         }
 
         public void Draw(SpriteBatch batch)
         {
             Background.Draw(batch);
+            batch.Draw(Subby.Texture, Subby.Position, null, Subby.Color, Subby.Rotation, Subby.PivotPoint, 1f, SpriteEffects.None, 1);
             foreach (ISprite sprite in SpriteList)
             {
                 if (sprite is Player)
                 {
-                    batch.Draw(sprite.Texture, sprite.Position, null, sprite.Color, sprite.Rotation, sprite.PivotPoint, 1f, SpriteEffects.None, 1);
+                   
                 }
                 else
                 {
-                    batch.Draw(sprite.Texture, new Vector2(sprite.Position.X - (float)ScrollingPosition, sprite.Position.Y), null, sprite.Color, sprite.Rotation, sprite.PivotPoint, 1f, SpriteEffects.None, 1);
+                    if (sprite.GetType().Name.Equals("Mine"))
+                    {
+                        Mine m = (Mine)sprite;
+                        batch.Draw(sprite.Texture, new Vector2(sprite.Position.X - (float)ScrollingPosition + (m.Range / 2), sprite.Position.Y + (m.Range / 2)), sprite.Color);
+                    }
+                    else
+                    {
+                        batch.Draw(sprite.Texture, new Vector2(sprite.Position.X - (float)ScrollingPosition, sprite.Position.Y), null, sprite.Color, sprite.Rotation, sprite.PivotPoint, 1f, SpriteEffects.None, 1);
+                    }
                 }
             }
         }
-
         private void UpdateScrollingPosition(Player subby)
         {
-            if (subby.Position.Y >= LevelBoundaries.Z || subby.Position.Y <= LevelBoundaries.Y || subby.Position.X <= LevelBoundaries.W)
+            if (subby.Position.Y >= LevelBoundaries.Bottom || subby.Position.Y <= LevelBoundaries.Top || subby.Position.X <= LevelBoundaries.Left)
             {
-                subby.Speed = 0;
+                subby.Speed = -subby.Speed / 4;
             }
-            if (subby.Position.X >= LevelBoundaries.X)
+            if (subby.Position.X >= LevelBoundaries.Right)
             {
-                ScrollingPosition += (int)subby.Position.X - (int)LevelBoundaries.X;
-                subby.Position = new Vector2(LevelBoundaries.X, subby.Position.Y);
+                ScrollingPosition += (int)subby.Position.X - (int)LevelBoundaries.Right;
+                subby.Position = new Vector2(LevelBoundaries.Right, subby.Position.Y);
             }
         }
 

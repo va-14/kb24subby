@@ -16,6 +16,24 @@ namespace Subby.Sprites
         [DataMember]
         public Color Color { get; set; }
         public Texture2D Texture { get; set; }
+
+        public int Width
+        {
+            get { return Texture.Width; }
+        }
+
+        public int Height
+        {
+            get { return Texture.Height; }
+        }
+        private int _health;
+
+        public int Health
+        {
+            get { return _health; }
+            set { _health = value; }
+        }
+    
         [DataMember]
         public string TextureName { get; set; }
         [DataMember]

@@ -8,7 +8,7 @@ using Subby.Sprites;
 
 namespace Subby
 {
-    class Waves : ISprite
+    class Waves 
     {
         public Vector2 Position { get; set; }
         public Color Color { get; set; }
@@ -21,6 +21,16 @@ namespace Subby
         {
             Color = Color.White;
             Position = new Vector2(960, 270);
+        }
+
+        public int Width
+        {
+            get { return Texture.Width; }
+        }
+
+        public int Height
+        {
+            get { return Texture.Height; }
         }
 
         public void Load(Texture2D _texture)

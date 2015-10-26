@@ -19,14 +19,29 @@ namespace Subby.Sprites
 	    {
 		    get { return _textureData;}
 	    }
+        private String _state;
 
-
-        private int Bullits;
-        [DataMember]
-        public int _bullits
+        public String State
         {
-            get { return Bullits; }
-            set { Bullits = value; }
+            get { return _state; }
+            set { _state = value; }
+        }
+
+        public int Width
+        {
+            get { return Texture.Width; }
+        }
+
+        public int Height
+        {
+            get { return Texture.Height; }
+        }
+        private int _bullits;
+        [DataMember]
+        public int Bullits
+        {
+            get { return _bullits; }
+            set { _bullits = value; }
         }
 
         private Vector2 _origin;
@@ -36,6 +51,7 @@ namespace Subby.Sprites
             get { return _origin; }
             set { _origin = value; }
         }
+
         [DataMember]
         public Vector2 Position { get; set; }
         [DataMember]
@@ -116,22 +132,10 @@ namespace Subby.Sprites
             get { return _speed; }
             set { _speed = value; }
         }
-        [DataMember]
-        private Vector4 _boundaries;
-
-        public void SetBoundaries(Vector4 boundaries)
-        {
-            _boundaries = boundaries;
-        }
 
         public void Initialize()
         {
-            Fuel = 10000;
-            Health = 1000;
-            Color = Color.White;
-            Position = new Vector2(120, 590);
-            _bullits = 100;
-            TextureName = "subby";
+            
         }
 
         public void Load(Texture2D _texture)
@@ -139,11 +143,19 @@ namespace Subby.Sprites
             Texture = _texture;
             PivotPoint = new Vector2(Texture.Width / 2, Texture.Height / 2);
         }
+        private Missile getBullit()
+        {
+            if (Bullits > 0)
+            {
+                Bullits--;
+                return new Missile { Speed = 5f, Damage = 50, Angle = this._angle, Color = Color.White };
+            }
+            return null;
+        }
 
         public Missile Shoot()
         {
-            _bullits--;
-            return new Missile { Speed = 5f, Damage = 50, Angle = this._angle, Color = Color.White};
+            return getBullit();
         }
         private void UpdatePosition()
         {
@@ -209,16 +221,24 @@ namespace Subby.Sprites
             while (this._angle < 0) this._angle += 360;
             while (this._angle > 359) this._angle -= 360;
         }
+
+        private void Accelerate(float acceleration)
+        {
+            if ((_speed < 4 && _speed >= 0) || (_speed > -4 && _speed <= 0))
+            {
+                _speed += acceleration;
+            }
+        }
         public void GoFaster()
         {
             if (UseFuel(2))
-            _speed += .05f;
+            Accelerate(.05f);
         }
         
         public void GoSlower()
         {
             if (UseFuel(2))
-            _speed -= .05f;
+             Accelerate(-.05f);
         }
 
         public bool UseFuel(int fuel)
@@ -243,6 +263,14 @@ namespace Subby.Sprites
                 Wrak wrak = (Wrak)s;
                 SchadeAanBoot(wrak.Schade);
             }
+            if (s.GetType().Name.Equals("Waves"))
+            {
+                BoatBackInWater(_speed,_angle);
+            }
+        }
+        private void BoatBackInWater(float speed, float angle)
+        {
+
         }
         public void SchadeAanBoot(int schade)
         {

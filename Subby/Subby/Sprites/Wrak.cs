@@ -30,7 +30,16 @@ namespace Subby.Sprites
             get { return _schade; }
             set { _schade = value; }
         }
-        
+
+
+        public int Height
+        {
+            get { return Texture.Height; }
+        }
+        public int Width
+        {
+            get { return Texture.Width; }
+        }
 
         public void Update(GameTime gameTime) { }
 
