@@ -133,7 +133,7 @@ namespace Subby
             if (missile != null)
             {
                 missile.Texture = Content.Load<Texture2D>("missile");
-                Point afterSubby = PointOnCircle((level.Subby.Texture.Width + 2) / 2, (int)level.Subby.AngleDegrees, new Point((int)level.Subby.Position.X, (int)level.Subby.Position.Y));
+                Point afterSubby = PointOnCircle((level.Subby.Texture.Width + 12) / 2, (int)level.Subby.AngleDegrees, new Point((int)level.Subby.Position.X, (int)level.Subby.Position.Y));
                 missile.Position = new Vector2(afterSubby.X + level.ScrollingPosition, afterSubby.Y);
                 level.SpriteList.Add(missile);
                 if (level.MissileList == null)
