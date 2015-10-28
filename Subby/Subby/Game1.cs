@@ -19,7 +19,7 @@ namespace Subby
 
         Background background;
         Level level;
-
+        int seconds;
         KeyboardState oldState;
         public Game1()
         {
@@ -61,7 +61,7 @@ namespace Subby
             checkKeys();
             checkCollisions();
             level.Update(gameTime);
-
+            seconds = (int)gameTime.TotalGameTime.TotalSeconds;
             base.Update(gameTime);
         }
         private void DrawText()
@@ -69,6 +69,7 @@ namespace Subby
             spriteBatch.DrawString(font, "Health: " + level.Subby.Health, new Vector2(20, 45), Color.White);
             spriteBatch.DrawString(font, "Fuel: " + level.Subby.Fuel, new Vector2(20, 70), Color.White);
             spriteBatch.DrawString(font, "Bullits: " + level.Subby.Bullits, new Vector2(20, 95), Color.White);
+            spriteBatch.DrawString(font, "Seconds: " + seconds, new Vector2(20, 120), Color.White);
         }
         protected override void Draw(GameTime gameTime)
         {

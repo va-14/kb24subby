@@ -87,7 +87,7 @@ namespace Subby
         }
         private void ChopperGenerator(GameTime gameTime)
         {
-            int second = gameTime.TotalGameTime.Seconds;
+            int second = (int)gameTime.TotalGameTime.TotalSeconds;
             if (second >= _spawnChopperSecond)
             {
                 Random random = new Random();
