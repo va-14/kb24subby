@@ -112,7 +112,7 @@ namespace Subby
                 {
                     Missile missile = level.Subby.Shoot();
                     Point position = PointOnCircle(level.Subby.Texture.Width / 2 + 30, (int)level.Subby.AngleDegrees, new Point((int)level.Subby.Position.X, (int)level.Subby.Position.Y));
-                    createMissile(missile, position);
+                    level.createMissile(missile, position);
                 }
             }
             if (state.IsKeyDown(Keys.P))
@@ -127,26 +127,6 @@ namespace Subby
             oldState = state;
 
             return false;
-        }
-
-        private void createMissile(Missile missile, Point position)
-        {
-            
-            if (missile != null)
-            {
-                missile.Texture = Content.Load<Texture2D>("missile");
-                missile.TextureName = "missile";
-
-                if (position != null)
-                    missile.Position = new Vector2(position.X + level.ScrollingPosition, position.Y);
-                
-                level.SpriteList.Add(missile);
-
-                if (level.MissileList == null)
-                    level.MissileList = new List<Missile>();
-                
-                level.MissileList.Add(missile);
-            }
         }
         private List<Rectangle> calculateSubbyRect()
         {

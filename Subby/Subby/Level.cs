@@ -108,6 +108,27 @@ namespace Subby
 
             return random.Next(minSeconds, minSeconds + 3);
         }
+
+
+        public void createMissile(Missile missile, Point position)
+        {
+
+            if (missile != null)
+            {
+                missile.Texture = _missileTexture;
+                missile.TextureName = "missile";
+
+                if (position != null)
+                    missile.Position = new Vector2(position.X + ScrollingPosition, position.Y);
+
+                SpriteList.Add(missile);
+
+                if (MissileList == null)
+                    MissileList = new List<Missile>();
+
+                MissileList.Add(missile);
+            }
+        }
         public void Draw(SpriteBatch batch)
         {
             Background.Draw(batch);

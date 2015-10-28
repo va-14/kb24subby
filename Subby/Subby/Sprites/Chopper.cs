@@ -18,6 +18,8 @@ namespace Subby.Sprites
         [DataMember]
         public Color Color { get; set; }
 
+        public List<Missile> Missiles { get; set; }
+
         public int Width
         {
             get { return Texture.Width; }

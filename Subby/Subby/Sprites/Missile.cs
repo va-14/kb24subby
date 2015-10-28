@@ -51,10 +51,9 @@ namespace Subby.Sprites
             get { return _damage; }
             set { _damage = value; }
         }
-        
 
-        private float _angle; // in degrees
         [DataMember]
+        private float _angle; // in degrees
         public float Angle
         {
             set
