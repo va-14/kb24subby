@@ -93,7 +93,7 @@ namespace Subby
         }
         private void ChopperGenerator(GameTime gameTime)
         {
-            int second = (int)gameTime.TotalGameTime.TotalSeconds;
+            /*int second = (int)gameTime.TotalGameTime.TotalSeconds;
             if (second >= _spawnChopperSecond)
             {
                 Random random = new Random();
@@ -113,7 +113,7 @@ namespace Subby
                     };
 
                 SpriteList.Add(chopper);
-            }
+            }*/
         }
         private int NewRandom(int lastRandomSecond){
             Random random = new Random();
@@ -132,6 +132,10 @@ namespace Subby
                     {
                         SpriteList.Remove(sprite);
                     }
+                }
+                if (sprite.Position.Y > Background.ScreenHeight || sprite.Position.X - ScrollingPosition < - sprite.Width - 200 || sprite.Position.Y < - sprite.Height)
+                {
+                    SpriteList.Remove(sprite);
                 }
             }
         }
