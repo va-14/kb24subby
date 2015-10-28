@@ -89,13 +89,14 @@ namespace Subby.Sprites
             if (Missiles != null)
             {
                 if (Missiles.Count > 0) 
-                { 
+                {
+                    Random random = new Random();
                     Missile missile = Missiles.FirstOrDefault();
                     Missiles.Remove(missile);
                     missile.Position = new Vector2(this.Position.X, this.Position.Y + 40);
                     missile.Speed = 5f;
-                    missile.Angle = 75;
-                    DropSecond += 2;
+                    missile.Angle = random.Next(25,75);
+                    DropSecond += random.Next(1,3);
                 }
             }
         }

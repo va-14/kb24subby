@@ -90,7 +90,8 @@ namespace Subby
             int second = gameTime.TotalGameTime.Seconds;
             if (second >= _spawnChopperSecond)
             {
-                _spawnChopperSecond = NewRandom(_spawnChopperSecond);
+                Random random = new Random();
+                _spawnChopperSecond = random.Next(_spawnChopperSecond + 3, _spawnChopperSecond + 7);
                 Chopper chopper = new Chopper() {
                     Texture = _chopperTexture, 
                     Color = Color.White, 
@@ -98,7 +99,7 @@ namespace Subby
                     Position = new Vector2(ScrollingPosition-70, 60), 
                     Speed = 6f,
                     TextureName = "chopper",
-                    DropSecond = NewRandom(second),
+                    DropSecond = random.Next(second + 2, second + 5),
                 };
                 chopper.Missiles = new List<Missile>(){
                     createMissile(new Missile(), new Point(), 300),
