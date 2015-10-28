@@ -94,6 +94,11 @@ namespace Subby.Sprites
 
         public void CollisionWith(ISprite s)
         {
+            if (s.GetType().Name.Equals("Missile"))
+            {
+                Missile missile = (Missile)s;
+                Speed = 0;
+            }
         }
     }
 }

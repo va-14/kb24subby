@@ -11,11 +11,12 @@ using System.Runtime.Serialization;
 
 namespace Subby
 {
-    //[KnownType(typeof(Player))]
+    [KnownType(typeof(Player))]
     [KnownType(typeof(Missile))]
     [KnownType(typeof(TankStation))]
     [KnownType(typeof(Wrak))]
     [KnownType(typeof(Mine))]
+    [KnownType(typeof(Chopper))]
     [DataContract]
     public class Level
     {
@@ -57,6 +58,13 @@ namespace Subby
                 sprite.Texture = manager.Load<Texture2D>(sprite.TextureName);
             }
 
+            if (MissileList != null)
+            {
+                foreach (ISprite sprite in MissileList)
+                {
+                    sprite.Texture = manager.Load<Texture2D>(sprite.TextureName);
+                }
+            }
             _chopperTexture = manager.Load<Texture2D>("chopper");
             _missileTexture = manager.Load<Texture2D>("missile");
             Texture2D waterTexture = manager.Load<Texture2D>(Background.WaterTextureName);
@@ -87,7 +95,8 @@ namespace Subby
                     Color = Color.White, 
                     Damage = 300, 
                     Position = new Vector2(ScrollingPosition-70, 60), 
-                    Speed = 6f
+                    Speed = 6f,
+                    TextureName = "chopper"
                 };
 
                 SpriteList.Add(chopper);
@@ -105,21 +114,14 @@ namespace Subby
             batch.Draw(Subby.Texture, Subby.Position, null, Subby.Color, Subby.Rotation, Subby.PivotPoint, 1f, SpriteEffects.None, 1);
             foreach (ISprite sprite in SpriteList)
             {
-                if (sprite is Player)
+                if (sprite.GetType().Name.Equals("Mine"))
                 {
-                   
+                    Mine m = (Mine)sprite;
+                    batch.Draw(sprite.Texture, new Vector2(sprite.Position.X - (float)ScrollingPosition + (m.Range / 2), sprite.Position.Y + (m.Range / 2)), sprite.Color);
                 }
                 else
                 {
-                    if (sprite.GetType().Name.Equals("Mine"))
-                    {
-                        Mine m = (Mine)sprite;
-                        batch.Draw(sprite.Texture, new Vector2(sprite.Position.X - (float)ScrollingPosition + (m.Range / 2), sprite.Position.Y + (m.Range / 2)), sprite.Color);
-                    }
-                    else
-                    {
-                        batch.Draw(sprite.Texture, new Vector2(sprite.Position.X - (float)ScrollingPosition, sprite.Position.Y), null, sprite.Color, sprite.Rotation, sprite.PivotPoint, 1f, SpriteEffects.None, 1);
-                    }
+                    batch.Draw(sprite.Texture, new Vector2(sprite.Position.X - (float)ScrollingPosition, sprite.Position.Y), null, sprite.Color, sprite.Rotation, sprite.PivotPoint, 1f, SpriteEffects.None, 1);
                 }
             }
         }

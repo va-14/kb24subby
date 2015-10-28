@@ -63,7 +63,7 @@ namespace Subby.Sprites
         public string TextureName { get; set; }
         [DataMember]
         public Vector2 PivotPoint { get; set; }
-        [DataMember]
+        
         public Texture2D Texture {
             get
             {
@@ -148,7 +148,7 @@ namespace Subby.Sprites
             if (Bullits > 0)
             {
                 Bullits--;
-                return new Missile { Speed = 5f, Damage = 50, Angle = this._angle, Color = Color.White };
+                return new Missile { Speed = 7f, Damage = 50, Angle = this._angle, Color = Color.White };
             }
             return null;
         }
