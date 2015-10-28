@@ -38,7 +38,12 @@ namespace Subby
 
         private Texture2D _chopperTexture;
         private Texture2D _missileTexture;
+
+        [DataMember]
         private int _spawnChopperSecond;
+
+        [DataMember]
+        private int _cleanUpSecond;
 
         public void Initialize()
         {
@@ -76,6 +81,7 @@ namespace Subby
 
         public void Update(GameTime gameTime)
         {
+            CleanUpSpriteList();
             Subby.Update(gameTime);
             foreach (ISprite sprite in SpriteList)
             {
@@ -116,7 +122,19 @@ namespace Subby
             return random.Next(minSeconds, minSeconds + 3);
         }
 
-
+        private void CleanUpSpriteList()
+        {
+            foreach (ISprite sprite in SpriteList.Reverse<ISprite>())
+            {
+                if (sprite is Chopper || sprite is Missile)
+                {
+                    if (sprite.Position.X - ScrollingPosition > Background.ScreenWidth)
+                    {
+                        SpriteList.Remove(sprite);
+                    }
+                }
+            }
+        }
         public Missile createMissile(Missile missile, Point position, int Damage)
         {
 
