@@ -30,6 +30,9 @@ namespace Subby.Sprites
 
         private int _health;
 
+        [DataMember]
+        public Boolean Active { get; set; }
+
         public int Health
         {
             get { return _health; }

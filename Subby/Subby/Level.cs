@@ -108,8 +108,8 @@ namespace Subby
                     DropSecond = random.Next(second + 2, second + 5),
                 };
                 chopper.Missiles = new List<Missile>(){
-                    createMissile(new Missile(), new Point(), 300),
-                    createMissile(new Missile(), new Point(), 300)
+                    createMissile(new Missile(), new Point(-40,0), 300),
+                    createMissile(new Missile(), new Point(-40,0), 300)
                     };
 
                 SpriteList.Add(chopper);
@@ -139,10 +139,19 @@ namespace Subby
                 }
                 if (sprite.Position.Y > Background.ScreenHeight || sprite.Position.X - ScrollingPosition < - sprite.Width - 200 || sprite.Position.Y < - sprite.Height)
                 {
-                    SpriteList.Remove(sprite);
+                    
                     if (sprite is Missile)
                     {
-                        MissileList.Remove((Missile)sprite);
+                        Missile missile = (Missile)sprite;
+                        if (missile.Active)
+                        {
+                            MissileList.Remove(missile);
+                            SpriteList.Remove(missile);
+                        }
+                    }
+                    else
+                    {
+                        SpriteList.Remove(sprite);
                     }
                 }
             }
@@ -155,6 +164,7 @@ namespace Subby
                 missile.Texture = _missileTexture;
                 missile.TextureName = "missile";
                 missile.Color = Color.White;
+                missile.Active = false;
                 if (position != null)
                     missile.Position = new Vector2(position.X + ScrollingPosition, position.Y);
 
