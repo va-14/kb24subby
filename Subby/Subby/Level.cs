@@ -87,7 +87,8 @@ namespace Subby
         }
         private void ChopperGenerator(GameTime gameTime)
         {
-            if (gameTime.TotalGameTime.Seconds >= _spawnChopperSecond)
+            int second = gameTime.TotalGameTime.Seconds;
+            if (second >= _spawnChopperSecond)
             {
                 _spawnChopperSecond = NewRandom(_spawnChopperSecond);
                 Chopper chopper = new Chopper() {
@@ -96,8 +97,13 @@ namespace Subby
                     Damage = 300, 
                     Position = new Vector2(ScrollingPosition-70, 60), 
                     Speed = 6f,
-                    TextureName = "chopper"
+                    TextureName = "chopper",
+                    DropSecond = NewRandom(second),
                 };
+                chopper.Missiles = new List<Missile>(){
+                    createMissile(new Missile(), new Point(), 300),
+                    createMissile(new Missile(), new Point(), 300)
+                    };
 
                 SpriteList.Add(chopper);
             }
@@ -110,16 +116,19 @@ namespace Subby
         }
 
 
-        public void createMissile(Missile missile, Point position)
+        public Missile createMissile(Missile missile, Point position, int Damage)
         {
 
             if (missile != null)
             {
                 missile.Texture = _missileTexture;
                 missile.TextureName = "missile";
-
+                missile.Color = Color.White;
                 if (position != null)
                     missile.Position = new Vector2(position.X + ScrollingPosition, position.Y);
+
+                if (Damage > 0)
+                    missile.Damage = Damage;
 
                 SpriteList.Add(missile);
 
@@ -128,6 +137,7 @@ namespace Subby
 
                 MissileList.Add(missile);
             }
+            return missile;
         }
         public void Draw(SpriteBatch batch)
         {

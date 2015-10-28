@@ -148,7 +148,7 @@ namespace Subby.Sprites
             if (Bullits > 0)
             {
                 Bullits--;
-                return new Missile { Speed = 7f, Damage = 50, Angle = this._angle, Color = Color.White };
+                return new Missile { Speed = 7f, Angle = this._angle, Color = Color.White };
             }
             return null;
         }

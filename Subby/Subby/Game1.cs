@@ -112,7 +112,7 @@ namespace Subby
                 {
                     Missile missile = level.Subby.Shoot();
                     Point position = PointOnCircle(level.Subby.Texture.Width / 2 + 30, (int)level.Subby.AngleDegrees, new Point((int)level.Subby.Position.X, (int)level.Subby.Position.Y));
-                    level.createMissile(missile, position);
+                    level.createMissile(missile, position, 300);
                 }
             }
             if (state.IsKeyDown(Keys.P))
