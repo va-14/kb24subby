@@ -28,6 +28,7 @@ namespace Subby.Sprites
         }
         private int _health;
 
+        [DataMember]
         public int Health
         {
             get { return _health; }

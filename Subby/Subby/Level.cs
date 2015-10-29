@@ -39,20 +39,21 @@ namespace Subby
         private Texture2D _chopperTexture;
         private Texture2D _missileTexture;
 
+        public DateTime startRoundTime;
+        public TimeSpan totalRoundTime;
+
         [DataMember]
         private int _spawnChopperSecond;
 
-        [DataMember]
-        private int _cleanUpSecond;
-
         public void Initialize()
         {
-            SpriteList = new List<ISprite>();
-            MissileList = new List<Missile>();
-            Highscores = new int[10];
-            Background = new Background();
+            startRoundTime = DateTime.Now;
+            //SpriteList = new List<ISprite>();
+            //MissileList = new List<Missile>();
+            //Highscores = new int[10];
+            //Background = new Background();
             _spawnChopperSecond = 0;
-            Background.Initialize();
+           // Background.Initialize();
         }
 
         public void Load(ContentManager manager, GraphicsDevice graphicsDevice)
@@ -81,6 +82,7 @@ namespace Subby
 
         public void Update(GameTime gameTime)
         {
+            totalRoundTime = DateTime.Now - startRoundTime;
             CleanUpSpriteList();
             Subby.Update(gameTime);
             foreach (ISprite sprite in SpriteList)
@@ -93,7 +95,7 @@ namespace Subby
         }
         private void ChopperGenerator(GameTime gameTime)
         {
-            int second = (int)gameTime.TotalGameTime.TotalSeconds;
+            int second = (int)totalRoundTime.TotalSeconds;
             if (second >= _spawnChopperSecond)
             {
                 Random random = new Random();
@@ -105,7 +107,8 @@ namespace Subby
                     Position = new Vector2(ScrollingPosition-70, 60), 
                     Speed = 6f,
                     TextureName = "chopper",
-                    DropSecond = random.Next(second + 2, second + 5),
+                    DropSecond = random.Next(second, second + 5),
+                    Health = 200
                 };
                 chopper.Missiles = new List<Missile>(){
                     createMissile(new Missile(), new Point(-40,0), 300),
@@ -124,38 +127,54 @@ namespace Subby
 
         private void CleanUpSpriteList()
         {
+            Boolean remove;
             foreach (ISprite sprite in SpriteList.Reverse<ISprite>())
             {
+                remove = false;
+
+                if (sprite.Health < 0)
+                {
+                    remove = true;
+                }
+
+
+                //check alleen chopper en missile wanneer ze aan de rechter kant uit het scherm vliegen
                 if (sprite is Chopper || sprite is Missile)
                 {
                     if (sprite.Position.X - ScrollingPosition > Background.ScreenWidth)
                     {
-                        SpriteList.Remove(sprite);
-                        if (sprite is Missile)
-                        {
-                            MissileList.Remove((Missile)sprite);
-                        }
+                        remove = true; 
                     }
                 }
+                //check alles aan de boven/onder/linker kant, behalve de missiles, want die starten aan de linker kant van de nieuwe choppers
                 if (sprite.Position.Y > Background.ScreenHeight || sprite.Position.X - ScrollingPosition < - sprite.Width - 200 || sprite.Position.Y < - sprite.Height)
                 {
-                    
+
                     if (sprite is Missile)
                     {
                         Missile missile = (Missile)sprite;
                         if (missile.Active)
                         {
-                            MissileList.Remove(missile);
-                            SpriteList.Remove(missile);
+                            remove = true;
                         }
                     }
                     else
                     {
-                        SpriteList.Remove(sprite);
+                        remove = true;
                     }
+                }
+                if (remove)
+                {
+                    SpriteList.Remove(sprite);
+                    if (sprite is Missile)
+                    {
+                        MissileList.Remove((Missile)sprite);
+                    }
+                    remove = false;
                 }
             }
         }
+       
         public Missile createMissile(Missile missile, Point position, int Damage)
         {
 

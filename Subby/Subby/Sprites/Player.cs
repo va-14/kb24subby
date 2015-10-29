@@ -263,19 +263,11 @@ namespace Subby.Sprites
                 Wrak wrak = (Wrak)s;
                 SchadeAanBoot(wrak.Schade);
             }
-            if (s.GetType().Name.Equals("Waves"))
-            {
-                BoatBackInWater(_speed,_angle);
-            }
             if (s.GetType().Name.Equals("Missile"))
             {
                 Missile missile = (Missile)s;
                 SchadeAanBoot(missile.Damage);
             }
-        }
-        private void BoatBackInWater(float speed, float angle)
-        {
-
         }
         public void SchadeAanBoot(int schade)
         {

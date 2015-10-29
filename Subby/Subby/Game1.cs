@@ -8,6 +8,7 @@ using Subby.Sprites;
 using System.Xml.Serialization;
 using System.IO;
 using System.Runtime.Serialization;
+using System.Globalization;
 
 namespace Subby
 {
@@ -17,10 +18,9 @@ namespace Subby
         SpriteBatch spriteBatch;
         SpriteFont font;
 
-        Background background;
         Level level;
-        int seconds;
         KeyboardState oldState;
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -32,12 +32,14 @@ namespace Subby
 
         protected override void Initialize()
         {
+            
             using (FileStream reader = new FileStream("level1.xml", FileMode.Open, FileAccess.Read))
             {
                 DataContractSerializer ser = new DataContractSerializer(typeof(Level));
                 level = (Level)ser.ReadObject(reader);
             }
             base.Initialize();
+            level.Initialize();
         }
 
         protected override void LoadContent()
@@ -61,15 +63,27 @@ namespace Subby
             checkKeys();
             checkCollisions();
             level.Update(gameTime);
-            seconds = (int)gameTime.TotalGameTime.TotalSeconds;
+            IsSubbyAlive();
             base.Update(gameTime);
         }
+        public void IsSubbyAlive()
+        {
+            if (level.Subby.Health < 0)
+            {
+                ResetLevel();
+            }
+        }
+        private void ResetLevel()
+        {
+            Initialize();
+        }
+
         private void DrawText()
         {
             spriteBatch.DrawString(font, "Health: " + level.Subby.Health, new Vector2(20, 45), Color.White);
             spriteBatch.DrawString(font, "Fuel: " + level.Subby.Fuel, new Vector2(20, 70), Color.White);
             spriteBatch.DrawString(font, "Bullits: " + level.Subby.Bullits, new Vector2(20, 95), Color.White);
-            spriteBatch.DrawString(font, "Seconds: " + seconds, new Vector2(20, 120), Color.White);
+            spriteBatch.DrawString(font, "Seconds: " + level.totalRoundTime.TotalSeconds.ToString("0", CultureInfo.CurrentCulture), new Vector2(20, 120), Color.White);
             spriteBatch.DrawString(font, "Spritelist: " + level.SpriteList.Count, new Vector2(20, 145), Color.White);
         }
         protected override void Draw(GameTime gameTime)

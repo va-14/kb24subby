@@ -31,9 +31,9 @@ namespace Subby.Sprites
         {
             get { return Texture.Height; }
         }
-
         private int _health;
 
+        [DataMember]
         public int Health
         {
             get { return _health; }
@@ -107,21 +107,28 @@ namespace Subby.Sprites
 
         public void Update(GameTime gameTime)
         {
-            if (gameTime.TotalGameTime.TotalSeconds > DropSecond)
+            if (Health > 0)
             {
-                DropMissile();
-            }
+                if (gameTime.TotalGameTime.TotalSeconds > DropSecond)
+                {
+                    DropMissile();
+                }
 
-            Position += new Vector2(_speed * (float)Math.Cos(Angle), (_speed * (float)Math.Sin(Angle)));
+                Position += new Vector2(_speed * (float)Math.Cos(Angle), (_speed * (float)Math.Sin(Angle)));
+            }
         }
 
 
+        public void Schade(int schade)
+        {
+            _health -= schade;
+        }
         public void CollisionWith(ISprite s)
         {
             if (s.GetType().Name.Equals("Missile"))
             {
                 Missile missile = (Missile)s;
-                Speed = 0;
+                Schade(missile.Damage);
             }
         }
     }

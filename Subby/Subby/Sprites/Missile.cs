@@ -31,13 +31,14 @@ namespace Subby.Sprites
         private int _health;
 
         [DataMember]
-        public Boolean Active { get; set; }
-
         public int Health
         {
             get { return _health; }
             set { _health = value; }
         }
+
+        [DataMember]
+        public Boolean Active { get; set; }
         
         public Texture2D Texture { get; set; }
         [DataMember]
