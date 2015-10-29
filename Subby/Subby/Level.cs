@@ -212,7 +212,12 @@ namespace Subby
         }
         private void UpdateScrollingPosition(Player subby)
         {
-            if (subby.Position.Y >= LevelBoundaries.Bottom || subby.Position.Y <= LevelBoundaries.Top || subby.Position.X <= LevelBoundaries.Left)
+            if (subby.Position.Y >= LevelBoundaries.Bottom)
+            {
+                subby.Position += new Vector2(0, -1);
+                subby.Speed = -subby.Speed / 4;
+            }
+                if (subby.Position.Y <= LevelBoundaries.Top || subby.Position.X <= LevelBoundaries.Left)
             {
                 subby.Speed = -subby.Speed / 4;
             }

@@ -172,7 +172,6 @@ namespace Subby.Sprites
 
             Position += new Vector2(_speed * (float)Math.Cos(Rotation), (_speed * (float)Math.Sin(Rotation)));
 
-            System.Diagnostics.Debug.WriteLine(_positionDeflection);
         }
         public void Update(GameTime gameTime)
         {
@@ -185,7 +184,6 @@ namespace Subby.Sprites
         public void IsDamaged()
         {
 
-            System.Diagnostics.Debug.WriteLine(_health);
             if (_health < 800)
             {
                 Position += new Vector2(0, 0.1f);
