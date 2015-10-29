@@ -43,6 +43,7 @@
     <Compile Include="GameBoundaries.cs" />
     <Compile Include="ISprite.cs" />
     <Compile Include="Sprites\Chopper.cs" />
+    <Compile Include="Sprites\HostileSub.cs" />
     <Compile Include="Sprites\Mine.cs" />
     <Compile Include="Sprites\Missile.cs" />
     <Compile Include="Level.cs" />
@@ -52,6 +53,9 @@
     <Compile Include="Sprites\TankStation.cs" />
     <Compile Include="Sprites\Wrak.cs" />
     <Compile Include="ScrollingBackground.cs" />
+    <Compile Include="Strategies\HostileSubStrategy.cs" />
+    <Compile Include="Strategies\AimedShots.cs" />
+    <Compile Include="Strategies\WallOfShots.cs" />
     <Compile Include="Waves.cs" />
   </ItemGroup>
   <ItemGroup>
