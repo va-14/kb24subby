@@ -97,7 +97,7 @@ namespace Subby.Sprites
 
         public void CollisionWith(ISprite s)
         {
-            this.Color = new Color(0.5f, 1, 1);
+            _health -= 200;
         }
     }
 }

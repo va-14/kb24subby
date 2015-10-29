@@ -48,12 +48,7 @@ namespace Subby
         public void Initialize()
         {
             startRoundTime = DateTime.Now;
-            //SpriteList = new List<ISprite>();
-            //MissileList = new List<Missile>();
-            //Highscores = new int[10];
-            //Background = new Background();
             _spawnChopperSecond = 0;
-           // Background.Initialize();
         }
 
         public void Load(ContentManager manager, GraphicsDevice graphicsDevice)
@@ -131,7 +126,7 @@ namespace Subby
             foreach (ISprite sprite in SpriteList.Reverse<ISprite>())
             {
                 remove = false;
-
+                //alle sprites die geen health meer hebben
                 if (sprite.Health < 0)
                 {
                     remove = true;
@@ -170,7 +165,6 @@ namespace Subby
                     {
                         MissileList.Remove((Missile)sprite);
                     }
-                    remove = false;
                 }
             }
         }

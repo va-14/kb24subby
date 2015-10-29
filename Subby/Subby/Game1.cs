@@ -68,7 +68,7 @@ namespace Subby
         }
         public void IsSubbyAlive()
         {
-            if (level.Subby.Health < 0)
+            if (level.Subby.Health < 0 || (level.Subby.Speed > -0.01f && level.Subby.Speed < 0.01f && level.Subby.Fuel <= 0))
             {
                 ResetLevel();
             }
@@ -193,10 +193,10 @@ namespace Subby
                 boundingLength = level.Subby.Height;
             }
             Rectangle rectSubby = new Rectangle((int)level.Subby.Position.X - (boundingLength/2), (int)level.Subby.Position.Y - (boundingLength/2), boundingLength, boundingLength);
-            
+            Boolean subbyCollision;
             foreach (ISprite sprite in level.SpriteList)
             {
-
+                subbyCollision = false;
                 //collision voor subby is apart, want deze wordt opgedeeld in meerdere vierkantjes
                 Rectangle rectSprite = new Rectangle((int)sprite.Position.X - level.ScrollingPosition, (int)sprite.Position.Y, sprite.Width, sprite.Height); 
                 Rectangle overlap = Rectangle.Intersect(rectSubby, rectSprite);
@@ -207,8 +207,9 @@ namespace Subby
                     foreach (Rectangle partRectSubby in partRectsSubby)
                     {
                         Rectangle collisionCheck = Rectangle.Intersect(partRectSubby, rectSprite);
-                        if (!collisionCheck.IsEmpty)
+                        if (!collisionCheck.IsEmpty && !subbyCollision)
                         {
+                            subbyCollision = true;
                             // checkt alle collision met level.Subby
                             level.Subby.CollisionWith(sprite);
                             sprite.CollisionWith(level.Subby);
