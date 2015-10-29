@@ -8,6 +8,7 @@ using Subby.Sprites;
 using System.Xml.Serialization;
 using System.IO;
 using System.Runtime.Serialization;
+using System.Globalization;
 
 namespace Subby
 {
@@ -17,10 +18,9 @@ namespace Subby
         SpriteBatch spriteBatch;
         SpriteFont font;
 
-        Background background;
         Level level;
-
         KeyboardState oldState;
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -32,12 +32,14 @@ namespace Subby
 
         protected override void Initialize()
         {
+            
             using (FileStream reader = new FileStream("level1.xml", FileMode.Open, FileAccess.Read))
             {
                 DataContractSerializer ser = new DataContractSerializer(typeof(Level));
                 level = (Level)ser.ReadObject(reader);
             }
             base.Initialize();
+            level.Initialize();
         }
 
         protected override void LoadContent()
@@ -61,14 +63,28 @@ namespace Subby
             checkKeys();
             checkCollisions();
             level.Update(gameTime);
-
+            IsSubbyAlive();
             base.Update(gameTime);
         }
+        public void IsSubbyAlive()
+        {
+            if (level.Subby.Health < 0 || (level.Subby.Speed > -0.01f && level.Subby.Speed < 0.01f && level.Subby.Fuel <= 0))
+            {
+                ResetLevel();
+            }
+        }
+        private void ResetLevel()
+        {
+            Initialize();
+        }
+
         private void DrawText()
         {
             spriteBatch.DrawString(font, "Health: " + level.Subby.Health, new Vector2(20, 45), Color.White);
             spriteBatch.DrawString(font, "Fuel: " + level.Subby.Fuel, new Vector2(20, 70), Color.White);
             spriteBatch.DrawString(font, "Bullits: " + level.Subby.Bullits, new Vector2(20, 95), Color.White);
+            spriteBatch.DrawString(font, "Seconds: " + level.totalRoundTime.TotalSeconds.ToString("0", CultureInfo.CurrentCulture), new Vector2(20, 120), Color.White);
+            spriteBatch.DrawString(font, "Spritelist: " + level.SpriteList.Count, new Vector2(20, 145), Color.White);
         }
         protected override void Draw(GameTime gameTime)
         {
@@ -110,7 +126,9 @@ namespace Subby
             {
                 if (!oldState.IsKeyDown(Keys.Space))
                 {
-                    createMissile();
+                    Missile missile = level.Subby.Shoot();
+                    Point position = PointOnCircle(level.Subby.Texture.Width / 2 + 30, (int)level.Subby.AngleDegrees, new Point((int)level.Subby.Position.X, (int)level.Subby.Position.Y));
+                    level.createMissile(missile, position, 300);
                 }
             }
             if (state.IsKeyDown(Keys.P))
@@ -125,21 +143,6 @@ namespace Subby
             oldState = state;
 
             return false;
-        }
-
-        private void createMissile()
-        {
-            Missile missile = level.Subby.Shoot();
-            if (missile != null)
-            {
-                missile.Texture = Content.Load<Texture2D>("missile");
-                Point afterSubby = PointOnCircle((level.Subby.Texture.Width + 12) / 2, (int)level.Subby.AngleDegrees, new Point((int)level.Subby.Position.X, (int)level.Subby.Position.Y));
-                missile.Position = new Vector2(afterSubby.X + level.ScrollingPosition, afterSubby.Y);
-                level.SpriteList.Add(missile);
-                if (level.MissileList == null)
-                    level.MissileList = new List<Missile>();
-                level.MissileList.Add(missile);
-            }
         }
         private List<Rectangle> calculateSubbyRect()
         {
@@ -190,10 +193,10 @@ namespace Subby
                 boundingLength = level.Subby.Height;
             }
             Rectangle rectSubby = new Rectangle((int)level.Subby.Position.X - (boundingLength/2), (int)level.Subby.Position.Y - (boundingLength/2), boundingLength, boundingLength);
-            
+            Boolean subbyCollision;
             foreach (ISprite sprite in level.SpriteList)
             {
-
+                subbyCollision = false;
                 //collision voor subby is apart, want deze wordt opgedeeld in meerdere vierkantjes
                 Rectangle rectSprite = new Rectangle((int)sprite.Position.X - level.ScrollingPosition, (int)sprite.Position.Y, sprite.Width, sprite.Height); 
                 Rectangle overlap = Rectangle.Intersect(rectSubby, rectSprite);
@@ -204,8 +207,9 @@ namespace Subby
                     foreach (Rectangle partRectSubby in partRectsSubby)
                     {
                         Rectangle collisionCheck = Rectangle.Intersect(partRectSubby, rectSprite);
-                        if (!collisionCheck.IsEmpty)
+                        if (!collisionCheck.IsEmpty && !subbyCollision)
                         {
+                            subbyCollision = true;
                             // checkt alle collision met level.Subby
                             level.Subby.CollisionWith(sprite);
                             sprite.CollisionWith(level.Subby);

@@ -51,13 +51,9 @@ namespace Subby.Sprites
 
         public Texture2D Texture { get; set; }
 
-        private int _health;
 
-        public int Health
-        {
-            get { return _health; }
-            set { _health = value; }
-        }
+        [DataMember]
+        public int Health { get; set; }
         
 
         private int _damage;
@@ -154,6 +150,8 @@ namespace Subby.Sprites
                 {
                     //mine is exploated
                     Exploded = true;
+
+                    Health -= 200;
                     this.Color = Color.Black;
                 }
                 else

@@ -18,6 +18,7 @@ namespace Subby
         int Height { get; }
         string TextureName { get; set; }
         Vector2 PivotPoint { get; set; }
+        int Health { get; set; }
 
         void Initialize();
         void Load(Texture2D texture);

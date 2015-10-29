@@ -30,11 +30,15 @@ namespace Subby.Sprites
 
         private int _health;
 
+        [DataMember]
         public int Health
         {
             get { return _health; }
             set { _health = value; }
         }
+
+        [DataMember]
+        public Boolean Active { get; set; }
         
         public Texture2D Texture { get; set; }
         [DataMember]
@@ -51,10 +55,9 @@ namespace Subby.Sprites
             get { return _damage; }
             set { _damage = value; }
         }
-        
 
-        private float _angle; // in degrees
         [DataMember]
+        private float _angle; // in degrees
         public float Angle
         {
             set
@@ -94,7 +97,7 @@ namespace Subby.Sprites
 
         public void CollisionWith(ISprite s)
         {
-            this.Color = new Color(0.5f, 1, 1);
+            _health -= 200;
         }
     }
 }

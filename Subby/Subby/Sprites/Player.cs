@@ -63,7 +63,7 @@ namespace Subby.Sprites
         public string TextureName { get; set; }
         [DataMember]
         public Vector2 PivotPoint { get; set; }
-        [DataMember]
+        
         public Texture2D Texture {
             get
             {
@@ -148,7 +148,7 @@ namespace Subby.Sprites
             if (Bullits > 0)
             {
                 Bullits--;
-                return new Missile { Speed = 5f, Damage = 50, Angle = this._angle, Color = Color.White };
+                return new Missile { Speed = 7f, Angle = this._angle, Color = Color.White };
             }
             return null;
         }
@@ -172,7 +172,6 @@ namespace Subby.Sprites
 
             Position += new Vector2(_speed * (float)Math.Cos(Rotation), (_speed * (float)Math.Sin(Rotation)));
 
-            System.Diagnostics.Debug.WriteLine(_positionDeflection);
         }
         public void Update(GameTime gameTime)
         {
@@ -185,7 +184,6 @@ namespace Subby.Sprites
         public void IsDamaged()
         {
 
-            System.Diagnostics.Debug.WriteLine(_health);
             if (_health < 800)
             {
                 Position += new Vector2(0, 0.1f);
@@ -263,19 +261,11 @@ namespace Subby.Sprites
                 Wrak wrak = (Wrak)s;
                 SchadeAanBoot(wrak.Schade);
             }
-            if (s.GetType().Name.Equals("Waves"))
-            {
-                BoatBackInWater(_speed,_angle);
-            }
             if (s.GetType().Name.Equals("Missile"))
             {
                 Missile missile = (Missile)s;
                 SchadeAanBoot(missile.Damage);
             }
-        }
-        private void BoatBackInWater(float speed, float angle)
-        {
-
         }
         public void SchadeAanBoot(int schade)
         {

@@ -31,7 +31,14 @@ namespace Subby.Sprites
             set { _schade = value; }
         }
 
+        private int _health;
 
+        [DataMember]
+        public int Health
+        {
+            get { return _health; }
+            set { _health = value; }
+        }
         public int Height
         {
             get { return Texture.Height; }
@@ -50,8 +57,6 @@ namespace Subby.Sprites
 
         public void Initialize()
         {
-            Color = Color.White;
-            //Position = new Vector2(960, 270);
         }
 
         public void Load(Texture2D _texture)

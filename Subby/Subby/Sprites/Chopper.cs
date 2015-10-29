@@ -18,6 +18,10 @@ namespace Subby.Sprites
         [DataMember]
         public Color Color { get; set; }
 
+        public List<Missile> Missiles { get; set; }
+
+        public int DropSecond { get; set; }
+
         public int Width
         {
             get { return Texture.Width; }
@@ -27,9 +31,9 @@ namespace Subby.Sprites
         {
             get { return Texture.Height; }
         }
-
         private int _health;
 
+        [DataMember]
         public int Health
         {
             get { return _health; }
@@ -80,6 +84,22 @@ namespace Subby.Sprites
         {
         }
 
+        private void DropMissile()
+        {
+            if (Missiles != null)
+            {
+                if (Missiles.Count > 0) 
+                {
+                    Random random = new Random();
+                    Missile missile = Missiles.FirstOrDefault();
+                    Missiles.Remove(missile);
+                    missile.Position = new Vector2(this.Position.X, this.Position.Y + 40);
+                    missile.Speed = 5f;
+                    missile.Angle = random.Next(25,75);
+                    DropSecond += random.Next(1,3);
+                }
+            }
+        }
         public void Load(Texture2D texture)
         {
             Texture = texture;
@@ -87,13 +107,29 @@ namespace Subby.Sprites
 
         public void Update(GameTime gameTime)
         {
+            if (Health > 0)
+            {
+                if (gameTime.TotalGameTime.TotalSeconds > DropSecond)
+                {
+                    DropMissile();
+                }
 
-            Position += new Vector2(_speed * (float)Math.Cos(Angle), (_speed * (float)Math.Sin(Angle)));
+                Position += new Vector2(_speed * (float)Math.Cos(Angle), (_speed * (float)Math.Sin(Angle)));
+            }
         }
 
 
+        public void Schade(int schade)
+        {
+            _health -= schade;
+        }
         public void CollisionWith(ISprite s)
         {
+            if (s.GetType().Name.Equals("Missile"))
+            {
+                Missile missile = (Missile)s;
+                Schade(missile.Damage);
+            }
         }
     }
 }
