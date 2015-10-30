@@ -63,16 +63,13 @@ namespace Subby
             checkKeys();
             checkCollisions();
             level.Update(gameTime);
-            IsSubbyAlive();
-            base.Update(gameTime);
-        }
-        public void IsSubbyAlive()
-        {
-            if (level.Subby.Health < 0 || (level.Subby.Speed > -0.01f && level.Subby.Speed < 0.01f && level.Subby.Fuel <= 0))
+            if (!level.IsSubbyAlive())
             {
                 ResetLevel();
             }
+            base.Update(gameTime);
         }
+        
         private void ResetLevel()
         {
             Initialize();
