@@ -21,7 +21,6 @@ namespace Subby
         int Health { get; set; }
 
         void Initialize();
-        //void Load(Texture2D texture);
         void Update(GameTime gameTime);
         void CollisionWith(ISprite s);
     }

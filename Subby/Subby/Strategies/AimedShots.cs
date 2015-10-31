@@ -1,4 +1,5 @@
-﻿using Subby.Sprites;
+﻿using Microsoft.Xna.Framework;
+using Subby.Sprites;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,32 +9,41 @@ namespace Subby.Strategies
 {
     public class AimedShots : HostileSubStrategy
     {
-        public override void Move(HostileSub sub)
+        public override void Move(HostileSub sub, int scrollingPosition)
         {
-            if (sub.Position.X < sub.Subby.Position.X + 100)
+            if (sub.Position.X < (scrollingPosition + sub.Subby.Position.X + 200))
             {
                 sub.MoveRight();
             }
-            if (sub.Position.X > sub.Subby.Position.X + 500)
+            if (sub.Position.X > (scrollingPosition + sub.Subby.Position.X + 800))
             {
                 sub.MoveLeft();
             }
-            if (sub.Position.Y < sub.Boundaries.Top)
+            if (sub.Position.Y < sub.Boundaries.Top + 100)
             {
                 sub.MoveDown();
             }
-            if (sub.Position.Y > sub.Boundaries.Bottom)
+            if (sub.Position.Y > sub.Boundaries.Bottom - 100)
             {
                 sub.MoveUp();
             }
 
             sub.Position += sub.Velocity;
 
-            float dX = sub.Position.X - sub.Subby.Position.X;
+            float dX = sub.Position.X - (scrollingPosition + sub.Subby.Position.X);
             float dY = sub.Position.Y - sub.Subby.Position.Y;
 
-            float angle = (float)Math.Atan2(dY, dX);
-            sub.Rotation = (float)(Math.PI * angle / 180.0);
+            sub.Rotation = (float)Math.Atan2(dY, dX);
+        }
+
+        public override bool Shoot(HostileSub sub, GameTime gameTime)
+        {
+            if (gameTime.TotalGameTime.TotalSeconds > sub.ShootTimer)
+            {
+                sub.ShootTimer += 3;
+                return true;
+            }
+            return false;
         }
     }
 }

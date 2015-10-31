@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Xml.Serialization;
 using System.Runtime.Serialization;
+using Subby.Strategies;
 
 namespace Subby
 {
@@ -17,6 +18,7 @@ namespace Subby
     [KnownType(typeof(Wrak))]
     [KnownType(typeof(Mine))]
     [KnownType(typeof(Chopper))]
+    [KnownType(typeof(HostileSub))]
     [DataContract]
     public class Level
     {
@@ -53,10 +55,19 @@ namespace Subby
 
         public void Load(ContentManager manager, GraphicsDevice graphicsDevice)
         {
+            LevelBoundaries.Top = graphicsDevice.Viewport.Height / 2.5f + 20;
+            LevelBoundaries.Bottom = graphicsDevice.Viewport.Height - 80;
+            LevelBoundaries.Left = 20;
+            LevelBoundaries.Right = graphicsDevice.Viewport.Width / 2;
             Subby.Texture = manager.Load<Texture2D>(Subby.TextureName);
             foreach (ISprite sprite in SpriteList)
             {
                 sprite.Texture = manager.Load<Texture2D>(sprite.TextureName);
+                if (sprite is HostileSub)
+                {
+                    ((HostileSub)sprite).Strategy = new AimedShots();
+                    ((HostileSub)sprite).Load(Subby, LevelBoundaries);
+                }
             }
 
             if (MissileList != null)
@@ -83,11 +94,38 @@ namespace Subby
             foreach (ISprite sprite in SpriteList)
             {
                 sprite.Update(gameTime);
+                if (sprite is HostileSub)
+                {
+                    ((HostileSub)sprite).ScrollingPosition = ScrollingPosition;
+                }
             }
             UpdateScrollingPosition(Subby);
             Background.UpdatePosition(ScrollingPosition, gameTime);
             ChopperGenerator(gameTime);
+            HostileSubShoot(gameTime);
         }
+
+        private void HostileSubShoot(GameTime gameTime)
+        {
+            foreach (ISprite sprite in SpriteList.ToList())
+	        {
+		        if (sprite is HostileSub)
+	            {
+                    if (((HostileSub)sprite).Shoot(gameTime))
+	                {
+                        int x = (int)((sprite.Texture.Width / 2 + 30) * Math.Cos((((HostileSub)sprite).AngleDeg + 180) * Math.PI / 180F)) + (int)sprite.Position.X - ScrollingPosition;
+                        int y = (int)((sprite.Texture.Width / 2 + 30) * Math.Sin((((HostileSub)sprite).AngleDeg + 180) * Math.PI / 180F)) + (int)sprite.Position.Y;
+                        Point position = new Point(x, y);
+                        Missile missile = new Missile();
+                        missile.Angle = ((HostileSub)sprite).AngleDeg;
+                        missile.Speed = -7.0f;
+                        createMissile(missile, position, 300);
+	                }		            
+	            }
+	        }
+            
+        }
+
         private void ChopperGenerator(GameTime gameTime)
         {
             int second = (int)totalRoundTime.TotalSeconds;

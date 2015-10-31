@@ -35,6 +35,7 @@ namespace Subby
             SkyTexture = skyTexture;
             ScreenHeight = device.Viewport.Height;
             ScreenWidth = device.Viewport.Width;
+            WavesPosition.Y = ScreenHeight / 2.5f;
         }
 
         public void UpdatePosition(int scrollingPosition, GameTime gameTime)

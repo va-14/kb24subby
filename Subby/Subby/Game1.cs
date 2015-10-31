@@ -9,6 +9,7 @@ using System.Xml.Serialization;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Globalization;
+using Subby.Strategies;
 
 namespace Subby
 {
@@ -32,12 +33,7 @@ namespace Subby
 
         protected override void Initialize()
         {
-            
-            using (FileStream reader = new FileStream("level1.xml", FileMode.Open, FileAccess.Read))
-            {
-                DataContractSerializer ser = new DataContractSerializer(typeof(Level));
-                level = (Level)ser.ReadObject(reader);
-            }
+            deserialize("level1.xml");
             base.Initialize();
             level.Initialize();
         }
@@ -122,6 +118,18 @@ namespace Subby
             {
                 level.Subby.Start();
             }
+            if (state.IsKeyDown(Keys.D1))
+            {
+                deserialize("level1.xml");
+                base.Initialize();
+                level.Initialize();
+            }
+            if (state.IsKeyDown(Keys.D2))
+            {
+                deserialize("level2.xml");
+                base.Initialize();
+                level.Initialize();
+            }
             if (state.IsKeyDown(Keys.Space))
             {
                 if (!oldState.IsKeyDown(Keys.Space))
@@ -133,10 +141,26 @@ namespace Subby
             }
             if (state.IsKeyDown(Keys.P))
             {
-                using (FileStream writer = new FileStream("level1.xml", FileMode.Create, FileAccess.Write))
+                serialize("level3.xml");
+            }
+            if (state.IsKeyDown(Keys.K))
+            {
+                foreach(ISprite sprite in level.SpriteList)
                 {
-                    DataContractSerializer ser = new DataContractSerializer(typeof(Level));
-                    ser.WriteObject(writer, level);
+                    if (sprite is HostileSub)
+                    {
+                        ((HostileSub)sprite).Strategy = new AimedShots();
+                    }
+                }
+            }
+            if (state.IsKeyDown(Keys.L))
+            {
+                foreach (ISprite sprite in level.SpriteList)
+                {
+                    if (sprite is HostileSub)
+                    {
+                        ((HostileSub)sprite).Strategy = new WallOfShots();
+                    }
                 }
             }
 
@@ -245,6 +269,22 @@ namespace Subby
             }
         }
 
+        private void serialize(string filePath)
+        {
+            using (FileStream writer = new FileStream(filePath, FileMode.Create, FileAccess.Write))
+            {
+                DataContractSerializer ser = new DataContractSerializer(typeof(Level));
+                ser.WriteObject(writer, level);
+            }
+        }
 
+        private void deserialize(string filePath)
+        {
+            using (FileStream reader = new FileStream(filePath, FileMode.Open, FileAccess.Read))
+            {
+                DataContractSerializer ser = new DataContractSerializer(typeof(Level));
+                level = (Level)ser.ReadObject(reader);
+            }
+        }
     }
 }
