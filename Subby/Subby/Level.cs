@@ -85,7 +85,14 @@ namespace Subby
             Background.Load(graphicsDevice, waterTexture, wavesTexture, skyTexture);
 
         }
+        public Boolean IsSubbyAlive()
+        {
+            if (Subby.Health <= 0 || (Subby.Speed > -0.01f && Subby.Speed < 0.01f && Subby.Fuel <= 0))
+                return false;
+            else
+                return true;
 
+        }
         public void Update(GameTime gameTime)
         {
             totalRoundTime = DateTime.Now - startRoundTime;
