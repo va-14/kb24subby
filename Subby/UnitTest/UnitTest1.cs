@@ -1,7 +1,15 @@
 ﻿using System;
+using Microsoft.Xna.Framework;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Subby.Sprites;
 using Subby;
+using System.Runtime.Serialization;
+using System.Data;
+using System.Drawing;
+using System.Runtime;
+using System.Collections.Generic;
+using Microsoft.Xna.Framework.Graphics;
+
 
 namespace UnitTest
 {
@@ -101,7 +109,7 @@ namespace UnitTest
 
 
         [TestMethod]
-        public void GameReset()
+        public void IsSubbyAlive()
         {
 
 
@@ -142,7 +150,6 @@ namespace UnitTest
 
             Assert.AreEqual(expected, actual, "Subby hoort levend te zijn bij 1 fuel en 1 health");
         }
-
 
     }
 }
