@@ -18,9 +18,16 @@ namespace Subby.Sprites
         [DataMember]
         public Color Color { get; set; }
 
+        [DataMember]
         public List<Missile> Missiles { get; set; }
 
+        [DataMember]
         public int DropSecond { get; set; }
+
+        [DataMember]
+        private int _counter;
+
+        private int _lastSecond;
 
         public int Width
         {
@@ -107,9 +114,14 @@ namespace Subby.Sprites
 
         public void Update(GameTime gameTime)
         {
+            if ((int)gameTime.TotalGameTime.TotalSeconds != _lastSecond)
+            {
+                _lastSecond = (int)gameTime.TotalGameTime.TotalSeconds;
+                _counter++;
+            }
             if (Health > 0)
             {
-                if (gameTime.TotalGameTime.TotalSeconds > DropSecond)
+                if (_counter > DropSecond)
                 {
                     DropMissile();
                 }

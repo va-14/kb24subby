@@ -108,7 +108,7 @@ namespace Subby
             }
             UpdateScrollingPosition(Subby);
             Background.UpdatePosition(ScrollingPosition, gameTime);
-            ChopperGenerator(gameTime);
+            ChopperGenerator();
             HostileSubShoot(gameTime);
         }
 
@@ -133,7 +133,7 @@ namespace Subby
             
         }
 
-        private void ChopperGenerator(GameTime gameTime)
+        private void ChopperGenerator()
         {
             int second = (int)totalRoundTime.TotalSeconds;
             if (second >= _spawnChopperSecond)
@@ -147,7 +147,7 @@ namespace Subby
                     Position = new Vector2(ScrollingPosition-70, 60), 
                     Speed = 6f,
                     TextureName = "chopper",
-                    DropSecond = random.Next(second, second + 5),
+                    DropSecond = random.Next(0, 5),
                     Health = 200
                 };
                 chopper.Missiles = new List<Missile>(){
