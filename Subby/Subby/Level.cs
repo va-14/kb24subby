@@ -106,7 +106,7 @@ namespace Subby
                     ((HostileSub)sprite).ScrollingPosition = ScrollingPosition;
                 }
             }
-            UpdateScrollingPosition(Subby);
+            SubbyOnLevelBounaries(Subby);
             Background.UpdatePosition(ScrollingPosition, gameTime);
             ChopperGenerator();
             HostileSubShoot(gameTime);
@@ -255,7 +255,7 @@ namespace Subby
                 }
             }
         }
-        private void UpdateScrollingPosition(Player subby)
+        private void SubbyOnLevelBounaries(Player subby)
         {
             if (subby.Position.Y >= LevelBoundaries.Bottom)
             {

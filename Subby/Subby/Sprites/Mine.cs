@@ -125,11 +125,6 @@ namespace Subby.Sprites
 
         public Mine()
         {
-           /* activated = false;
-            Range = 200;
-            _delay = 2f;
-            exploded = false;
-            _damage = 2000;*/
         }
         public void Initialize()
         {
@@ -148,11 +143,9 @@ namespace Subby.Sprites
                 _timeSinceActivated += (float)gameTime.ElapsedGameTime.TotalSeconds;
                 if (_timeSinceActivated > Delay)
                 {
-                    //mine is exploated
+                    //mine is exploded
                     Exploded = true;
-
                     Health -= 200;
-                    this.Color = Color.Black;
                 }
                 else
                 {
@@ -160,10 +153,7 @@ namespace Subby.Sprites
                     this.Color = Color.Red;
                 }
             }
-
         }
-
-
         public void CollisionWith(ISprite s)
         {
 
