@@ -53,7 +53,7 @@
     <Compile Include="Sprites\TankStation.cs" />
     <Compile Include="Sprites\Wrak.cs" />
     <Compile Include="ScrollingBackground.cs" />
-    <Compile Include="Strategies\HostileSubStrategy.cs" />
+    <Compile Include="Strategies\IHostileSubStrategy.cs" />
     <Compile Include="Strategies\AimedShots.cs" />
     <Compile Include="Strategies\WallOfShots.cs" />
     <Compile Include="Waves.cs" />

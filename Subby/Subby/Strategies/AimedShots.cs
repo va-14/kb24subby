@@ -7,9 +7,9 @@ using System.Text;
 
 namespace Subby.Strategies
 {
-    public class AimedShots : HostileSubStrategy
+    public class AimedShots : IHostileSubStrategy
     {
-        public override void Move(HostileSub sub, int scrollingPosition)
+        public void Move(HostileSub sub, int scrollingPosition)
         {
             if (sub.Position.X < (scrollingPosition + sub.Subby.Position.X + 200))
             {
@@ -36,7 +36,7 @@ namespace Subby.Strategies
             sub.Rotation = (float)Math.Atan2(dY, dX);
         }
 
-        public override bool Shoot(HostileSub sub, GameTime gameTime)
+        public bool Shoot(HostileSub sub, GameTime gameTime)
         {
             if (gameTime.TotalGameTime.TotalSeconds > sub.ShootTimer)
             {

@@ -7,9 +7,9 @@ using System.Text;
 
 namespace Subby.Strategies
 {
-    public class WallOfShots : HostileSubStrategy
+    public class WallOfShots : IHostileSubStrategy
     {
-        public override void Move(HostileSub sub, int scrollingPosition)
+        public void Move(HostileSub sub, int scrollingPosition)
         {
             sub.Rotation = 0;
             if (sub.Position.X < (scrollingPosition + sub.Subby.Position.X + 400))
@@ -19,6 +19,10 @@ namespace Subby.Strategies
             if (sub.Position.X > (scrollingPosition + sub.Subby.Position.X + 430))
             {
                 sub.StopMoveSideways();
+                if (sub.Velocity.Y == 0)
+                {
+                    sub.MoveDown();
+                }
             }
             if (sub.Position.Y < sub.Boundaries.Top + 30)
             {
@@ -32,7 +36,7 @@ namespace Subby.Strategies
         }
 
 
-        public override bool Shoot(HostileSub sub, GameTime gameTime)
+        public bool Shoot(HostileSub sub, GameTime gameTime)
         {
             if (gameTime.TotalGameTime.TotalSeconds > sub.ShootTimer)
             {

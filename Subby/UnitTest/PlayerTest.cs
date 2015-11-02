@@ -14,7 +14,7 @@ using Microsoft.Xna.Framework.Graphics;
 namespace UnitTest
 {
     [TestClass]
-    public class UnitTest1
+    public class PlayerTest
     {
         [TestMethod]
         public void PlayerMovings()

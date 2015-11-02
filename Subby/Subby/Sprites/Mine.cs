@@ -11,7 +11,7 @@ using Subby;
 namespace Subby.Sprites
 {
      [DataContract]
-    class Mine : ISprite
+    public class Mine : ISprite
     {
         private Vector2 _position;
 

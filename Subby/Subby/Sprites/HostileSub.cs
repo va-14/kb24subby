@@ -41,7 +41,7 @@ namespace Subby.Sprites
         public float ShootTimer { get; set; }
         public Player Subby;
         public GameBoundaries Boundaries;
-        public HostileSubStrategy Strategy { get; set; }
+        public IHostileSubStrategy Strategy { get; set; }
         public int Width
         {
             get { return Texture.Width; }
