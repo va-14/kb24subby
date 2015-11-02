@@ -106,6 +106,8 @@ namespace Subby
                     ((HostileSub)sprite).ScrollingPosition = ScrollingPosition;
                 }
             }
+
+            checkCollisions();
             SubbyOnLevelBounaries(Subby);
             Background.UpdatePosition(ScrollingPosition, gameTime);
             ChopperGenerator();
@@ -253,6 +255,106 @@ namespace Subby
                 {
                     batch.Draw(sprite.Texture, new Vector2(sprite.Position.X - (float)ScrollingPosition, sprite.Position.Y), null, sprite.Color, sprite.Rotation, sprite.PivotPoint, 1f, SpriteEffects.None, 1);
                 }
+            }
+        }
+        private List<Rectangle> calculateSubbyRect()
+        {
+            int pixels = 10; // deze kan maximaal op 10 voor een goede collision
+            Point size = new Point(pixels, pixels);
+            int widthRadius = Subby.Texture.Width / 2;
+            int heightRadius = Subby.Texture.Height / 2;
+            List<Rectangle> values = new List<Rectangle>();
+
+            for (int x = 0; x < widthRadius; x = x + pixels)
+            {
+                for (int y = 0; y < heightRadius; y = y + pixels)
+                {
+                    Point radiusPoint = PointOnCircle(x, (int)Subby.AngleDegrees, new Point((int)Subby.Position.X, (int)Subby.Position.Y));
+                    Point point = PointOnCircle(y, (int)Subby.AngleDegrees - 90, new Point((int)radiusPoint.X, (int)radiusPoint.Y));
+                    values.Add(new Rectangle(point, size));
+                    radiusPoint = PointOnCircle(x, (int)Subby.AngleDegrees, new Point((int)Subby.Position.X, (int)Subby.Position.Y));
+                    point = PointOnCircle(y, (int)Subby.AngleDegrees + 90, new Point((int)radiusPoint.X, (int)radiusPoint.Y));
+                    values.Add(new Rectangle(point, size));
+                    radiusPoint = PointOnCircle(-x, (int)Subby.AngleDegrees, new Point((int)Subby.Position.X, (int)Subby.Position.Y));
+                    point = PointOnCircle(y, (int)Subby.AngleDegrees - 90, new Point((int)radiusPoint.X, (int)radiusPoint.Y));
+                    values.Add(new Rectangle(point, size));
+                    radiusPoint = PointOnCircle(-x, (int)Subby.AngleDegrees, new Point((int)Subby.Position.X, (int)Subby.Position.Y));
+                    point = PointOnCircle(y, (int)Subby.AngleDegrees + 90, new Point((int)radiusPoint.X, (int)radiusPoint.Y));
+                    values.Add(new Rectangle(point, size));
+                }
+            }
+            return values;
+        }
+
+        public Point PointOnCircle(int radius, int angleInDegrees, Point origin)
+        {
+            // Convert from degrees to radians via multiplication by PI/180        
+            int x = (int)(radius * Math.Cos(angleInDegrees * Math.PI / 180F)) + origin.X;
+            int y = (int)(radius * Math.Sin(angleInDegrees * Math.PI / 180F)) + origin.Y;
+            return new Point(x, y);
+        }
+        private void checkCollisions()
+        {
+
+            int boundingLength;
+            if (Subby.Width > Subby.Height)
+            {
+                boundingLength = Subby.Width;
+            }
+            else
+            {
+                boundingLength = Subby.Height;
+            }
+            Rectangle rectSubby = new Rectangle((int)Subby.Position.X - (boundingLength / 2), (int)Subby.Position.Y - (boundingLength / 2), boundingLength, boundingLength);
+            Boolean subbyCollision;
+            foreach (ISprite sprite in SpriteList)
+            {
+                subbyCollision = false;
+                //collision voor subby is apart, want deze wordt opgedeeld in meerdere vierkantjes
+                Rectangle rectSprite = new Rectangle((int)sprite.Position.X - ScrollingPosition, (int)sprite.Position.Y, sprite.Width, sprite.Height);
+                Rectangle overlap = Rectangle.Intersect(rectSubby, rectSprite);
+                if (!overlap.IsEmpty)
+                {
+                    List<Rectangle> partRectsSubby = calculateSubbyRect();
+
+                    foreach (Rectangle partRectSubby in partRectsSubby)
+                    {
+                        Rectangle collisionCheck = Rectangle.Intersect(partRectSubby, rectSprite);
+                        if (!collisionCheck.IsEmpty && !subbyCollision)
+                        {
+                            subbyCollision = true;
+                            // checkt alle collision met Subby
+                            Subby.CollisionWith(sprite);
+                            sprite.CollisionWith(Subby);
+                        }
+                    }
+                }
+                if (!(sprite is Missile))
+                {
+                    if (MissileList != null)
+                    {
+                        foreach (ISprite missile in MissileList)
+                        {
+                            // checkt alle collison met missiles
+                            if (!sprite.GetType().Name.Equals("Missile"))
+                                checkCollisionRectangleAction(missile, sprite);
+                        }
+                    }
+                }
+            }
+
+
+        }
+        private void checkCollisionRectangleAction(ISprite s1, ISprite s2)
+        {
+            Rectangle r1 = new Rectangle((int)s1.Position.X - ScrollingPosition, (int)s1.Position.Y, s1.Width, s1.Height);
+            Rectangle r2 = new Rectangle((int)s2.Position.X - ScrollingPosition, (int)s2.Position.Y, s2.Width, s2.Height);
+
+            Rectangle collisionCheck = Rectangle.Intersect(r1, r2);
+            if (!collisionCheck.IsEmpty)
+            {
+                s2.CollisionWith(s1);
+                s1.CollisionWith(s2);
             }
         }
         private void SubbyOnLevelBounaries(Player subby)
