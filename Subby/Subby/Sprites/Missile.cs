@@ -43,8 +43,7 @@ namespace Subby.Sprites
         public Texture2D Texture { get; set; }
         [DataMember]
         public string TextureName { get; set; }
-        [DataMember]
-        public float Rotation { get; set; }
+
         [DataMember]
         public Vector2 PivotPoint { get; set; }
 
@@ -57,16 +56,16 @@ namespace Subby.Sprites
         }
 
         [DataMember]
-        private float _angle; // in degrees
-        public float Angle
+        private float _rotation; // in degrees
+        public float Rotation
         {
             set
             {
-                _angle = value;
+                _rotation = value;
             }
             get
             {
-                return ((float)Math.PI) * _angle / 180.0f;
+                return ((float)Math.PI) * _rotation / 180.0f;
             }
         }
 
@@ -80,7 +79,7 @@ namespace Subby.Sprites
         public void Update(GameTime gameTime)
         {
 
-            Position += new Vector2(_speed * (float)Math.Cos(Angle), (_speed * (float)Math.Sin(Angle)));
+            Position += new Vector2(_speed * (float)Math.Cos(Rotation), (_speed * (float)Math.Sin(Rotation)));
         }
 
 

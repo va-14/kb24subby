@@ -126,7 +126,7 @@ namespace Subby
                         int y = (int)((sprite.Texture.Width / 2 + 30) * Math.Sin((((HostileSub)sprite).AngleDeg + 180) * Math.PI / 180F)) + (int)sprite.Position.Y;
                         Point position = new Point(x, y);
                         Missile missile = new Missile();
-                        missile.Angle = ((HostileSub)sprite).AngleDeg;
+                        missile.Rotation = ((HostileSub)sprite).AngleDeg;
                         missile.Speed = -7.0f;
                         createMissile(missile, position, 300);
 	                }		            

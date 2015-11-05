@@ -78,20 +78,6 @@ namespace Subby.Sprites
             set { _range = value; }
         }
         
-
-        private float _angle; // in degrees
-        public float Angle
-        {
-            set
-            {
-                _angle = value;
-            }
-            get
-            {
-                return ((float)Math.PI) * _angle / 180.0f;
-            }
-        }
-
         private float _speed;
         public float Speed
         {

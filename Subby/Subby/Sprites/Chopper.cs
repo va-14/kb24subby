@@ -51,8 +51,6 @@ namespace Subby.Sprites
         [DataMember]
         public string TextureName { get; set; }
         [DataMember]
-        public float Rotation { get; set; }
-        [DataMember]
         public Vector2 PivotPoint { get; set; }
 
         private int _damage;
@@ -64,17 +62,17 @@ namespace Subby.Sprites
         }
 
 
-        private float _angle; // in degrees
+        private float _rotation; // in degrees
         [DataMember]
-        public float Angle
+        public float Rotation
         {
             set
             {
-                _angle = value;
+                _rotation = value;
             }
             get
             {
-                return ((float)Math.PI) * _angle / 180.0f;
+                return ((float)Math.PI) * _rotation / 180.0f;
             }
         }
 
@@ -97,7 +95,7 @@ namespace Subby.Sprites
                     Missiles.Remove(missile);
                     missile.Position = new Vector2(this.Position.X, this.Position.Y + 40);
                     missile.Speed = 5f;
-                    missile.Angle = random.Next(25,75);
+                    missile.Rotation = random.Next(25,75);
                     DropSecond += random.Next(1,3);
                 }
             }
@@ -117,7 +115,7 @@ namespace Subby.Sprites
                     DropMissile();
                 }
 
-                Position += new Vector2(_speed * (float)Math.Cos(Angle), (_speed * (float)Math.Sin(Angle)));
+                Position += new Vector2(_speed * (float)Math.Cos(Rotation), (_speed * (float)Math.Sin(Rotation)));
             }
         }
 
