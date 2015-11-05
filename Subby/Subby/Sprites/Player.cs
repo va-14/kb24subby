@@ -13,20 +13,6 @@ namespace Subby.Sprites
     public class Player : ISprite
     {
 
-        private Color[] _textureData;
-
-	    public Color[] TextureData
-	    {
-		    get { return _textureData;}
-	    }
-        private String _state;
-
-        public String State
-        {
-            get { return _state; }
-            set { _state = value; }
-        }
-
         public int Width
         {
             get { return Texture.Width; }
@@ -43,15 +29,6 @@ namespace Subby.Sprites
             get { return _bullits; }
             set { _bullits = value; }
         }
-
-        private Vector2 _origin;
-
-        public Vector2 Origin
-        {
-            get { return _origin; }
-            set { _origin = value; }
-        }
-
         [DataMember]
         public Vector2 Position { get; set; }
         [DataMember]
@@ -72,16 +49,7 @@ namespace Subby.Sprites
             set
             {
                 _texture = value;
-                _textureData = new Color[value.Width * value.Height];
-                _origin = new Vector2(value.Width / 2, value.Height / 2);
             }
-        }
-        private float _positionDeflection;
-        [DataMember]
-        public float PositionDeflection
-        {
-            get { return _positionDeflection; }
-            set { _positionDeflection = value; }
         }
         
         private int _health;
@@ -133,16 +101,6 @@ namespace Subby.Sprites
             set { _speed = value; }
         }
 
-        public void Initialize()
-        {
-            
-        }
-
-        public void Load(Texture2D _texture)
-        {
-            Texture = _texture;
-            PivotPoint = new Vector2(Texture.Width / 2, Texture.Height / 2);
-        }
         private Missile getBullit()
         {
             if (Bullits > 0)

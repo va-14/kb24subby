@@ -13,8 +13,6 @@ namespace Subby.Sprites
      [DataContract]
     public class Mine : ISprite
     {
-        private Vector2 _position;
-
         [DataMember]
         public Vector2 Position
         {
@@ -121,18 +119,6 @@ namespace Subby.Sprites
                 else
                     return 0;
             }
-        }
-
-        public Mine()
-        {
-        }
-        public void Initialize()
-        {
-        }
-
-        public void Load(Texture2D texture)
-        {
-            Texture = texture;
         }
 
         public void Update(GameTime gameTime)

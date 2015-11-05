@@ -67,22 +67,5 @@ namespace Subby.Sprites
             Color = Color.Black ;
         }
 
-        public void Initialize()
-        {
-            Color = Color.White;
-           // Position = new Vector2(960, 270);
-        }
-
-        public void Load(Texture2D _texture)
-        {
-            Texture = _texture;
-        }
-
-
-        public void Draw(SpriteBatch batch, Vector2 positionDeflection)
-        {
-            batch.Draw(Texture, new Vector2(Position.X - positionDeflection.X, Position.Y), Color);
-        }
-
     }
 }

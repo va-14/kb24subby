@@ -77,17 +77,6 @@ namespace Subby.Sprites
             get { return _speed; }
             set { _speed = value; }
         }
-
-
-        public void Initialize()
-        {
-        }
-
-        public void Load(Texture2D texture)
-        {
-            Texture = texture;
-        }
-
         public void Update(GameTime gameTime)
         {
 

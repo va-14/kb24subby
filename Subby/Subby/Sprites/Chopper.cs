@@ -86,11 +86,6 @@ namespace Subby.Sprites
             set { _speed = value; }
         }
 
-
-        public void Initialize()
-        {
-        }
-
         private void DropMissile()
         {
             if (Missiles != null)
@@ -106,10 +101,6 @@ namespace Subby.Sprites
                     DropSecond += random.Next(1,3);
                 }
             }
-        }
-        public void Load(Texture2D texture)
-        {
-            Texture = texture;
         }
 
         public void Update(GameTime gameTime)
@@ -129,7 +120,6 @@ namespace Subby.Sprites
                 Position += new Vector2(_speed * (float)Math.Cos(Angle), (_speed * (float)Math.Sin(Angle)));
             }
         }
-
 
         public void Schade(int schade)
         {

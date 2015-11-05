@@ -53,11 +53,6 @@ namespace Subby.Sprites
         public int ScrollingPosition { get; set; }
         public float AngleDeg { get; set; }
 
-        public void Initialize()
-        {
-            ShootTimer = 0;
-        }
-
         public void Load(Player subby, GameBoundaries boundaries)
         {
             Subby = subby;

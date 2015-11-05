@@ -20,7 +20,6 @@ namespace Subby
         Vector2 PivotPoint { get; set; }
         int Health { get; set; }
 
-        void Initialize();
         void Update(GameTime gameTime);
         void CollisionWith(ISprite s);
     }

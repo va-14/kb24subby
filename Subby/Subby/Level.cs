@@ -287,8 +287,7 @@ namespace Subby
         }
 
         public Point PointOnCircle(int radius, int angleInDegrees, Point origin)
-        {
-            // Convert from degrees to radians via multiplication by PI/180        
+        {  
             int x = (int)(radius * Math.Cos(angleInDegrees * Math.PI / 180F)) + origin.X;
             int y = (int)(radius * Math.Sin(angleInDegrees * Math.PI / 180F)) + origin.Y;
             return new Point(x, y);
@@ -364,7 +363,7 @@ namespace Subby
                 subby.Position += new Vector2(0, -1);
                 subby.Speed = -subby.Speed / 4;
             }
-                if (subby.Position.Y <= LevelBoundaries.Top || subby.Position.X <= LevelBoundaries.Left)
+            if (subby.Position.Y <= LevelBoundaries.Top || subby.Position.X <= LevelBoundaries.Left)
             {
                 subby.Speed = -subby.Speed / 4;
             }
