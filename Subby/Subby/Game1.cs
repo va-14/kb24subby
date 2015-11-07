@@ -33,7 +33,7 @@ namespace Subby
 
         protected override void Initialize()
         {
-            deserialize("level2.xml");
+            Deserialize("level1.xml");
             base.Initialize();
             level.Initialize();
         }
@@ -51,7 +51,7 @@ namespace Subby
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            checkKeys();
+            CheckKeys();
             level.Update(gameTime);
             if (!level.IsSubbyAlive())
             {
@@ -70,7 +70,7 @@ namespace Subby
             spriteBatch.DrawString(font, "Health: " + level.Subby.Health, new Vector2(20, 45), Color.White);
             spriteBatch.DrawString(font, "Fuel: " + level.Subby.Fuel, new Vector2(20, 70), Color.White);
             spriteBatch.DrawString(font, "Bullits: " + level.Subby.Bullits, new Vector2(20, 95), Color.White);
-            spriteBatch.DrawString(font, "Seconds: " + level.totalRoundTime.TotalSeconds.ToString("0", CultureInfo.CurrentCulture), new Vector2(20, 120), Color.White);
+            spriteBatch.DrawString(font, "Seconds: " + level.TotalRoundTime.TotalSeconds.ToString("0", CultureInfo.CurrentCulture), new Vector2(20, 120), Color.White);
         }
         protected override void Draw(GameTime gameTime)
         {
@@ -84,7 +84,7 @@ namespace Subby
 
             base.Draw(gameTime);
         }
-        private Boolean checkKeys()
+        private Boolean CheckKeys()
         {
             KeyboardState state = Keyboard.GetState();
 
@@ -106,13 +106,13 @@ namespace Subby
             }
             if (state.IsKeyDown(Keys.D1))
             {
-                deserialize("level1.xml");
+                Deserialize("level1.xml");
                 base.Initialize();
                 level.Initialize();
             }
             if (state.IsKeyDown(Keys.D2))
             {
-                deserialize("level2.xml");
+                Deserialize("level2.xml");
                 base.Initialize();
                 level.Initialize();
             }
@@ -122,12 +122,12 @@ namespace Subby
                 {
                     Missile missile = level.Subby.Shoot();
                     Point position = level.PointOnCircle(level.Subby.Texture.Width / 2 + 30, (int)level.Subby.AngleDegrees, new Point((int)level.Subby.Position.X, (int)level.Subby.Position.Y));
-                    level.createMissile(missile, position, 300);
+                    level.CreateMissile(missile, position, 300);
                 }
             }
             if (state.IsKeyDown(Keys.P))
             {
-                serialize("level3.xml");
+                Serialize("level3.xml");
             }
             if (state.IsKeyDown(Keys.K))
             {
@@ -156,7 +156,7 @@ namespace Subby
         }
       
 
-        private void serialize(string filePath)
+        private void Serialize(string filePath)
         {
             using (FileStream writer = new FileStream(filePath, FileMode.Create, FileAccess.Write))
             {
@@ -165,7 +165,7 @@ namespace Subby
             }
         }
 
-        private void deserialize(string filePath)
+        private void Deserialize(string filePath)
         {
             using (FileStream reader = new FileStream(filePath, FileMode.Open, FileAccess.Read))
             {

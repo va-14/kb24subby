@@ -23,43 +23,42 @@ namespace Subby
     public class Level
     {
         [DataMember]
-        public List<ISprite> SpriteList;
-        [DataMember]
-        public List<Missile> MissileList;
+        public Background Background;
         [DataMember]
         public int[] Highscores;
         [DataMember]
-        public Background Background;
+        public LevelBoundaries LevelBoundaries;
         [DataMember]
-        public GameBoundaries LevelBoundaries;
+        public List<Missile> MissileList;
         [DataMember]
         public int ScrollingPosition;
         [DataMember]
         public Player Subby;
-
+        [DataMember]
+        public List<ISprite> SpriteList;
+        [DataMember]
+        public DateTime StartRoundTime;
+        [DataMember]
+        public TimeSpan TotalRoundTime;
 
         private Texture2D _chopperTexture;
         private Texture2D _missileTexture;
-
-        public DateTime startRoundTime;
-        public TimeSpan totalRoundTime;
-
         [DataMember]
         private int _spawnChopperSecond;
 
         public void Initialize()
         {
-            startRoundTime = DateTime.Now;
+            StartRoundTime = DateTime.Now;
             _spawnChopperSecond = 0;
         }
 
         public void Load(ContentManager manager, GraphicsDevice graphicsDevice)
         {
-            LevelBoundaries.Top = graphicsDevice.Viewport.Height / 2.5f + 20;
-            LevelBoundaries.Bottom = graphicsDevice.Viewport.Height - 80;
-            LevelBoundaries.Left = 20;
-            LevelBoundaries.Right = graphicsDevice.Viewport.Width / 2;
+            LevelBoundaries.SetByGraphicDevice(graphicsDevice);
             Subby.Texture = manager.Load<Texture2D>(Subby.TextureName);
+            _chopperTexture = manager.Load<Texture2D>("chopper");
+            _missileTexture = manager.Load<Texture2D>("missile");
+
             foreach (ISprite sprite in SpriteList)
             {
                 sprite.Texture = manager.Load<Texture2D>(sprite.TextureName);
@@ -77,14 +76,13 @@ namespace Subby
                     sprite.Texture = manager.Load<Texture2D>(sprite.TextureName);
                 }
             }
-            _chopperTexture = manager.Load<Texture2D>("chopper");
-            _missileTexture = manager.Load<Texture2D>("missile");
             Texture2D waterTexture = manager.Load<Texture2D>(Background.WaterTextureName);
             Texture2D wavesTexture = manager.Load<Texture2D>(Background.WavesTextureName);
             Texture2D skyTexture = manager.Load<Texture2D>(Background.SkyTextureName);
             Background.Load(graphicsDevice, waterTexture, wavesTexture, skyTexture);
-
         }
+
+
         public Boolean IsSubbyAlive()
         {
             if (Subby.Health <= 0 || (Subby.Speed > -0.01f && Subby.Speed < 0.01f && Subby.Fuel <= 0))
@@ -95,7 +93,7 @@ namespace Subby
         }
         public void Update(GameTime gameTime)
         {
-            totalRoundTime = DateTime.Now - startRoundTime;
+            TotalRoundTime = DateTime.Now - StartRoundTime;
             CleanUpSpriteList();
             Subby.Update(gameTime);
             foreach (ISprite sprite in SpriteList)
@@ -128,7 +126,7 @@ namespace Subby
                         Missile missile = new Missile();
                         missile.Rotation = ((HostileSub)sprite).AngleDeg;
                         missile.Speed = -7.0f;
-                        createMissile(missile, position, 300);
+                        CreateMissile(missile, position, 300);
 	                }		            
 	            }
 	        }
@@ -137,7 +135,7 @@ namespace Subby
 
         private void ChopperGenerator()
         {
-            int second = (int)totalRoundTime.TotalSeconds;
+            int second = (int)TotalRoundTime.TotalSeconds;
             if (second >= _spawnChopperSecond)
             {
                 Random random = new Random();
@@ -153,18 +151,12 @@ namespace Subby
                     Health = 200
                 };
                 chopper.Missiles = new List<Missile>(){
-                    createMissile(new Missile(), new Point(-40,0), 300),
-                    createMissile(new Missile(), new Point(-40,0), 300)
+                    CreateMissile(new Missile(), new Point(-40,0), 300),
+                    CreateMissile(new Missile(), new Point(-40,0), 300)
                     };
 
                 SpriteList.Add(chopper);
             }
-        }
-        private int NewRandom(int lastRandomSecond){
-            Random random = new Random();
-            int minSeconds = lastRandomSecond + 2;
-
-            return random.Next(minSeconds, minSeconds + 3);
         }
 
         private void CleanUpSpriteList()
@@ -178,8 +170,6 @@ namespace Subby
                 {
                     remove = true;
                 }
-
-
                 //check alleen chopper en missile wanneer ze aan de rechter kant uit het scherm vliegen
                 if (sprite is Chopper || sprite is Missile)
                 {
@@ -191,7 +181,6 @@ namespace Subby
                 //check alles aan de boven/onder/linker kant, behalve de missiles, want die starten aan de linker kant van de nieuwe choppers
                 if (sprite.Position.Y > Background.ScreenHeight || sprite.Position.X - ScrollingPosition < - sprite.Width - 200 || sprite.Position.Y < - sprite.Height)
                 {
-
                     if (sprite is Missile)
                     {
                         Missile missile = (Missile)sprite;
@@ -216,7 +205,7 @@ namespace Subby
             }
         }
        
-        public Missile createMissile(Missile missile, Point position, int Damage)
+        public Missile CreateMissile(Missile missile, Point position, int Damage)
         {
 
             if (missile != null)
@@ -257,7 +246,7 @@ namespace Subby
                 }
             }
         }
-        private List<Rectangle> calculateSubbyRect()
+        private List<Rectangle> CalculateSubbyRect()
         {
             int pixels = 10; // deze kan maximaal op 10 voor een goede collision
             Point size = new Point(pixels, pixels);
@@ -314,7 +303,7 @@ namespace Subby
                 Rectangle overlap = Rectangle.Intersect(rectSubby, rectSprite);
                 if (!overlap.IsEmpty)
                 {
-                    List<Rectangle> partRectsSubby = calculateSubbyRect();
+                    List<Rectangle> partRectsSubby = CalculateSubbyRect();
 
                     foreach (Rectangle partRectSubby in partRectsSubby)
                     {
@@ -336,7 +325,7 @@ namespace Subby
                         {
                             // checkt alle collison met missiles
                             if (!sprite.GetType().Name.Equals("Missile"))
-                                checkCollisionRectangleAction(missile, sprite);
+                                CheckCollisionRectangleAction(missile, sprite);
                         }
                     }
                 }
@@ -344,7 +333,7 @@ namespace Subby
 
 
         }
-        private void checkCollisionRectangleAction(ISprite s1, ISprite s2)
+        private void CheckCollisionRectangleAction(ISprite s1, ISprite s2)
         {
             Rectangle r1 = new Rectangle((int)s1.Position.X - ScrollingPosition, (int)s1.Position.Y, s1.Width, s1.Height);
             Rectangle r2 = new Rectangle((int)s2.Position.X - ScrollingPosition, (int)s2.Position.Y, s2.Width, s2.Height);

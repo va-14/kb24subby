@@ -48,7 +48,7 @@ namespace Subby.Sprites
 
         //HostileSub properties
         public float AngleDeg { get; set; }
-        public GameBoundaries Boundaries;
+        public LevelBoundaries Boundaries;
         public int ScrollingPosition { get; set; }
         [DataMember]
         public float ShootTimer { get; set; }
@@ -78,7 +78,7 @@ namespace Subby.Sprites
 
 
         //HostileSub functions
-        public void Load(Player subby, GameBoundaries boundaries)
+        public void Load(Player subby, LevelBoundaries boundaries)
         {
             Subby = subby;
             Boundaries = boundaries;

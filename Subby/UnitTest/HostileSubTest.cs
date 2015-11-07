@@ -19,7 +19,7 @@ namespace UnitTest
             ShootTimer = 0,
             Rotation = 0,
             ScrollingPosition = 0,
-            Boundaries = new GameBoundaries() { Bottom = 1000, Left = 20, Right = 800, Top = 300 },
+            Boundaries = new LevelBoundaries() { Bottom = 1000, Left = 20, Right = 800, Top = 300 },
             Velocity = new Vector2(0, 0)
         };
         GameTime gameTime = new GameTime();

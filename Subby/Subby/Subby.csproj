@@ -40,7 +40,7 @@
   <ItemGroup>
     <Compile Include="Background.cs" />
     <Compile Include="Game1.cs" />
-    <Compile Include="GameBoundaries.cs" />
+    <Compile Include="LevelBoundaries.cs" />
     <Compile Include="ISprite.cs" />
     <Compile Include="Sprites\Chopper.cs" />
     <Compile Include="Sprites\HostileSub.cs" />
