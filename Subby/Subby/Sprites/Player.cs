@@ -12,7 +12,35 @@ namespace Subby.Sprites
     [DataContract]
     public class Player : ISprite
     {
-
+        //ISprite properties
+        [DataMember]
+        public Color Color { get; set; }
+        [DataMember]
+        private int _health;
+        public int Health
+        {
+            get { return _health; }
+            set { _health = value; }
+        }
+        [DataMember]
+        public Vector2 PivotPoint { get; set; }
+        [DataMember]
+        public Vector2 Position { get; set; }
+        [DataMember]
+        public float Rotation
+        {
+            get
+            {
+                return ((float)Math.PI) * _angle / 180f; ;
+            }
+            set
+            {
+                _angle = value * 180.0f / ((float)Math.PI);
+            }
+        }
+        public Texture2D Texture { get; set; }
+        [DataMember]
+        public string TextureName { get; set; }
         public int Width
         {
             get { return Texture.Width; }
@@ -22,86 +50,81 @@ namespace Subby.Sprites
         {
             get { return Texture.Height; }
         }
-        private int _bullits;
-        [DataMember]
-        public int Bullits
-        {
-            get { return _bullits; }
-            set { _bullits = value; }
-        }
-        [DataMember]
-        public Vector2 Position { get; set; }
-        [DataMember]
-        public Color Color { get; set; }
-        
-        private Texture2D _texture;
-        public Texture2D TorpedoTexture { get; set; }
-        [DataMember]
-        public string TextureName { get; set; }
-        [DataMember]
-        public Vector2 PivotPoint { get; set; }
-        
-        public Texture2D Texture {
-            get
-            {
-                return _texture;
-            }
-            set
-            {
-                _texture = value;
-            }
-        }
-        
-        private int _health;
-        [DataMember]
-        public int Health
-        {
-            get { return _health; }
-            set { _health = value; }
-        }
 
-        private int _fuel;
-        [DataMember]
-        public int Fuel
-        {
-            get { return _fuel; }
-            set { _fuel = value; }
-        }
-
+        //Player properties
         private float _angle; // in degrees
-        [DataMember]
-        public float Rotation
-        {
-            get 
-            {
-                return ((float)Math.PI) * _angle / 180f;;  
-            }
-            set
-            {
-                _angle = value * 180.0f / ((float)Math.PI);
-            }
-        }
         public float AngleDegrees
         {
             get
             {
                 return _angle;
             }
-            set 
+            set
             {
                 _angle = value * 180.0f / ((float)Math.PI);
             }
         }
-
-        private float _speed;
         [DataMember]
+        private int _bullits;
+        public int Bullits
+        {
+            get { return _bullits; }
+            set { _bullits = value; }
+        }
+        [DataMember]
+        private int _fuel;
+        public int Fuel
+        {
+            get { return _fuel; }
+            set { _fuel = value; }
+        }
+        [DataMember]
+        private float _speed;
         public float Speed
         {
             get { return _speed; }
             set { _speed = value; }
         }
 
-        private Missile getBullit()
+
+        //ISprite functions
+        public void CollisionWith(ISprite s)
+        {
+            if (s.GetType().Name.Equals("TankStation"))
+            {
+                TankStation tankstation = (TankStation)s;
+                FillTank(tankstation.GetFuel());
+            }
+            if (s.GetType().Name.Equals("Wrak"))
+            {
+                Wrak wrak = (Wrak)s;
+                DoDamage(wrak.Schade);
+            }
+            if (s.GetType().Name.Equals("Missile"))
+            {
+                Missile missile = (Missile)s;
+                DoDamage(missile.Damage);
+            }
+        }
+        public void Update(GameTime gameTime)
+        {
+            UpdatePosition();
+        }
+
+
+        //Player functions
+        private void Accelerate(float acceleration)
+        {
+            if ((_speed < 4 && _speed >= 0) || (_speed > -4 && _speed <= 0))
+            {
+                _speed += acceleration;
+            }
+        }
+        public void FillTank(int fuel)
+        {
+            _fuel += fuel;
+        }
+        private Missile GetBullit()
         {
             if (Bullits > 0)
             {
@@ -110,35 +133,26 @@ namespace Subby.Sprites
             }
             return null;
         }
-
-        public Missile Shoot()
+        public void GoDown()
         {
-            return getBullit();
+            if (UseFuel(1))
+                Rotate(1);
         }
-        private void UpdatePosition()
+        public void GoFaster()
         {
-            if (_speed > 0.01)
-            {
-                _speed -= 0.01f;
-            }
-            if (_speed < -0.01)
-            {
-                _speed += 0.01f;
-            }
-
-            IsDamaged();
-
-            Position += new Vector2(_speed * (float)Math.Cos(Rotation), (_speed * (float)Math.Sin(Rotation)));
-
+            if (UseFuel(2))
+            Accelerate(.05f);
         }
-        public void Update(GameTime gameTime)
+        public void GoSlower()
         {
-            System.Diagnostics.Debug.WriteLine(_fuel);
-
-            UpdatePosition();
-            return;
+            if (UseFuel(2))
+             Accelerate(-.05f);
         }
-
+        public void GoUp()
+        {
+            if (UseFuel(1))
+            Rotate(-1);
+        }
         public void IsDamaged()
         {
 
@@ -159,44 +173,35 @@ namespace Subby.Sprites
                 Position += new Vector2(0, 0.25f);
             }
         }
-        public void GoUp()
-        {
-            if (UseFuel(1))
-            Rotate(-1);
-        }
-
-        public void GoDown()
-        {
-            if (UseFuel(1))
-            Rotate(1);
-        }
-
         private void Rotate(int degrees)
         {
             _angle += degrees;
             while (this._angle < 0) this._angle += 360;
             while (this._angle > 359) this._angle -= 360;
         }
-
-        private void Accelerate(float acceleration)
+        public void DoDamage(int damage)
         {
-            if ((_speed < 4 && _speed >= 0) || (_speed > -4 && _speed <= 0))
+            _health -= damage;
+        }
+        public Missile Shoot()
+        {
+            return GetBullit();
+        }
+        private void UpdatePosition()
+        {
+            if (_speed > 0.01)
             {
-                _speed += acceleration;
+                _speed -= 0.01f;
             }
-        }
-        public void GoFaster()
-        {
-            if (UseFuel(2))
-            Accelerate(.05f);
-        }
-        
-        public void GoSlower()
-        {
-            if (UseFuel(2))
-             Accelerate(-.05f);
-        }
+            if (_speed < -0.01)
+            {
+                _speed += 0.01f;
+            }
 
+            IsDamaged();
+
+            Position += new Vector2(_speed * (float)Math.Cos(Rotation), (_speed * (float)Math.Sin(Rotation)));
+        }
         public bool UseFuel(int fuel)
         {
             if (_fuel >= fuel)
@@ -205,37 +210,6 @@ namespace Subby.Sprites
                 return true;
             }
             return false;
-        }
-
-        public void CollisionWith(ISprite s)
-        {
-            if (s.GetType().Name.Equals("TankStation"))
-            {
-                TankStation tankstation = (TankStation)s;
-                fillTank(tankstation.getFuel());
-            }
-            if (s.GetType().Name.Equals("Wrak"))
-            {
-                Wrak wrak = (Wrak)s;
-                SchadeAanBoot(wrak.Schade);
-            }
-            if (s.GetType().Name.Equals("Missile"))
-            {
-                Missile missile = (Missile)s;
-                SchadeAanBoot(missile.Damage);
-            }
-        }
-        public void SchadeAanBoot(int schade)
-        {
-            _health -= schade;
-        }
-        public void Start()
-        {
-            // geen start implemented
-        }
-        public void fillTank(int fuel)
-        {
-            _fuel += fuel;
         }
     }
 }

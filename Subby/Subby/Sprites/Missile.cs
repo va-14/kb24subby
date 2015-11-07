@@ -13,48 +13,42 @@ namespace Subby.Sprites
     [DataContract]
     public class Missile : ISprite
     {
-        [DataMember]
-        public Vector2 Position { get; set; }
+        //ISprite properties
         [DataMember]
         public Color Color { get; set; }
-
-        public int Width
-        {
-            get { return Texture.Width; }
-        }
-
-        public int Height
-        {
-            get { return Texture.Height; }
-        }
-
-        private int _health;
-
         [DataMember]
+        private int _health;
         public int Health
         {
             get { return _health; }
             set { _health = value; }
         }
-
         [DataMember]
-        public Boolean Active { get; set; }
-        
+        public Vector2 PivotPoint { get; set; }
+        [DataMember]
+        public Vector2 Position { get; set; }
         public Texture2D Texture { get; set; }
         [DataMember]
         public string TextureName { get; set; }
+        public int Width
+        {
+            get { return Texture.Width; }
+        }
+        public int Height
+        {
+            get { return Texture.Height; }
+        }
 
+        //Missile properties
         [DataMember]
-        public Vector2 PivotPoint { get; set; }
-
+        public Boolean Active { get; set; }
+        [DataMember]
         private int _damage;
-        [DataMember]
         public int Damage
         {
             get { return _damage; }
             set { _damage = value; }
         }
-
         [DataMember]
         private float _rotation; // in degrees
         public float Rotation
@@ -68,21 +62,22 @@ namespace Subby.Sprites
                 return ((float)Math.PI) * _rotation / 180.0f;
             }
         }
-
-        private float _speed;
         [DataMember]
+        private float _speed;
         public float Speed
         {
             get { return _speed; }
             set { _speed = value; }
         }
+
+
+
+        //ISprite functions
         public void Update(GameTime gameTime)
         {
 
             Position += new Vector2(_speed * (float)Math.Cos(Rotation), (_speed * (float)Math.Sin(Rotation)));
         }
-
-
         public void CollisionWith(ISprite s)
         {
             _health -= 200;

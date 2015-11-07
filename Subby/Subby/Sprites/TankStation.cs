@@ -11,57 +11,55 @@ namespace Subby.Sprites
     [DataContract]
     class TankStation : ISprite
     {
-        [DataMember]
-        public Vector2 Position { get; set; }
+        //ISprite properties
         [DataMember]
         public Color Color { get; set; }
-        public Texture2D Texture { get; set; }
-
-        public int Width
-        {
-            get { return Texture.Width; }
-        }
-
-        public int Height
-        {
-            get { return Texture.Height; }
-        }
-        private int _health;
-
         [DataMember]
+        private int _health;
         public int Health
         {
             get { return _health; }
             set { _health = value; }
         }
-    
-        [DataMember]
-        public string TextureName { get; set; }
-        [DataMember]
-        public float Rotation { get; set; }
         [DataMember]
         public Vector2 PivotPoint { get; set; }
-        private int _tank;
         [DataMember]
-        public int Tank
+        public Vector2 Position { get; set; }
+        [DataMember]
+        public float Rotation { get; set; }
+        public Texture2D Texture { get; set; }
+        [DataMember]
+        public string TextureName { get; set; }
+        public int Width
         {
-            get { return _tank; }
-            set { _tank = value; }
+            get { return Texture.Width; }
         }
-        
+        public int Height
+        {
+            get { return Texture.Height; }
+        }
+
+
+        //FillingStation properties
+        [DataMember]
+        private int _tank;
+
+        //ISprite functions
+        public void CollisionWith(ISprite s)
+        {
+
+        }
         public void Update(GameTime gameTime) {  }
-        
-        public void CollisionWith(ISprite s) 
-        {
-            
-        }
-        public int getFuel()
+
+
+        //FillingStation functions
+        public int GetFuel()
         {
             int tmpTank = _tank;
-            emptyTank();
+            EmptyTank();
             return tmpTank;
         }
-        private void emptyTank()
+        private void EmptyTank()
         {
             _tank = 0;
             Color = Color.Black ;

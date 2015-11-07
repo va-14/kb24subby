@@ -10,17 +10,17 @@ namespace Subby
 {
     public interface ISprite
     {
+        Color Color { get; set; }
+        int Health { get; set; }
+        Vector2 PivotPoint { get; set; }
         Vector2 Position { get; set; }
         float Rotation { get; set; }
-        Color Color { get; set; }
         Texture2D Texture { get; set; }
+        string TextureName { get; set; }
         int Width { get; }
         int Height { get; }
-        string TextureName { get; set; }
-        Vector2 PivotPoint { get; set; }
-        int Health { get; set; }
 
-        void Update(GameTime gameTime);
         void CollisionWith(ISprite s);
+        void Update(GameTime gameTime);
     }
 }

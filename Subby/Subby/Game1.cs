@@ -27,13 +27,13 @@ namespace Subby
             graphics = new GraphicsDeviceManager(this);
             graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
             graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
-            graphics.IsFullScreen = true;
+            graphics.IsFullScreen = false;
             Content.RootDirectory = "Content";
         }
 
         protected override void Initialize()
         {
-            deserialize("level1.xml");
+            deserialize("level2.xml");
             base.Initialize();
             level.Initialize();
         }
@@ -103,10 +103,6 @@ namespace Subby
             if (state.IsKeyDown(Keys.Left))
             {
                 level.Subby.GoSlower();
-            }
-            if (state.IsKeyDown(Keys.S))
-            {
-                level.Subby.Start();
             }
             if (state.IsKeyDown(Keys.D1))
             {

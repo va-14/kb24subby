@@ -11,34 +11,25 @@ namespace Subby.Sprites
     [DataContract]
     class Wrak : ISprite
     {
-        [DataMember]
-        public Vector2 Position { get; set; }
+        //ISprite properties
         [DataMember]
         public Color Color { get; set; }
-        public Texture2D Texture { get; set; }
         [DataMember]
-        public string TextureName { get; set; }
-        [DataMember]
-        public float Rotation { get; set; }
-        [DataMember]
-        public Vector2 PivotPoint { get; set; }
-        
-        private int _schade;
-        [DataMember]
-        public int Schade
-        {
-            get { return _schade; }
-            set { _schade = value; }
-        }
-
         private int _health;
-
-        [DataMember]
         public int Health
         {
             get { return _health; }
             set { _health = value; }
         }
+        [DataMember]
+        public Vector2 PivotPoint { get; set; }
+        [DataMember]
+        public Vector2 Position { get; set; }
+        [DataMember]
+        public float Rotation { get; set; }
+        public Texture2D Texture { get; set; }
+        [DataMember]
+        public string TextureName { get; set; }
         public int Height
         {
             get { return Texture.Height; }
@@ -48,12 +39,17 @@ namespace Subby.Sprites
             get { return Texture.Width; }
         }
 
-        public void Update(GameTime gameTime) { }
+        //Wrak properties
+        [DataMember]
+        public int Schade { get; set; }
 
+        //ISprite functions
         public void CollisionWith(ISprite s)
         {
 
         }
+        public void Update(GameTime gameTime) { }
+
 
     }
 }

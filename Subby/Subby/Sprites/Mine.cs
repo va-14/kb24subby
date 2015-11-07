@@ -13,89 +13,30 @@ namespace Subby.Sprites
      [DataContract]
     public class Mine : ISprite
     {
+        //ISprite properties
         [DataMember]
-        public Vector2 Position
-        {
-            get; set;
-        }
-
-        private float _delay;
-
+        public Color Color { get; set; }
         [DataMember]
-        public float Delay
-        {
-            get { return _delay; }
-            set { _delay = value; }
-        }
-
+        public int Health { get; set; }
         [DataMember]
-        public string TextureName { get; set; }
+        public Vector2 PivotPoint { get; set; }
+        [DataMember]
+        public Vector2 Position { get; set; }
         [DataMember]
         public float Rotation { get; set; }
         [DataMember]
-        public Vector2 PivotPoint { get; set; }
-
-
-        [DataMember]
-        public Boolean Exploded { get; set; }
-
-        private float _timeSinceActivated;
-
-
-        [DataMember]
-        private Boolean _activated;
-        [DataMember]
-        public Color Color { get; set; }
-
+        public string TextureName { get; set; }
         public Texture2D Texture { get; set; }
-
-
-        [DataMember]
-        public int Health { get; set; }
-        
-
-        private int _damage;
-
-        [DataMember]
-        public int Damage
-        {
-            get {
-                int tmpDamage = _damage;
-                _damage = 0;
-                return tmpDamage; }
-            set { _damage = value; }
-        }
-
-        private int _range;
-
-        [DataMember]
-        public int Range
-        {
-            get {
-                if (_range.Equals(null))
-                    _range = 0;
-                return _range; }
-            set { _range = value; }
-        }
-        
-        private float _speed;
-        public float Speed
-        {
-            get { return _speed; }
-            set { _speed = value; }
-        }
-
         public int Width
         {
             get
             {
-                if (Texture != null) 
-                    return Texture.Width + Range; 
+                if (Texture != null)
+                    return Texture.Width + Range;
                 else
-                    return 0; 
+                    return 0;
             }
         }
-
         public int Height
         {
             get
@@ -107,9 +48,63 @@ namespace Subby.Sprites
             }
         }
 
+        //Mine properties
+        [DataMember]
+        private Boolean _activated;
+        private int _damage;
+        [DataMember]
+        public int Damage
+        {
+            get
+            {
+                int tmpDamage = _damage;
+                _damage = 0;
+                return tmpDamage;
+            }
+            set { _damage = value; }
+        }
+        private float _delay;
+        [DataMember]
+        public float Delay
+        {
+            get { return _delay; }
+            set { _delay = value; }
+        }
+        [DataMember]
+        public Boolean Exploded { get; set; }
+        private int _range;
+        [DataMember]
+        public int Range
+        {
+            get
+            {
+                if (_range.Equals(null))
+                    _range = 0;
+                return _range;
+            }
+            set { _range = value; }
+        }
+        private float _timeSinceActivated;
+
+
+        //ISprite functions
+        public void CollisionWith(ISprite s)
+        {
+
+            _activated = true;
+            if (Exploded && _timeSinceActivated < Delay +0.5 && _timeSinceActivated > Delay)
+            {
+                if (s.GetType().Name.Equals("Player"))
+                {
+                    Player p = (Player)s;
+                    p.DoDamage(Damage);
+                }
+            }
+
+        }
         public void Update(GameTime gameTime)
         {
-            
+
             if (_activated)
             {
                 _timeSinceActivated += (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -125,20 +120,6 @@ namespace Subby.Sprites
                     this.Color = Color.Red;
                 }
             }
-        }
-        public void CollisionWith(ISprite s)
-        {
-
-            _activated = true;
-            if (Exploded && _timeSinceActivated < Delay +0.5 && _timeSinceActivated > Delay)
-            {
-                if (s.GetType().Name.Equals("Player"))
-                {
-                    Player p = (Player)s;
-                    p.SchadeAanBoot(Damage);
-                }
-            }
-
         }
     }
 }

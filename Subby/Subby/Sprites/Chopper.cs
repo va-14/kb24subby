@@ -13,57 +13,23 @@ namespace Subby.Sprites
     [DataContract]
     public class Chopper : ISprite
     {
-        [DataMember]
-        public Vector2 Position { get; set; }
+        //ISprite properties
         [DataMember]
         public Color Color { get; set; }
-
-        [DataMember]
-        public List<Missile> Missiles { get; set; }
-
-        [DataMember]
-        public int DropSecond { get; set; }
-
-        [DataMember]
-        private int _counter;
-
-        private int _lastSecond;
-
-        public int Width
-        {
-            get { return Texture.Width; }
-        }
-
-        public int Height
-        {
-            get { return Texture.Height; }
-        }
+        
         private int _health;
-
         [DataMember]
         public int Health
         {
             get { return _health; }
             set { _health = value; }
         }
-
-        public Texture2D Texture { get; set; }
-        [DataMember]
-        public string TextureName { get; set; }
         [DataMember]
         public Vector2 PivotPoint { get; set; }
-
-        private int _damage;
         [DataMember]
-        public int Damage
-        {
-            get { return _damage; }
-            set { _damage = value; }
-        }
-
-
+        public Vector2 Position { get; set; }
+        [DataMember]
         private float _rotation; // in degrees
-        [DataMember]
         public float Rotation
         {
             set
@@ -75,32 +41,55 @@ namespace Subby.Sprites
                 return ((float)Math.PI) * _rotation / 180.0f;
             }
         }
-
-        private float _speed;
+        public Texture2D Texture { get; set; }
         [DataMember]
+        public string TextureName { get; set; }
+        public int Width
+        {
+            get { return Texture.Width; }
+        }
+        public int Height
+        {
+            get { return Texture.Height; }
+        }
+
+
+        //Chopper properties
+        [DataMember]
+        private int _counter;
+        [DataMember]
+        private int _damage;
+
+        public int Damage
+        {
+            get { return _damage; }
+            set { _damage = value; }
+        }
+        [DataMember]
+        public int DropSecond { get; set; }
+        [DataMember]
+        private int _lastSecond;
+        [DataMember]
+        public List<Missile> Missiles { get; set; }
+        [DataMember]
+        private float _speed;
         public float Speed
         {
             get { return _speed; }
             set { _speed = value; }
         }
 
-        private void DropMissile()
+
+
+        //ISprite functions
+        public void CollisionWith(ISprite s)
         {
-            if (Missiles != null)
+            if (s.GetType().Name.Equals("Missile"))
             {
-                if (Missiles.Count > 0) 
-                {
-                    Random random = new Random();
-                    Missile missile = Missiles.FirstOrDefault();
-                    Missiles.Remove(missile);
-                    missile.Position = new Vector2(this.Position.X, this.Position.Y + 40);
-                    missile.Speed = 5f;
-                    missile.Rotation = random.Next(25,75);
-                    DropSecond += random.Next(1,3);
-                }
+                Missile missile = (Missile)s;
+                DoDamage(missile.Damage);
             }
         }
-
         public void Update(GameTime gameTime)
         {
             if ((int)gameTime.TotalGameTime.TotalSeconds != _lastSecond)
@@ -119,17 +108,30 @@ namespace Subby.Sprites
             }
         }
 
-        public void Schade(int schade)
+
+        //Chopper functions
+        private void DropMissile()
         {
-            _health -= schade;
-        }
-        public void CollisionWith(ISprite s)
-        {
-            if (s.GetType().Name.Equals("Missile"))
+            if (Missiles != null)
             {
-                Missile missile = (Missile)s;
-                Schade(missile.Damage);
+                if (Missiles.Count > 0) 
+                {
+                    Random random = new Random();
+                    Missile missile = Missiles.FirstOrDefault();
+                    Missiles.Remove(missile);
+                    missile.Position = new Vector2(this.Position.X, this.Position.Y + 40);
+                    missile.Speed = 5f;
+                    missile.Rotation = random.Next(25,75);
+                    DropSecond += random.Next(1,3);
+                }
             }
+        }
+
+        
+
+        public void DoDamage(int damage)
+        {
+            _health -= damage;
         }
     }
 }
