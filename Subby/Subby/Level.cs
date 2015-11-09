@@ -166,9 +166,19 @@ namespace Subby
             {
                 remove = false;
                 //alle sprites die geen health meer hebben
-                if (sprite.Health < 0)
+                if (sprite is IDamageableSprite)
                 {
-                    remove = true;
+                    IDamageableSprite damageableSprite = (IDamageableSprite)sprite;
+                    if (damageableSprite.Health < 0)
+                    {
+                        remove = true;
+                    }
+                }
+                //sprites die geexplodeerd zijn
+                if (sprite is IExplodableSprite)
+                {
+                    IExplodableSprite explodableSprite = (IExplodableSprite)sprite;
+                    remove = explodableSprite.Exploded;
                 }
                 //check alleen chopper en missile wanneer ze aan de rechter kant uit het scherm vliegen
                 if (sprite is Chopper || sprite is Missile)

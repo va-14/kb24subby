@@ -11,14 +11,13 @@ namespace Subby.Sprites
 {
 
     [DataContract]
-    public class Chopper : ISprite
+    public class Chopper : IDamageableSprite
     {
         //ISprite properties
         [DataMember]
         public Color Color { get; set; }
-        
-        private int _health;
         [DataMember]
+        private int _health;
         public int Health
         {
             get { return _health; }

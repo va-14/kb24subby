@@ -11,18 +11,11 @@ namespace Subby.Sprites
 {
 
     [DataContract]
-    public class Missile : ISprite
+    public class Missile : IExplodableSprite
     {
         //ISprite properties
         [DataMember]
         public Color Color { get; set; }
-        [DataMember]
-        private int _health;
-        public int Health
-        {
-            get { return _health; }
-            set { _health = value; }
-        }
         [DataMember]
         public Vector2 PivotPoint { get; set; }
         [DataMember]
@@ -49,6 +42,7 @@ namespace Subby.Sprites
             get { return _damage; }
             set { _damage = value; }
         }
+        public Boolean Exploded { get; set; }
         [DataMember]
         private float _rotation; // in degrees
         public float Rotation
@@ -80,7 +74,7 @@ namespace Subby.Sprites
         }
         public void CollisionWith(ISprite s)
         {
-            _health -= 200;
+            Exploded = true;
         }
     }
 }

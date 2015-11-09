@@ -10,7 +10,7 @@ using System.Runtime.Serialization;
 namespace Subby.Sprites
 {
     [DataContract]
-    public class Player : ISprite
+    public class Player : IDamageableSprite
     {
         //ISprite properties
         [DataMember]

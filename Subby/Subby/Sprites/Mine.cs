@@ -11,13 +11,11 @@ using Subby;
 namespace Subby.Sprites
 {
      [DataContract]
-    public class Mine : ISprite
+    public class Mine : IExplodableSprite
     {
         //ISprite properties
         [DataMember]
         public Color Color { get; set; }
-        [DataMember]
-        public int Health { get; set; }
         [DataMember]
         public Vector2 PivotPoint { get; set; }
         [DataMember]
@@ -112,7 +110,6 @@ namespace Subby.Sprites
                 {
                     //mine is exploded
                     Exploded = true;
-                    Health -= 200;
                 }
                 else
                 {

@@ -15,13 +15,6 @@ namespace Subby.Sprites
         [DataMember]
         public Color Color { get; set; }
         [DataMember]
-        private int _health;
-        public int Health
-        {
-            get { return _health; }
-            set { _health = value; }
-        }
-        [DataMember]
         public Vector2 PivotPoint { get; set; }
         [DataMember]
         public Vector2 Position { get; set; }

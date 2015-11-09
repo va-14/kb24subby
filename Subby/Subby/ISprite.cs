@@ -11,7 +11,6 @@ namespace Subby
     public interface ISprite
     {
         Color Color { get; set; }
-        int Health { get; set; }
         Vector2 PivotPoint { get; set; }
         Vector2 Position { get; set; }
         float Rotation { get; set; }

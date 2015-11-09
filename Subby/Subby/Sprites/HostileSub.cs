@@ -10,14 +10,20 @@ using System.Text;
 namespace Subby.Sprites
 {
     [DataContract]
-    public class HostileSub : ISprite
+    public class HostileSub : IDamageableSprite
     {
 
         //ISprite properties
         [DataMember]
         public Color Color { get; set; }
+
         [DataMember]
-        public int Health { get; set; }
+        private int _health;
+        public int Health
+        {
+            get { return _health; }
+            set { _health = value; }
+        }
         [DataMember]
         public Vector2 PivotPoint { get; set; }
         [DataMember]
@@ -64,7 +70,7 @@ namespace Subby.Sprites
             if (s.GetType().Name.Equals("Missile"))
             {
                 Missile missile = (Missile)s;
-                Health -= missile.Damage;
+                DoDamage(missile.Damage);
             }
         }
         public void Update(GameTime gameTime)
@@ -78,6 +84,10 @@ namespace Subby.Sprites
 
 
         //HostileSub functions
+        public void DoDamage(int damage)
+        {
+            _health -= damage;
+        }
         public void Load(Player subby, LevelBoundaries boundaries)
         {
             Subby = subby;
