@@ -40,6 +40,8 @@ namespace Subby
         public DateTime StartRoundTime;
         [DataMember]
         public TimeSpan TotalRoundTime;
+        [DataMember]
+        public int Score;
 
         private Texture2D _chopperTexture;
         private Texture2D _missileTexture;
@@ -105,7 +107,7 @@ namespace Subby
                 }
             }
 
-            checkCollisions();
+            CheckCollisions();
             SubbyOnLevelBounaries(Subby);
             Background.UpdatePosition(ScrollingPosition, gameTime);
             ChopperGenerator();
@@ -291,7 +293,7 @@ namespace Subby
             int y = (int)(radius * Math.Sin(angleInDegrees * Math.PI / 180F)) + origin.Y;
             return new Point(x, y);
         }
-        private void checkCollisions()
+        private void CheckCollisions()
         {
 
             int boundingLength;
@@ -331,19 +333,18 @@ namespace Subby
                 {
                     if (MissileList != null)
                     {
-                        foreach (ISprite missile in MissileList)
+                        foreach (Missile missile in MissileList)
                         {
                             // checkt alle collison met missiles
                             if (!sprite.GetType().Name.Equals("Missile"))
-                                CheckCollisionRectangleAction(missile, sprite);
+                                CheckMissileCollision(missile, sprite);
+                            
                         }
                     }
                 }
             }
-
-
         }
-        private void CheckCollisionRectangleAction(ISprite s1, ISprite s2)
+        private void CheckMissileCollision(Missile s1, ISprite s2)
         {
             Rectangle r1 = new Rectangle((int)s1.Position.X - ScrollingPosition, (int)s1.Position.Y, s1.Width, s1.Height);
             Rectangle r2 = new Rectangle((int)s2.Position.X - ScrollingPosition, (int)s2.Position.Y, s2.Width, s2.Height);
@@ -353,7 +354,15 @@ namespace Subby
             {
                 s2.CollisionWith(s1);
                 s1.CollisionWith(s2);
+                if (s2 is Chopper || s2 is HostileSub)
+                {
+                    UpdateScore(100);
+                }
             }
+        }
+        private void UpdateScore(int score)
+        {
+            Score += score;
         }
         private void SubbyOnLevelBounaries(Player subby)
         {

@@ -71,6 +71,7 @@ namespace Subby
             spriteBatch.DrawString(font, "Fuel: " + level.Subby.Fuel, new Vector2(20, 70), Color.White);
             spriteBatch.DrawString(font, "Bullits: " + level.Subby.Bullits, new Vector2(20, 95), Color.White);
             spriteBatch.DrawString(font, "Seconds: " + level.TotalRoundTime.TotalSeconds.ToString("0", CultureInfo.CurrentCulture), new Vector2(20, 120), Color.White);
+            spriteBatch.DrawString(font, "Score: " + level.Score, new Vector2(20, 155), Color.White);
         }
         protected override void Draw(GameTime gameTime)
         {
