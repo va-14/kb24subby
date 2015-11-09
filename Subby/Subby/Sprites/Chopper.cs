@@ -70,6 +70,12 @@ namespace Subby.Sprites
         private int _lastSecond;
         [DataMember]
         public List<Missile> Missiles { get; set; }
+        public int Score {
+            get
+            {
+                return 100;
+            }
+        }
         [DataMember]
         private float _speed;
         public float Speed

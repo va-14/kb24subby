@@ -55,6 +55,13 @@ namespace Subby.Sprites
         //HostileSub properties
         public float AngleDeg { get; set; }
         public LevelBoundaries Boundaries;
+        public int Score
+        {
+            get
+            {
+                return 1000;
+            }
+        }
         public int ScrollingPosition { get; set; }
         [DataMember]
         public float ShootTimer { get; set; }

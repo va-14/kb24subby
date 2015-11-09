@@ -354,9 +354,15 @@ namespace Subby
             {
                 s2.CollisionWith(s1);
                 s1.CollisionWith(s2);
-                if (s2 is Chopper || s2 is HostileSub)
+                if (s2 is Chopper )
                 {
-                    UpdateScore(100);
+                    Chopper chopper = (Chopper)s2;
+                    UpdateScore(chopper.Score);
+                }
+                if (s2 is HostileSub)
+                {
+                    HostileSub hostileSub = (HostileSub)s2;
+                    UpdateScore(hostileSub.Score);
                 }
             }
         }
