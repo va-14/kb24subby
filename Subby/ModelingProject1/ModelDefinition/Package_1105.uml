@@ -1,0 +1,1001 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/LogicalClassDesigner"
+  dslVersion="1.0.0.0"
+  Id="ff1981cd-3739-470c-ace1-014f8a7b625b"
+  name="Strategies"
+  visibility="Private" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
+  <referencesInternal>
+    <reference
+      Id="fab0b140-f684-406b-948c-82df133c8edf"
+      handle="viewcode://./CodeSchema_Namespace?Namespace%3DSubby.Strategies"
+      tag="ViewCode" />
+  </referencesInternal>
+  <packagedElements>
+    <packageHasNamedElement>
+      <class
+        Id="79dba0ea-67ad-4e98-b0a6-94ff92052c26"
+        name="AimedShots"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <referencesInternal>
+          <reference
+            Id="c1ab3e0f-f8e4-4984-8089-d17fb7348323"
+            handle="viewcode://./CodeSchema_Class?Assembly%3Dfile:%2F%2F%2FC:%2FUsers%2FKevin%2FDocuments%2FGitHub%2Fkb24subby%2FSubby%2FSubby%2Fbin%2FWindows%2FDebug%2FSubby.exe Namespace%3DSubby.Strategies Type%3DAimedShots"
+            tag="ViewCode" />
+        </referencesInternal>
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="0bd485bc-9eea-4c1f-8c94-c18e80988f51"
+            name="class"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="d55d5ba5-94b1-4a19-a0b7-d10184cf1645">
+                <propertyInstance
+                  Id="84ad1ced-ee87-42ae-baa1-7d91a94eee2d"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="5ddcc958-e021-4150-b7b4-23db433e2031">
+                <propertyInstance
+                  Id="3fb6d1ab-532c-4b87-a515-1a206aaacfdf"
+                  name="IsPartial"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="9b46700c-b3ce-4c5b-8656-19485114de16">
+                <propertyInstance
+                  Id="17103844-6f24-4a22-957a-289dbd8c91b2"
+                  name="IsStatic"
+                  value="False" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="c35c42bf-aead-41d5-95b3-35df40d78b5b">
+                <propertyInstance
+                  Id="0e700886-2f48-4f00-ab73-2f253b734020"
+                  name="IsUnsafe"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="3f932a5b-fe6d-4056-b819-80430f5cf8ef">
+                <propertyInstance
+                  Id="42f0c5ae-fb6e-4196-b28c-823a4863cc12"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+        <suppliersInternal>
+          <interfaceRealization
+            Id="038e336d-f469-4701-820c-9fffb52639fb">
+            <interfaceMoniker
+              Id="ecb9346b-7e6d-40df-8902-bc79f40c81e5"
+              LastKnownName="IHostileSubStrategy"
+              LastKnownLocation="Package_1105.uml" />
+          </interfaceRealization>
+        </suppliersInternal>
+        <ownedOperationsInternal>
+          <operation
+            Id="f6411ced-d967-4719-8114-310cc98f5633"
+            name="Move"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="33695495-5cca-42f1-b671-a86894ac7bd6"
+                handle="viewcode://./CodeSchema_Method?Assembly%3Dfile:%2F%2F%2FC:%2FUsers%2FKevin%2FDocuments%2FGitHub%2Fkb24subby%2FSubby%2FSubby%2Fbin%2FWindows%2FDebug%2FSubby.exe Namespace%3DSubby.Strategies Type%3DAimedShots Member%3D(Name%3DMove OverloadingParameters%3D[(Assembly%3Dfile:%2F%2F%2FC:%2FUsers%2FKevin%2FDocuments%2FGitHub%2Fkb24subby%2FSubby%2FSubby%2Fbin%2FWindows%2FDebug%2FSubby.exe Namespace%3DSubby.Sprites Type%3DHostileSub)%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.0%2Fmscorlib.dll&quot; Namespace%3DSystem Type%3DInt32)])"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="8d9ca0df-75ac-4352-b129-3367943eec65"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="3d0106c4-c1f5-415d-890f-2a69c4cf87bf">
+                    <propertyInstance
+                      Id="1b987cc0-9537-45f5-b6ae-8c6022890dfc"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="350a315c-0e88-4fc7-b0ca-12799267a926">
+                    <propertyInstance
+                      Id="ccefbe6c-66fa-4556-9da0-c766888ab6b4"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="38e1b639-3dfe-4fac-b34d-aa88c1698504">
+                    <propertyInstance
+                      Id="c24d0cd0-2ee2-43ba-8cde-edc597d58e3f"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="42d5c271-cba7-4f23-82df-57246d990522">
+                    <propertyInstance
+                      Id="40f51d90-c4d0-4ccd-a182-94c836801661"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="bc70982d-2f80-40bb-894c-185d5f4b4eb1">
+                    <propertyInstance
+                      Id="cd8b1070-08f8-4368-a7c6-61019aec743e"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="c8b88459-d839-422e-90b8-91e9f24a0cc0">
+                    <propertyInstance
+                      Id="63dd2e0e-7e4c-4b13-9dbe-4475d9c12074"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="e44e5f08-1a15-43d3-8e76-80e9cea3f5b8"
+                  name="sub"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="1fcc4c42-2185-4be2-b48a-c54c18e74a9e"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly%3Dfile:%2F%2F%2FC:%2FUsers%2FKevin%2FDocuments%2FGitHub%2Fkb24subby%2FSubby%2FSubby%2Fbin%2FWindows%2FDebug%2FSubby.exe Namespace%3DSubby.Strategies Type%3DAimedShots Member%3D(Name%3DMove OverloadingParameters%3D[(Assembly%3Dfile:%2F%2F%2FC:%2FUsers%2FKevin%2FDocuments%2FGitHub%2Fkb24subby%2FSubby%2FSubby%2Fbin%2FWindows%2FDebug%2FSubby.exe Namespace%3DSubby.Sprites Type%3DHostileSub)%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.0%2Fmscorlib.dll&quot; Namespace%3DSystem Type%3DInt32)]) ParameterIdentifier%3Dsub"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="ac33c6ae-1068-40f1-a614-79fb03a00b61"
+                      LastKnownName="HostileSub"
+                      LastKnownLocation="Package8_1103.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="7cee94c6-f0cb-470d-af2f-18ac7d573810"
+                  name="scrollingPosition"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="e9696642-71ef-49a9-ab8f-49eed395497e"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly%3Dfile:%2F%2F%2FC:%2FUsers%2FKevin%2FDocuments%2FGitHub%2Fkb24subby%2FSubby%2FSubby%2Fbin%2FWindows%2FDebug%2FSubby.exe Namespace%3DSubby.Strategies Type%3DAimedShots Member%3D(Name%3DMove OverloadingParameters%3D[(Assembly%3Dfile:%2F%2F%2FC:%2FUsers%2FKevin%2FDocuments%2FGitHub%2Fkb24subby%2FSubby%2FSubby%2Fbin%2FWindows%2FDebug%2FSubby.exe Namespace%3DSubby.Sprites Type%3DHostileSub)%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.0%2Fmscorlib.dll&quot; Namespace%3DSystem Type%3DInt32)]) ParameterIdentifier%3DscrollingPosition"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <primitiveTypeMoniker
+                      Id="220a3521-e091-4221-bae9-3ef9018e845c"
+                      LastKnownName="Integer"
+                      LastKnownLocation="ModelingProject1.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="6b19b2e1-ba2e-495d-a8f7-f03dd541d5e4"
+            name="Shoot"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="3ce8c968-8361-4d0e-aa3f-5526946110fc"
+                handle="viewcode://./CodeSchema_Method?Assembly%3Dfile:%2F%2F%2FC:%2FUsers%2FKevin%2FDocuments%2FGitHub%2Fkb24subby%2FSubby%2FSubby%2Fbin%2FWindows%2FDebug%2FSubby.exe Namespace%3DSubby.Strategies Type%3DAimedShots Member%3D(Name%3DShoot OverloadingParameters%3D[(Assembly%3Dfile:%2F%2F%2FC:%2FUsers%2FKevin%2FDocuments%2FGitHub%2Fkb24subby%2FSubby%2FSubby%2Fbin%2FWindows%2FDebug%2FSubby.exe Namespace%3DSubby.Sprites Type%3DHostileSub)%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FMonoGame%2Fv3.0%2FAssemblies%2FWindows%2FMonoGame.Framework.dll&quot; Namespace%3DMicrosoft.Xna.Framework Type%3DGameTime)])"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="bc73eba2-eaee-4484-865d-32fcedd7f944"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="55fa0c92-03ed-41cf-83c2-12a15cbdd9db">
+                    <propertyInstance
+                      Id="938e7e5a-7e3f-407f-bbb3-8ac122b84d21"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="82d4e9ba-53a9-4f8c-aca6-df604361eeb6">
+                    <propertyInstance
+                      Id="e21b3c52-2cfa-4bfe-bea3-fe21870e99d2"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="d8e0c73d-9e02-49eb-8aad-96e2f699686c">
+                    <propertyInstance
+                      Id="b226e069-b3c7-4a94-aa6c-2d0aa2242bc8"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="27d4752a-5a16-4988-9632-5d2b3ea009fa">
+                    <propertyInstance
+                      Id="44984dbf-d5e5-4f26-a61f-6b29fd1763a0"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="cadcbf2b-7607-4331-a257-478cca37b003">
+                    <propertyInstance
+                      Id="89cce909-4874-4edf-9341-82bbac3481c6"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="7875a00a-be94-4c86-af36-cd32822ff930">
+                    <propertyInstance
+                      Id="cc07f050-4247-46f6-9e0d-64809b5e2589"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="b0bd0e29-dfa5-4da0-b492-9c4c87318b49"
+                  direction="Return">
+                  <type_NamedElement>
+                    <primitiveTypeMoniker
+                      Id="8943dc84-709e-4f62-b15a-a3273aa6f165"
+                      LastKnownName="Boolean"
+                      LastKnownLocation="ModelingProject1.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="5e9d8c10-20c6-4381-b109-ddf6c169587f"
+                  name="sub"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="3e832e3a-1198-443b-ae11-8b9b7eb482a2"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly%3Dfile:%2F%2F%2FC:%2FUsers%2FKevin%2FDocuments%2FGitHub%2Fkb24subby%2FSubby%2FSubby%2Fbin%2FWindows%2FDebug%2FSubby.exe Namespace%3DSubby.Strategies Type%3DAimedShots Member%3D(Name%3DShoot OverloadingParameters%3D[(Assembly%3Dfile:%2F%2F%2FC:%2FUsers%2FKevin%2FDocuments%2FGitHub%2Fkb24subby%2FSubby%2FSubby%2Fbin%2FWindows%2FDebug%2FSubby.exe Namespace%3DSubby.Sprites Type%3DHostileSub)%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FMonoGame%2Fv3.0%2FAssemblies%2FWindows%2FMonoGame.Framework.dll&quot; Namespace%3DMicrosoft.Xna.Framework Type%3DGameTime)]) ParameterIdentifier%3Dsub"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="ac33c6ae-1068-40f1-a614-79fb03a00b61"
+                      LastKnownName="HostileSub"
+                      LastKnownLocation="Package8_1103.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="841512eb-0708-43a7-818d-b61096e0ac83"
+                  name="gameTime"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="a068da73-12fb-44f8-8a6f-cb2a928d9ede"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly%3Dfile:%2F%2F%2FC:%2FUsers%2FKevin%2FDocuments%2FGitHub%2Fkb24subby%2FSubby%2FSubby%2Fbin%2FWindows%2FDebug%2FSubby.exe Namespace%3DSubby.Strategies Type%3DAimedShots Member%3D(Name%3DShoot OverloadingParameters%3D[(Assembly%3Dfile:%2F%2F%2FC:%2FUsers%2FKevin%2FDocuments%2FGitHub%2Fkb24subby%2FSubby%2FSubby%2Fbin%2FWindows%2FDebug%2FSubby.exe Namespace%3DSubby.Sprites Type%3DHostileSub)%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FMonoGame%2Fv3.0%2FAssemblies%2FWindows%2FMonoGame.Framework.dll&quot; Namespace%3DMicrosoft.Xna.Framework Type%3DGameTime)]) ParameterIdentifier%3DgameTime"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="355370a9-33c0-4ea6-80ed-88fc6830225d"
+                      LastKnownName="GameTime"
+                      LastKnownLocation="Package3_1103.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="6d71854c-ee69-441a-9c4b-3207c6122577"
+            name="AimedShots"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="c3583829-1781-4696-94a6-1720ea2ba680"
+                handle="viewcode://./CodeSchema_Method?Assembly%3Dfile:%2F%2F%2FC:%2FUsers%2FKevin%2FDocuments%2FGitHub%2Fkb24subby%2FSubby%2FSubby%2Fbin%2FWindows%2FDebug%2FSubby.exe Namespace%3DSubby.Strategies Type%3DAimedShots Member%3D.ctor"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="97756523-2abf-4b9b-901a-bbacd95297e9"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="b6f39009-0213-4694-857c-153c4f3e81bf">
+                    <propertyInstance
+                      Id="c729c242-7c6f-44be-b799-2e752bbc26b3"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="88dd0ff0-31db-43b2-aa6d-4232a47d0da2">
+                    <propertyInstance
+                      Id="67ff7aa2-9dba-462d-9314-724ae628a601"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="7b54269d-bb41-4267-b824-6a4232ea728b">
+                    <propertyInstance
+                      Id="7be43a9b-0011-4748-9e0e-93f93300217b"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="c8796272-57d2-4c19-b400-5f68b7a75d26">
+                    <propertyInstance
+                      Id="5128f422-d691-4ba3-94f3-34387f8d3f1e"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="654bab32-3991-40ea-afac-ba6f13a2b18f">
+                    <propertyInstance
+                      Id="2b77419e-67ad-4a34-a253-237b009e6abb"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="7e719fce-f63a-44d7-b8ab-ec524ca9499f">
+                    <propertyInstance
+                      Id="cdabce55-8a46-4ec8-af6d-881eee14ec08"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <Interface
+        Id="ecb9346b-7e6d-40df-8902-bc79f40c81e5"
+        name="IHostileSubStrategy"
+        isAbstract="false"
+        isLeaf="false">
+        <referencesInternal>
+          <reference
+            Id="d30230ae-3ce3-4f60-a388-30b95b3b0384"
+            handle="viewcode://./CodeSchema_Interface?Assembly%3Dfile:%2F%2F%2FC:%2FUsers%2FKevin%2FDocuments%2FGitHub%2Fkb24subby%2FSubby%2FSubby%2Fbin%2FWindows%2FDebug%2FSubby.exe Namespace%3DSubby.Strategies Type%3DIHostileSubStrategy"
+            tag="ViewCode" />
+        </referencesInternal>
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="a445c8f9-a352-48e8-b849-54abc94e2aba"
+            name="interface"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="6741ad81-110b-4653-be40-fc871c487ed2">
+                <propertyInstance
+                  Id="ab28bb64-2e75-48fc-8536-80f5926247ba"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="b5def958-c1a2-4c07-844e-873bcec2521c">
+                <propertyInstance
+                  Id="9bbcbe56-d594-4c8c-b163-ff56a478fffa"
+                  name="IsPartial"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="e499c5c2-4bd2-4757-ad42-477133a1f240">
+                <propertyInstance
+                  Id="0628809f-054f-41df-a216-d626f5051010"
+                  name="IsUnsafe"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="56da5b32-df4c-4e14-b27f-7ca9838e9145">
+                <propertyInstance
+                  Id="23576ed1-4d5b-4120-912c-8a03a3bc1972"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+        <ownedOperations>
+          <operation
+            Id="ad75bcf4-5b1f-4534-adda-29f05f19b7a0"
+            name="Move"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="590fa4d6-a5f5-4d7b-8dc9-2749af1757fc"
+                handle="viewcode://./CodeSchema_Method?Assembly%3Dfile:%2F%2F%2FC:%2FUsers%2FKevin%2FDocuments%2FGitHub%2Fkb24subby%2FSubby%2FSubby%2Fbin%2FWindows%2FDebug%2FSubby.exe Namespace%3DSubby.Strategies Type%3DIHostileSubStrategy Member%3D(Name%3DMove OverloadingParameters%3D[(Assembly%3Dfile:%2F%2F%2FC:%2FUsers%2FKevin%2FDocuments%2FGitHub%2Fkb24subby%2FSubby%2FSubby%2Fbin%2FWindows%2FDebug%2FSubby.exe Namespace%3DSubby.Sprites Type%3DHostileSub)%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.0%2Fmscorlib.dll&quot; Namespace%3DSystem Type%3DInt32)])"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="448d775b-1946-4472-8798-e47983b90e6b"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="13b89a5f-d608-4338-97f5-f25164ab41a8">
+                    <propertyInstance
+                      Id="2e78e84e-91cb-4c29-8eae-5c2ac2796f87"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="92f4111c-cc4d-4c90-8e28-ba0cdb3e1fbb">
+                    <propertyInstance
+                      Id="69cd0fff-442c-4ab4-9512-a88cd535fa38"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="85fc678d-d90e-44d5-8dfa-245b46000627">
+                    <propertyInstance
+                      Id="d23696b6-5b62-435b-9a07-d1c3e1845b08"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="99a9bed7-711b-4e9c-9731-325f36a7c888">
+                    <propertyInstance
+                      Id="83529e4f-a529-437c-a830-87bd7547e755"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="316aa3ed-72a1-4d1f-812a-084e0ac7ff99">
+                    <propertyInstance
+                      Id="0c4e4309-4abc-4490-a18e-88a87239a317"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="667ff0a1-b854-45bc-81e7-34d901193fe5">
+                    <propertyInstance
+                      Id="d117a9a9-6fd3-4d7b-8d30-849b3f4214e5"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="65344d1f-cc19-4cb5-ae0b-7d38af10894d"
+                  name="sub"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="87fb4f51-b3d2-477c-8e66-caf6c79279f3"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly%3Dfile:%2F%2F%2FC:%2FUsers%2FKevin%2FDocuments%2FGitHub%2Fkb24subby%2FSubby%2FSubby%2Fbin%2FWindows%2FDebug%2FSubby.exe Namespace%3DSubby.Strategies Type%3DIHostileSubStrategy Member%3D(Name%3DMove OverloadingParameters%3D[(Assembly%3Dfile:%2F%2F%2FC:%2FUsers%2FKevin%2FDocuments%2FGitHub%2Fkb24subby%2FSubby%2FSubby%2Fbin%2FWindows%2FDebug%2FSubby.exe Namespace%3DSubby.Sprites Type%3DHostileSub)%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.0%2Fmscorlib.dll&quot; Namespace%3DSystem Type%3DInt32)]) ParameterIdentifier%3Dsub"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="ac33c6ae-1068-40f1-a614-79fb03a00b61"
+                      LastKnownName="HostileSub"
+                      LastKnownLocation="Package8_1103.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="96d07c7f-247a-4f1b-90d8-b9867f106a9f"
+                  name="scrollingPosition"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="2e36cdf8-788b-4cb7-ab72-d39a168f0b6d"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly%3Dfile:%2F%2F%2FC:%2FUsers%2FKevin%2FDocuments%2FGitHub%2Fkb24subby%2FSubby%2FSubby%2Fbin%2FWindows%2FDebug%2FSubby.exe Namespace%3DSubby.Strategies Type%3DIHostileSubStrategy Member%3D(Name%3DMove OverloadingParameters%3D[(Assembly%3Dfile:%2F%2F%2FC:%2FUsers%2FKevin%2FDocuments%2FGitHub%2Fkb24subby%2FSubby%2FSubby%2Fbin%2FWindows%2FDebug%2FSubby.exe Namespace%3DSubby.Sprites Type%3DHostileSub)%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.0%2Fmscorlib.dll&quot; Namespace%3DSystem Type%3DInt32)]) ParameterIdentifier%3DscrollingPosition"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <primitiveTypeMoniker
+                      Id="220a3521-e091-4221-bae9-3ef9018e845c"
+                      LastKnownName="Integer"
+                      LastKnownLocation="ModelingProject1.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="22150e34-f9d5-4bf7-b46f-04bfb088e372"
+            name="Shoot"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="2ce565a8-0d30-4bbc-9f59-0b099c57f577"
+                handle="viewcode://./CodeSchema_Method?Assembly%3Dfile:%2F%2F%2FC:%2FUsers%2FKevin%2FDocuments%2FGitHub%2Fkb24subby%2FSubby%2FSubby%2Fbin%2FWindows%2FDebug%2FSubby.exe Namespace%3DSubby.Strategies Type%3DIHostileSubStrategy Member%3D(Name%3DShoot OverloadingParameters%3D[(Assembly%3Dfile:%2F%2F%2FC:%2FUsers%2FKevin%2FDocuments%2FGitHub%2Fkb24subby%2FSubby%2FSubby%2Fbin%2FWindows%2FDebug%2FSubby.exe Namespace%3DSubby.Sprites Type%3DHostileSub)%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FMonoGame%2Fv3.0%2FAssemblies%2FWindows%2FMonoGame.Framework.dll&quot; Namespace%3DMicrosoft.Xna.Framework Type%3DGameTime)])"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="0f67cc20-a4b8-4573-902f-774a2cde0a08"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="2dd13c53-4b7e-4111-b51e-18dbaca654f0">
+                    <propertyInstance
+                      Id="5f158ad8-e6b4-466d-a3e6-c627e4b75bf3"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="ebe0e214-55f1-49e3-b7f1-7848cee8f34c">
+                    <propertyInstance
+                      Id="075155f1-fb87-4937-baf0-772382d23193"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="33d01372-ef82-4e7f-8366-dc68d8471679">
+                    <propertyInstance
+                      Id="0f390680-599c-45aa-a9bb-b30a77a129f0"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="11c00e17-81fd-4079-95aa-60f39b3bb516">
+                    <propertyInstance
+                      Id="da7030c5-7293-4d13-8c9b-be314337880e"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="c52c13af-c133-4150-8c53-b065166f18de">
+                    <propertyInstance
+                      Id="b107a7d7-97b3-4db3-9688-34d012a0ed58"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="5894c890-ad45-48e5-90c3-d8d0cd341d0c">
+                    <propertyInstance
+                      Id="a9da3ee4-644b-4800-bf36-64cf54644be9"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="04e3cf9b-906a-4dbb-a41f-99b46dcef864"
+                  direction="Return">
+                  <type_NamedElement>
+                    <primitiveTypeMoniker
+                      Id="8943dc84-709e-4f62-b15a-a3273aa6f165"
+                      LastKnownName="Boolean"
+                      LastKnownLocation="ModelingProject1.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="3f71b6ee-3abd-4871-b359-c58a804adb2b"
+                  name="sub"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="4cabde8c-3272-4212-9c93-b4e4a51e1557"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly%3Dfile:%2F%2F%2FC:%2FUsers%2FKevin%2FDocuments%2FGitHub%2Fkb24subby%2FSubby%2FSubby%2Fbin%2FWindows%2FDebug%2FSubby.exe Namespace%3DSubby.Strategies Type%3DIHostileSubStrategy Member%3D(Name%3DShoot OverloadingParameters%3D[(Assembly%3Dfile:%2F%2F%2FC:%2FUsers%2FKevin%2FDocuments%2FGitHub%2Fkb24subby%2FSubby%2FSubby%2Fbin%2FWindows%2FDebug%2FSubby.exe Namespace%3DSubby.Sprites Type%3DHostileSub)%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FMonoGame%2Fv3.0%2FAssemblies%2FWindows%2FMonoGame.Framework.dll&quot; Namespace%3DMicrosoft.Xna.Framework Type%3DGameTime)]) ParameterIdentifier%3Dsub"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="ac33c6ae-1068-40f1-a614-79fb03a00b61"
+                      LastKnownName="HostileSub"
+                      LastKnownLocation="Package8_1103.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="707334fd-cba9-4c85-af7b-36cb3bce8b1c"
+                  name="gameTime"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="b8a98684-85c9-45f5-9590-0c57a5f0ff8a"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly%3Dfile:%2F%2F%2FC:%2FUsers%2FKevin%2FDocuments%2FGitHub%2Fkb24subby%2FSubby%2FSubby%2Fbin%2FWindows%2FDebug%2FSubby.exe Namespace%3DSubby.Strategies Type%3DIHostileSubStrategy Member%3D(Name%3DShoot OverloadingParameters%3D[(Assembly%3Dfile:%2F%2F%2FC:%2FUsers%2FKevin%2FDocuments%2FGitHub%2Fkb24subby%2FSubby%2FSubby%2Fbin%2FWindows%2FDebug%2FSubby.exe Namespace%3DSubby.Sprites Type%3DHostileSub)%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FMonoGame%2Fv3.0%2FAssemblies%2FWindows%2FMonoGame.Framework.dll&quot; Namespace%3DMicrosoft.Xna.Framework Type%3DGameTime)]) ParameterIdentifier%3DgameTime"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="355370a9-33c0-4ea6-80ed-88fc6830225d"
+                      LastKnownName="GameTime"
+                      LastKnownLocation="Package3_1103.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+        </ownedOperations>
+      </Interface>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="88761c86-d618-4aeb-bf3e-92042ac24ddf"
+        name="WallOfShots"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <referencesInternal>
+          <reference
+            Id="25642452-6864-4ea2-9e2d-a3e41af20126"
+            handle="viewcode://./CodeSchema_Class?Assembly%3Dfile:%2F%2F%2FC:%2FUsers%2FKevin%2FDocuments%2FGitHub%2Fkb24subby%2FSubby%2FSubby%2Fbin%2FWindows%2FDebug%2FSubby.exe Namespace%3DSubby.Strategies Type%3DWallOfShots"
+            tag="ViewCode" />
+        </referencesInternal>
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="61e84f2a-9b84-4a21-88b8-6c3c5c3f1523"
+            name="class"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="68f7d143-61f7-430e-8a9b-4c1593638bfc">
+                <propertyInstance
+                  Id="03c34706-6801-473a-b869-ad31153f1eda"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="2637d9ec-6d3a-451d-bcb5-52b6bfd45f02">
+                <propertyInstance
+                  Id="5bc3aae9-b1ee-404c-be10-dbb26e622970"
+                  name="IsPartial"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="cc728066-9994-4f0d-97b7-4bcc8728238b">
+                <propertyInstance
+                  Id="430a2100-6ab2-421f-aed5-a951d6a4cb7c"
+                  name="IsStatic"
+                  value="False" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="5aaafe86-4b45-440f-b042-2ac6c1e34581">
+                <propertyInstance
+                  Id="fb15c896-6534-4bef-a3a8-6a446fb5ff94"
+                  name="IsUnsafe"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="2fc4a4cf-6104-4944-bc7b-947b5f641e89">
+                <propertyInstance
+                  Id="842f872f-7ab1-444e-a811-fa992a49d348"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+        <suppliersInternal>
+          <interfaceRealization
+            Id="bf79e3fa-c11f-461f-9f53-8dd6f4b1e3cf">
+            <interfaceMoniker
+              Id="ecb9346b-7e6d-40df-8902-bc79f40c81e5"
+              LastKnownName="IHostileSubStrategy"
+              LastKnownLocation="Package_1105.uml" />
+          </interfaceRealization>
+        </suppliersInternal>
+        <ownedOperationsInternal>
+          <operation
+            Id="302d9e2b-24e1-4410-bc60-3772c9017351"
+            name="Move"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="c43757c5-8327-4492-818c-738928f38a4d"
+                handle="viewcode://./CodeSchema_Method?Assembly%3Dfile:%2F%2F%2FC:%2FUsers%2FKevin%2FDocuments%2FGitHub%2Fkb24subby%2FSubby%2FSubby%2Fbin%2FWindows%2FDebug%2FSubby.exe Namespace%3DSubby.Strategies Type%3DWallOfShots Member%3D(Name%3DMove OverloadingParameters%3D[(Assembly%3Dfile:%2F%2F%2FC:%2FUsers%2FKevin%2FDocuments%2FGitHub%2Fkb24subby%2FSubby%2FSubby%2Fbin%2FWindows%2FDebug%2FSubby.exe Namespace%3DSubby.Sprites Type%3DHostileSub)%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.0%2Fmscorlib.dll&quot; Namespace%3DSystem Type%3DInt32)])"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="6152f574-08fe-4e20-8f15-fa989a291a87"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="0aef9cef-8a5a-4440-9990-dcb3bfff1673">
+                    <propertyInstance
+                      Id="25e8658a-04cc-43a3-a70e-a8fba6cdd62b"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="d12f245b-d1b6-45e5-9e82-7ef38b0b1d5e">
+                    <propertyInstance
+                      Id="600d15f3-4c7c-4892-99e6-a0ec50395c2e"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="13965df8-2b00-4b19-8db8-f7d3e184a516">
+                    <propertyInstance
+                      Id="70a5b89f-629e-45a2-baf5-a807a1c3e7c9"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="5e8f03bd-322c-437a-a722-f6faf0961177">
+                    <propertyInstance
+                      Id="7d5ce9f7-de0a-4099-8244-ba52b1dcbbfd"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="d147612b-2618-4281-889e-4a6d3c37b03f">
+                    <propertyInstance
+                      Id="b053c82a-0882-4bb0-91f3-4c8786a4fa29"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="c91de3d7-a063-4e97-975c-37c381811b71">
+                    <propertyInstance
+                      Id="855bb97d-270d-46c4-b67a-5a06d92d282e"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="dbe76fb9-db91-42f4-9a41-0b9bd68888c2"
+                  name="sub"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="9567678c-15c7-4939-a83f-a429df2d2a3c"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly%3Dfile:%2F%2F%2FC:%2FUsers%2FKevin%2FDocuments%2FGitHub%2Fkb24subby%2FSubby%2FSubby%2Fbin%2FWindows%2FDebug%2FSubby.exe Namespace%3DSubby.Strategies Type%3DWallOfShots Member%3D(Name%3DMove OverloadingParameters%3D[(Assembly%3Dfile:%2F%2F%2FC:%2FUsers%2FKevin%2FDocuments%2FGitHub%2Fkb24subby%2FSubby%2FSubby%2Fbin%2FWindows%2FDebug%2FSubby.exe Namespace%3DSubby.Sprites Type%3DHostileSub)%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.0%2Fmscorlib.dll&quot; Namespace%3DSystem Type%3DInt32)]) ParameterIdentifier%3Dsub"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="ac33c6ae-1068-40f1-a614-79fb03a00b61"
+                      LastKnownName="HostileSub"
+                      LastKnownLocation="Package8_1103.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="c4f9557b-d8c7-421d-bdee-6c60e5a92274"
+                  name="scrollingPosition"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="5d93a306-f19c-45f2-8884-0d1e3cd6d5a7"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly%3Dfile:%2F%2F%2FC:%2FUsers%2FKevin%2FDocuments%2FGitHub%2Fkb24subby%2FSubby%2FSubby%2Fbin%2FWindows%2FDebug%2FSubby.exe Namespace%3DSubby.Strategies Type%3DWallOfShots Member%3D(Name%3DMove OverloadingParameters%3D[(Assembly%3Dfile:%2F%2F%2FC:%2FUsers%2FKevin%2FDocuments%2FGitHub%2Fkb24subby%2FSubby%2FSubby%2Fbin%2FWindows%2FDebug%2FSubby.exe Namespace%3DSubby.Sprites Type%3DHostileSub)%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.0%2Fmscorlib.dll&quot; Namespace%3DSystem Type%3DInt32)]) ParameterIdentifier%3DscrollingPosition"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <primitiveTypeMoniker
+                      Id="220a3521-e091-4221-bae9-3ef9018e845c"
+                      LastKnownName="Integer"
+                      LastKnownLocation="ModelingProject1.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="05e6812a-1750-40ca-b73c-9325409f1ab8"
+            name="Shoot"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="e085449f-dc71-472e-a1b5-4ec124896105"
+                handle="viewcode://./CodeSchema_Method?Assembly%3Dfile:%2F%2F%2FC:%2FUsers%2FKevin%2FDocuments%2FGitHub%2Fkb24subby%2FSubby%2FSubby%2Fbin%2FWindows%2FDebug%2FSubby.exe Namespace%3DSubby.Strategies Type%3DWallOfShots Member%3D(Name%3DShoot OverloadingParameters%3D[(Assembly%3Dfile:%2F%2F%2FC:%2FUsers%2FKevin%2FDocuments%2FGitHub%2Fkb24subby%2FSubby%2FSubby%2Fbin%2FWindows%2FDebug%2FSubby.exe Namespace%3DSubby.Sprites Type%3DHostileSub)%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FMonoGame%2Fv3.0%2FAssemblies%2FWindows%2FMonoGame.Framework.dll&quot; Namespace%3DMicrosoft.Xna.Framework Type%3DGameTime)])"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="e25b431d-3779-4110-b828-794ad47f1867"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="56f99af8-ee3b-45fb-8853-bc4cebac28f8">
+                    <propertyInstance
+                      Id="f18c7aaf-1d62-4c65-a60f-e38263aebbcc"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="6bb4c78d-3423-42ec-bcba-90df939cd710">
+                    <propertyInstance
+                      Id="650ac4de-8058-4d95-a825-349f198c17b0"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="1c63b895-e6ed-42b2-bb3e-df912da2170c">
+                    <propertyInstance
+                      Id="7925fc0c-f5f2-44e1-b086-a5bc6507c6eb"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="d3825626-8ae0-437e-a799-c6018748a967">
+                    <propertyInstance
+                      Id="2c8354ca-a8a0-478b-84dc-214360b20bca"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="6dc58a0c-be21-4d4c-be0d-7fae3d6e20a3">
+                    <propertyInstance
+                      Id="a5885f53-ffe2-4459-88c8-87e860ed8480"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="c81b1ccf-ddb6-44be-a5e1-2ae6069bf2ba">
+                    <propertyInstance
+                      Id="7f2ef6b8-01a2-44f7-bfc1-43f830fae392"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="479acddd-a10c-4f17-b95e-2ec548c729c1"
+                  direction="Return">
+                  <type_NamedElement>
+                    <primitiveTypeMoniker
+                      Id="8943dc84-709e-4f62-b15a-a3273aa6f165"
+                      LastKnownName="Boolean"
+                      LastKnownLocation="ModelingProject1.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="7263b991-7656-4975-929b-9590ef4b4167"
+                  name="sub"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="3c3a9547-2b46-45d9-9009-21ab593e97d0"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly%3Dfile:%2F%2F%2FC:%2FUsers%2FKevin%2FDocuments%2FGitHub%2Fkb24subby%2FSubby%2FSubby%2Fbin%2FWindows%2FDebug%2FSubby.exe Namespace%3DSubby.Strategies Type%3DWallOfShots Member%3D(Name%3DShoot OverloadingParameters%3D[(Assembly%3Dfile:%2F%2F%2FC:%2FUsers%2FKevin%2FDocuments%2FGitHub%2Fkb24subby%2FSubby%2FSubby%2Fbin%2FWindows%2FDebug%2FSubby.exe Namespace%3DSubby.Sprites Type%3DHostileSub)%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FMonoGame%2Fv3.0%2FAssemblies%2FWindows%2FMonoGame.Framework.dll&quot; Namespace%3DMicrosoft.Xna.Framework Type%3DGameTime)]) ParameterIdentifier%3Dsub"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="ac33c6ae-1068-40f1-a614-79fb03a00b61"
+                      LastKnownName="HostileSub"
+                      LastKnownLocation="Package8_1103.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="442294bc-1dd2-49cc-a0c2-d9d85e86f7a4"
+                  name="gameTime"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="9fe3be16-32e9-4c52-8427-b51844c88cba"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly%3Dfile:%2F%2F%2FC:%2FUsers%2FKevin%2FDocuments%2FGitHub%2Fkb24subby%2FSubby%2FSubby%2Fbin%2FWindows%2FDebug%2FSubby.exe Namespace%3DSubby.Strategies Type%3DWallOfShots Member%3D(Name%3DShoot OverloadingParameters%3D[(Assembly%3Dfile:%2F%2F%2FC:%2FUsers%2FKevin%2FDocuments%2FGitHub%2Fkb24subby%2FSubby%2FSubby%2Fbin%2FWindows%2FDebug%2FSubby.exe Namespace%3DSubby.Sprites Type%3DHostileSub)%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FMonoGame%2Fv3.0%2FAssemblies%2FWindows%2FMonoGame.Framework.dll&quot; Namespace%3DMicrosoft.Xna.Framework Type%3DGameTime)]) ParameterIdentifier%3DgameTime"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="355370a9-33c0-4ea6-80ed-88fc6830225d"
+                      LastKnownName="GameTime"
+                      LastKnownLocation="Package3_1103.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="2666f0d7-2ca5-4ddc-a765-a9c02496f629"
+            name="WallOfShots"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="cb2e790b-0692-4fa4-aa0d-a7791dc0b0ec"
+                handle="viewcode://./CodeSchema_Method?Assembly%3Dfile:%2F%2F%2FC:%2FUsers%2FKevin%2FDocuments%2FGitHub%2Fkb24subby%2FSubby%2FSubby%2Fbin%2FWindows%2FDebug%2FSubby.exe Namespace%3DSubby.Strategies Type%3DWallOfShots Member%3D.ctor"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="8a2656bc-dfe1-4b43-a6d0-c669e51b38c2"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="f91e7534-90fb-4a38-a0c7-a973fe7a6178">
+                    <propertyInstance
+                      Id="1f7a9def-9335-4401-acd3-ea3f06f670e1"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="c648098a-3fb2-41a4-8fcd-cf340bd231f3">
+                    <propertyInstance
+                      Id="7a58ad44-fde6-44db-a360-9ccfc0bf31b0"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="170457b2-7b0c-4dd3-829d-68b4b0bd54f2">
+                    <propertyInstance
+                      Id="246a0f0c-eeab-430c-ab99-f075b89ac1ba"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="509f0aae-1af5-4b55-a8af-a1736888471d">
+                    <propertyInstance
+                      Id="43b053fd-50a4-42fd-822c-d3aaea439df4"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="25d152b2-a530-4c74-ae43-49d692d1e5d9">
+                    <propertyInstance
+                      Id="09df6597-497a-4f0b-869f-5b691607d56b"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="9f697696-d80c-4f7a-9dc6-65fe723b5b33">
+                    <propertyInstance
+                      Id="3fe0e741-8e92-40f1-bbcc-1179614302b7"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+  </packagedElements>
+</package>

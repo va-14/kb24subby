@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<DirectedGraph xmlns="http://schemas.microsoft.com/vs/2009/dgml">
+  <Nodes>
+    <Node Id="(@1 @2 Type=Background)" Category="CodeSchema_Class" Bounds="869.257488360419,117.363590240479,104.41,26" CodeSchemaProperty_IsPublic="True" CommonLabel="Background" Icon="Microsoft.VisualStudio.Class.Public" Label="Background" Language="{B5E9BD34-6D3E-4B5D-925E-8A43B79820B4}" SourceLocation="(Assembly=file:///c:/users/kevin/documents/github/kb24subby/subby/subby/background.cs StartLineNumber=11 StartCharacterOffset=4 EndLineNumber=11 EndCharacterOffset=4)" UseManualLocation="True" />
+    <Node Id="(@1 @2 Type=Game1)" Category="CodeSchema_Class" Bounds="707.205625610351,18.0169153213501,78.4233333333334,26" CodeSchemaProperty_IsPublic="True" CommonLabel="Game1" Icon="Microsoft.VisualStudio.Class.Public" Label="Game1" Language="{B5E9BD34-6D3E-4B5D-925E-8A43B79820B4}" SourceLocation="(Assembly=file:///c:/users/kevin/documents/github/kb24subby/subby/subby/game1.cs StartLineNumber=15 StartCharacterOffset=4 EndLineNumber=15 EndCharacterOffset=4)" UseManualLocation="True" />
+    <Node Id="(@1 @2 Type=LevelBoundaries)" Category="CodeSchema_Class" Bounds="480.747061414842,117.723237838499,126.97,26" CodeSchemaProperty_IsPublic="True" CommonLabel="LevelBoundaries" Icon="Microsoft.VisualStudio.Class.Public" Label="LevelBoundaries" Language="{B5E9BD34-6D3E-4B5D-925E-8A43B79820B4}" SourceLocation="(Assembly=file:///C:/Users/Kevin/Documents/GitHub/kb24subby/Subby/Subby/LevelBoundaries.cs StartLineNumber=10 StartCharacterOffset=4 EndLineNumber=10 EndCharacterOffset=4)" UseManualLocation="True" />
+    <Node Id="(@1 @3 Type=Chopper)" Category="CodeSchema_Class" Bounds="351.990992037948,294.508810565227,86.8066666666667,26" CodeSchemaProperty_IsPublic="True" CommonLabel="Chopper" Icon="Microsoft.VisualStudio.Class.Public" Label="Chopper" Language="{B5E9BD34-6D3E-4B5D-925E-8A43B79820B4}" SourceLocation="(Assembly=file:///c:/users/kevin/documents/github/kb24subby/subby/subby/sprites/chopper.cs StartLineNumber=12 StartCharacterOffset=4 EndLineNumber=12 EndCharacterOffset=4)" UseManualLocation="True" />
+    <Node Id="(@1 @3 Type=Mine)" Category="CodeSchema_Class" Bounds="1067.10218261719,294.279815673828,67.75,26" CodeSchemaProperty_IsPublic="True" CommonLabel="Mine" Icon="Microsoft.VisualStudio.Class.Public" Label="Mine" Language="{B5E9BD34-6D3E-4B5D-925E-8A43B79820B4}" SourceLocation="(Assembly=file:///C:/Users/Kevin/Documents/GitHub/kb24subby/Subby/Subby/Sprites/Mine.cs StartLineNumber=12 StartCharacterOffset=5 EndLineNumber=12 EndCharacterOffset=5)" UseManualLocation="True" />
+    <Node Id="(@1 @3 Type=Missile)" Category="CodeSchema_Class" Bounds="960.142182617187,292.700378417969,76.96,26" CodeSchemaProperty_IsPublic="True" CommonLabel="Missile" Icon="Microsoft.VisualStudio.Class.Public" Label="Missile" Language="{B5E9BD34-6D3E-4B5D-925E-8A43B79820B4}" SourceLocation="(Assembly=file:///c:/users/kevin/documents/github/kb24subby/subby/subby/sprites/missile.cs StartLineNumber=12 StartCharacterOffset=4 EndLineNumber=12 EndCharacterOffset=4)" UseManualLocation="True" />
+    <Node Id="(@1 @3 Type=Player)" Category="CodeSchema_Class" Bounds="493.407956644694,294.414520263672,72.99,26" CodeSchemaProperty_IsPublic="True" CommonLabel="Player" Icon="Microsoft.VisualStudio.Class.Public" Label="Player" Language="{B5E9BD34-6D3E-4B5D-925E-8A43B79820B4}" SourceLocation="(Assembly=file:///c:/users/kevin/documents/github/kb24subby/subby/subby/sprites/player.cs StartLineNumber=11 StartCharacterOffset=4 EndLineNumber=11 EndCharacterOffset=4)" UseManualLocation="True" />
+    <Node Id="(@1 @3 Type=TankStation)" Category="CodeSchema_Class" Bounds="824.667550425721,295.179556962334,101.753333333333,26" CodeSchemaProperty_IsInternal="True" CommonLabel="TankStation" Icon="Microsoft.VisualStudio.Class.Internal" Label="TankStation" Language="{B5E9BD34-6D3E-4B5D-925E-8A43B79820B4}" SourceLocation="(Assembly=file:///c:/users/kevin/documents/github/kb24subby/subby/subby/sprites/tankstation.cs StartLineNumber=10 StartCharacterOffset=4 EndLineNumber=10 EndCharacterOffset=4)" UseManualLocation="True" />
+    <Node Id="(@1 @3 Type=Wrak)" Category="CodeSchema_Class" Bounds="724.414623311361,295.781585693359,68.4533333333334,26" CodeSchemaProperty_IsInternal="True" CommonLabel="Wrak" Icon="Microsoft.VisualStudio.Class.Internal" Label="Wrak" Language="{B5E9BD34-6D3E-4B5D-925E-8A43B79820B4}" SourceLocation="(Assembly=file:///c:/users/kevin/documents/github/kb24subby/subby/subby/sprites/wrak.cs StartLineNumber=10 StartCharacterOffset=4 EndLineNumber=10 EndCharacterOffset=4)" UseManualLocation="True" />
+    <Node Id="(@1 Namespace=Subby.Strategies Type=AimedShots)" Category="CodeSchema_Class" Bounds="559.269646481895,423.775061558481,104.68,26" CodeSchemaProperty_IsPublic="True" CommonLabel="AimedShots" Icon="Microsoft.VisualStudio.Class.Public" Label="AimedShots" Language="{B5E9BD34-6D3E-4B5D-925E-8A43B79820B4}" SourceLocation="(Assembly=file:///c:/users/kevin/documents/github/kb24subby/subby/subby/strategies/aimedshots.cs StartLineNumber=9 StartCharacterOffset=4 EndLineNumber=9 EndCharacterOffset=4)" UseManualLocation="True" />
+    <Node Id="(@1 Namespace=Subby.Strategies Type=WallOfShots)" Category="CodeSchema_Class" Bounds="701.169133887575,425.232962167578,105.816666666667,26" CodeSchemaProperty_IsPublic="True" CommonLabel="WallOfShots" Icon="Microsoft.VisualStudio.Class.Public" Label="WallOfShots" Language="{B5E9BD34-6D3E-4B5D-925E-8A43B79820B4}" SourceLocation="(Assembly=file:///c:/users/kevin/documents/github/kb24subby/subby/subby/strategies/wallofshots.cs StartLineNumber=9 StartCharacterOffset=4 EndLineNumber=9 EndCharacterOffset=4)" UseManualLocation="True" />
+    <Node Id="(@1)" Category="CodeSchema_Assembly" Visibility="Hidden" />
+    <Node Id="@4" Category="CodeSchema_Class" Bounds="596.397956644694,297.489624023438,98.0166666666667,26" CodeSchemaProperty_IsPublic="True" CommonLabel="HostileSub" Icon="Microsoft.VisualStudio.Class.Public" Label="HostileSub" Language="{B5E9BD34-6D3E-4B5D-925E-8A43B79820B4}" SourceLocation="(Assembly=file:///c:/users/kevin/documents/github/kb24subby/subby/subby/sprites/hostilesub.cs StartLineNumber=11 StartCharacterOffset=4 EndLineNumber=11 EndCharacterOffset=4)" UseManualLocation="True" />
+    <Node Id="@5" Category="CodeSchema_Interface" Bounds="501.190346763107,211.420516501371,141.693333333333,26" CodeSchemaProperty_IsPublic="True" CommonLabel="IDamageableSprite" Icon="Microsoft.VisualStudio.Interface.Public" Label="IDamageableSprite" Language="{B5E9BD34-6D3E-4B5D-925E-8A43B79820B4}" SourceLocation="(Assembly=file:///C:/Users/Kevin/Documents/GitHub/kb24subby/Subby/Subby/IDamageableSprite.cs StartLineNumber=10 StartCharacterOffset=4 EndLineNumber=10 EndCharacterOffset=4)" UseManualLocation="True" />
+    <Node Id="@6" Category="CodeSchema_Interface" Bounds="912.937553055285,207.906773447943,133.02,26" CodeSchemaProperty_IsPublic="True" CommonLabel="IExplodableSprite" Icon="Microsoft.VisualStudio.Interface.Public" Label="IExplodableSprite" Language="{B5E9BD34-6D3E-4B5D-925E-8A43B79820B4}" SourceLocation="(Assembly=file:///C:/Users/Kevin/Documents/GitHub/kb24subby/Subby/Subby/IExplodableSprite.cs StartLineNumber=10 StartCharacterOffset=4 EndLineNumber=10 EndCharacterOffset=4)" UseManualLocation="True" />
+    <Node Id="@7" Category="CodeSchema_Interface" Bounds="600.128611072549,364.191660385125,144.76,26" CodeSchemaProperty_IsPublic="True" CommonLabel="IHostileSubStrategy" Icon="Microsoft.VisualStudio.Interface.Public" Label="IHostileSubStrategy" Language="{B5E9BD34-6D3E-4B5D-925E-8A43B79820B4}" SourceLocation="(Assembly=file:///c:/users/kevin/documents/github/kb24subby/subby/subby/strategies/ihostilesubstrategy.cs StartLineNumber=9 StartCharacterOffset=4 EndLineNumber=9 EndCharacterOffset=4)" UseManualLocation="True" />
+    <Node Id="@8" Category="CodeSchema_Interface" Bounds="706.154236653646,214.370901123397,75.0433333333333,26" CodeSchemaProperty_IsPublic="True" CommonLabel="ISprite" Icon="Microsoft.VisualStudio.Interface.Public" Label="ISprite" Language="{B5E9BD34-6D3E-4B5D-925E-8A43B79820B4}" SourceLocation="(Assembly=file:///c:/users/kevin/documents/github/kb24subby/subby/subby/isprite.cs StartLineNumber=10 StartCharacterOffset=4 EndLineNumber=10 EndCharacterOffset=4)" UseManualLocation="True" />
+    <Node Id="@9" Category="CodeSchema_Class" Bounds="710.553783365885,102.370701123397,67.8566666666667,26" CodeSchemaProperty_IsPublic="True" CommonLabel="Level" Icon="Microsoft.VisualStudio.Class.Public" Label="Level" Language="{B5E9BD34-6D3E-4B5D-925E-8A43B79820B4}" SourceLocation="(Assembly=file:///C:/Users/Kevin/Documents/GitHub/kb24subby/Subby/Subby/Level.cs StartLineNumber=14 StartCharacterOffset=4 EndLineNumber=14 EndCharacterOffset=4)" UseManualLocation="True" />
+  </Nodes>
+  <Links>
+    <Link Source="(@1 @2 Type=Game1)" Target="@9" Bounds="744.986769719131,44.0169143676758,1.13229149376036,49.3561541739819" />
+    <Link Source="(@1 @3 Type=Chopper)" Target="@5" Category="Implements" Bounds="423.031853855757,241.251268749535,113.223590606985,53.2575508305435" />
+    <Link Source="(@1 @3 Type=Mine)" Target="@6" Category="Implements" Bounds="1005.0749335513,239.120562164075,77.6108254906167,55.1592535097532" />
+    <Link Source="(@1 @3 Type=Missile)" Target="@6" Category="Implements" Bounds="984.372349244535,242.685121091567,11.3101112597253,50.0152573264022" />
+    <Link Source="(@1 @3 Type=Player)" Target="@5" Category="Implements" Bounds="536.502741872445,245.445571407009,24.8603496371301,48.9689488566631" />
+    <Link Source="(@1 @3 Type=TankStation)" Target="@8" Category="Implements" Bounds="772.563835977565,245.07337364977,81.7662217350244,50.1061917799171" />
+    <Link Source="(@1 @3 Type=Wrak)" Target="@8" Category="Implements" Bounds="747.692801024054,249.222586362702,8.5587329055702,46.5589993306571" />
+    <Link Source="(@1 Namespace=Subby.Strategies Type=AimedShots)" Target="@7" Category="Implements" Bounds="624.896678789608,396.485747877018,27.8918321392794,27.2893070546228" />
+    <Link Source="(@1 Namespace=Subby.Strategies Type=WallOfShots)" Target="@7" Category="Implements" Bounds="697.086097085205,395.583997022216,39.6195990755792,29.6489741691904" />
+    <Link Source="@4" Target="@5" Category="Implements" Bounds="588.957360730701,244.269695961247,45.3671280178525,53.2199280621903" />
+    <Link Source="@4" Target="@7" Bounds="650.688432554199,323.489624023438,13.1501364704258,32.3640389239745" />
+    <Link Source="@5" Target="@8" Category="InheritsFrom" Bounds="642.883669230143,225.638334618029,54.2718967815491,0.932905906841967" />
+    <Link Source="@6" Target="@8" Category="InheritsFrom" Bounds="790.19418929879,222.730268208873,122.743350984414,3.36524474675943" />
+    <Link Source="@9" Target="(@1 @2 Type=Background)" Bounds="778.410450032552,118.244939293536,81.8791603622674,6.93639165060216" />
+    <Link Source="@9" Target="(@1 @2 Type=LevelBoundaries)" Bounds="616.690721592848,117.971878476162,93.863061773037,7.19618226296241" />
+    <Link Source="@9" Target="@8" Bounds="743.834264709137,128.370700836182,0.554273814008639,77.0004277117283" />
+  </Links>
+  <Categories>
+    <Category Id="CodeSchema_Assembly" Label="Assembly" BasedOn="File" CanBeDataDriven="True" DefaultAction="Microsoft.Contains" Icon="CodeSchema_Assembly" NavigationActionLabel="Assemblies" />
+    <Category Id="CodeSchema_Class" Label="Class" BasedOn="CodeSchema_Type" CanBeDataDriven="True" DefaultAction="Node:Both:CodeSchema_Member" Icon="CodeSchema_Class" NavigationActionLabel="Classes" />
+    <Category Id="CodeSchema_Interface" Label="Interface" BasedOn="CodeSchema_Type" CanBeDataDriven="True" DefaultAction="Node:Both:CodeSchema_Member" Icon="CodeSchema_Interface" NavigationActionLabel="Interfaces" />
+    <Category Id="CodeSchema_Type" Label="Type" CanBeDataDriven="True" DefaultAction="Node:Both:CodeSchema_Member" Icon="CodeSchema_Class" NavigationActionLabel="Types" />
+    <Category Id="File" Label="File" CanBeDataDriven="True" DefaultAction="Microsoft.Contains" Icon="File" NavigationActionLabel="Files" />
+    <Category Id="Implements" Label="Implements" CanBeDataDriven="True" CanLinkedNodesBeDataDriven="True" IncomingActionLabel="Implemented by" OutgoingActionLabel="Implements" />
+    <Category Id="InheritsFrom" Label="Inherits From" CanBeDataDriven="True" CanLinkedNodesBeDataDriven="True" IncomingActionLabel="Inherited By" OutgoingActionLabel="Inherits From" />
+  </Categories>
+  <Properties>
+    <Property Id="Bounds" DataType="System.Windows.Rect" />
+    <Property Id="CanBeDataDriven" Label="CanBeDataDriven" Description="CanBeDataDriven" DataType="System.Boolean" />
+    <Property Id="CanLinkedNodesBeDataDriven" Label="CanLinkedNodesBeDataDriven" Description="CanLinkedNodesBeDataDriven" DataType="System.Boolean" />
+    <Property Id="CodeSchemaProperty_IsInternal" Label="Is Internal" Description="Flag to indicate the method is 'Internal'" DataType="System.Boolean" />
+    <Property Id="CodeSchemaProperty_IsPublic" Label="Is Public" Description="Flag to indicate the scope is Public" DataType="System.Boolean" />
+    <Property Id="CommonLabel" DataType="System.String" />
+    <Property Id="DefaultAction" Label="DefaultAction" Description="DefaultAction" DataType="System.String" />
+    <Property Id="Icon" Label="Icon" Description="Icon" DataType="System.String" />
+    <Property Id="IncomingActionLabel" Label="IncomingActionLabel" Description="IncomingActionLabel" DataType="System.String" />
+    <Property Id="Label" Label="Label" Description="Displayable label of an Annotatable object" DataType="System.String" />
+    <Property Id="Language" Label="Language" Description="Language" DataType="System.String" />
+    <Property Id="NavigationActionLabel" Label="NavigationActionLabel" Description="NavigationActionLabel" DataType="System.String" />
+    <Property Id="OutgoingActionLabel" Label="OutgoingActionLabel" Description="OutgoingActionLabel" DataType="System.String" />
+    <Property Id="SourceLocation" Label="Start Line Number" DataType="Microsoft.VisualStudio.GraphModel.CodeSchema.SourceLocation" />
+    <Property Id="UseManualLocation" DataType="System.Boolean" />
+    <Property Id="Visibility" Label="Visibility" Description="Defines whether a node in the graph is visible or not" DataType="System.Windows.Visibility" />
+  </Properties>
+  <QualifiedNames>
+    <Name Id="Assembly" Label="Assembly" ValueType="Uri" />
+    <Name Id="Namespace" Label="Namespace" ValueType="System.String" />
+    <Name Id="Type" Label="Type" ValueType="System.Object" />
+  </QualifiedNames>
+  <IdentifierAliases>
+    <Alias n="1" Uri="Assembly=$(a50612be-aab8-46ee-a15b-8db598c43455.OutputPathUri)" />
+    <Alias n="2" Id="Namespace=Subby" />
+    <Alias n="3" Id="Namespace=Subby.Sprites" />
+    <Alias n="4" Id="(@1 @3 Type=HostileSub)" />
+    <Alias n="5" Id="(@1 @2 Type=IDamageableSprite)" />
+    <Alias n="6" Id="(@1 @2 Type=IExplodableSprite)" />
+    <Alias n="7" Id="(@1 Namespace=Subby.Strategies Type=IHostileSubStrategy)" />
+    <Alias n="8" Id="(@1 @2 Type=ISprite)" />
+    <Alias n="9" Id="(@1 @2 Type=Level)" />
+  </IdentifierAliases>
+  <Paths>
+    <Path Id="a50612be-aab8-46ee-a15b-8db598c43455.OutputPathUri" Value="file:///C:/Users/Kevin/Documents/GitHub/kb24subby/Subby/Subby/bin/Windows/Debug/Subby.exe" />
+  </Paths>
+</DirectedGraph>
