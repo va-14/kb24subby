@@ -153,25 +153,27 @@ namespace Subby.Sprites
             if (UseFuel(1))
             Rotate(-1);
         }
-        public void IsDamaged()
+        public Vector2 DamagedPositionBehavour()
         {
 
             if (_health < 800)
             {
-                Position += new Vector2(0, 0.1f);
+                return new Vector2(0, 0.1f);
             }
             if (_health < 600)
             {
-                Position += new Vector2(0, 0.15f);
+                return new Vector2(0, 0.15f);
             }
             if (_health < 400)
             {
-                Position += new Vector2(0, 0.2f);
+                return new Vector2(0, 0.2f);
             }
             if (_health < 200)
             {
-                Position += new Vector2(0, 0.25f);
+                return new Vector2(0, 0.25f);
             }
+            return new Vector2(0, 0);
+
         }
         private void Rotate(int degrees)
         {
@@ -198,13 +200,13 @@ namespace Subby.Sprites
                 _speed += 0.01f;
             }
 
-            IsDamaged();
+            Position += DamagedPositionBehavour();
 
             Position += new Vector2(_speed * (float)Math.Cos(Rotation), (_speed * (float)Math.Sin(Rotation)));
         }
         public bool UseFuel(int fuel)
         {
-            if (_fuel >= fuel)
+            if (_fuel > 0)
             {
                 _fuel -= fuel;
                 return true;

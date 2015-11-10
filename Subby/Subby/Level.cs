@@ -260,7 +260,7 @@ namespace Subby
         }
         private List<Rectangle> CalculateSubbyRect()
         {
-            int pixels = 10; // deze kan maximaal op 10 voor een goede collision
+            int pixels = 10; 
             Point size = new Point(pixels, pixels);
             int widthRadius = Subby.Texture.Width / 2;
             int heightRadius = Subby.Texture.Height / 2;
@@ -370,8 +370,8 @@ namespace Subby
         {
             if (subby.Position.Y >= LevelBoundaries.Bottom)
             {
-                subby.Position += new Vector2(0, -1);
-                subby.Speed = -subby.Speed / 4;
+                subby.Position -= subby.DamagedPositionBehavour();
+                subby.Speed = -subby.Speed / 2;
             }
             if (subby.Position.Y <= LevelBoundaries.Top || subby.Position.X <= LevelBoundaries.Left)
             {
