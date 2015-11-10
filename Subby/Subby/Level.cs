@@ -255,27 +255,27 @@ namespace Subby
         }
         private List<Rectangle> CalculateSubbyRect()
         {
-            int pixels = 10; // deze kan maximaal op 10 voor een goede collision
+            int pixels = 10; 
             Point size = new Point(pixels, pixels);
             int widthRadius = Subby.Texture.Width / 2;
             int heightRadius = Subby.Texture.Height / 2;
             List<Rectangle> values = new List<Rectangle>();
 
-            for (int x = 0; x < widthRadius; x = x + pixels)
+            for (int tmpWidthRadius = 0; tmpWidthRadius < widthRadius; tmpWidthRadius = tmpWidthRadius + pixels)
             {
-                for (int y = 0; y < heightRadius; y = y + pixels)
+                for (int tmpHeightRadius = 0; tmpHeightRadius < heightRadius; tmpHeightRadius = tmpHeightRadius + pixels)
                 {
-                    Point radiusPoint = PointOnCircle(x, (int)Subby.AngleDegrees, new Point((int)Subby.Position.X, (int)Subby.Position.Y));
-                    Point point = PointOnCircle(y, (int)Subby.AngleDegrees - 90, new Point((int)radiusPoint.X, (int)radiusPoint.Y));
+                    Point radiusPoint = PointOnCircle(tmpWidthRadius, (int)Subby.AngleDegrees, new Point((int)Subby.Position.X, (int)Subby.Position.Y));
+                    Point point = PointOnCircle(tmpHeightRadius, (int)Subby.AngleDegrees - 90, new Point((int)radiusPoint.X, (int)radiusPoint.Y));
                     values.Add(new Rectangle(point, size));
-                    radiusPoint = PointOnCircle(x, (int)Subby.AngleDegrees, new Point((int)Subby.Position.X, (int)Subby.Position.Y));
-                    point = PointOnCircle(y, (int)Subby.AngleDegrees + 90, new Point((int)radiusPoint.X, (int)radiusPoint.Y));
+                    radiusPoint = PointOnCircle(tmpWidthRadius, (int)Subby.AngleDegrees, new Point((int)Subby.Position.X, (int)Subby.Position.Y));
+                    point = PointOnCircle(tmpHeightRadius, (int)Subby.AngleDegrees + 90, new Point((int)radiusPoint.X, (int)radiusPoint.Y));
                     values.Add(new Rectangle(point, size));
-                    radiusPoint = PointOnCircle(-x, (int)Subby.AngleDegrees, new Point((int)Subby.Position.X, (int)Subby.Position.Y));
-                    point = PointOnCircle(y, (int)Subby.AngleDegrees - 90, new Point((int)radiusPoint.X, (int)radiusPoint.Y));
+                    radiusPoint = PointOnCircle(-tmpWidthRadius, (int)Subby.AngleDegrees, new Point((int)Subby.Position.X, (int)Subby.Position.Y));
+                    point = PointOnCircle(tmpHeightRadius, (int)Subby.AngleDegrees - 90, new Point((int)radiusPoint.X, (int)radiusPoint.Y));
                     values.Add(new Rectangle(point, size));
-                    radiusPoint = PointOnCircle(-x, (int)Subby.AngleDegrees, new Point((int)Subby.Position.X, (int)Subby.Position.Y));
-                    point = PointOnCircle(y, (int)Subby.AngleDegrees + 90, new Point((int)radiusPoint.X, (int)radiusPoint.Y));
+                    radiusPoint = PointOnCircle(-tmpWidthRadius, (int)Subby.AngleDegrees, new Point((int)Subby.Position.X, (int)Subby.Position.Y));
+                    point = PointOnCircle(tmpHeightRadius, (int)Subby.AngleDegrees + 90, new Point((int)radiusPoint.X, (int)radiusPoint.Y));
                     values.Add(new Rectangle(point, size));
                 }
             }
@@ -293,19 +293,15 @@ namespace Subby
 
             int boundingLength;
             if (Subby.Width > Subby.Height)
-            {
                 boundingLength = Subby.Width;
-            }
             else
-            {
                 boundingLength = Subby.Height;
-            }
+           
             Rectangle rectSubby = new Rectangle((int)Subby.Position.X - (boundingLength / 2), (int)Subby.Position.Y - (boundingLength / 2), boundingLength, boundingLength);
             Boolean subbyCollision;
             foreach (ISprite sprite in SpriteList)
             {
                 subbyCollision = false;
-                //collision voor subby is apart, want deze wordt opgedeeld in meerdere vierkantjes
                 Rectangle rectSprite = new Rectangle((int)sprite.Position.X - ScrollingPosition, (int)sprite.Position.Y, sprite.Width, sprite.Height);
                 Rectangle overlap = Rectangle.Intersect(rectSubby, rectSprite);
                 if (!overlap.IsEmpty)
@@ -369,8 +365,8 @@ namespace Subby
         {
             if (subby.Position.Y >= LevelBoundaries.Bottom)
             {
-                subby.Position += new Vector2(0, -1);
-                subby.Speed = -subby.Speed / 4;
+                subby.Position -= subby.DamagedPositionBehavour();
+                subby.Speed = -subby.Speed / 2;
             }
             if (subby.Position.Y <= LevelBoundaries.Top || subby.Position.X <= LevelBoundaries.Left)
             {
