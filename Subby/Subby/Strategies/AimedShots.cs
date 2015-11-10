@@ -36,9 +36,9 @@ namespace Subby.Strategies
             sub.Rotation = (float)Math.Atan2(dY, dX);
         }
 
-        public bool Shoot(HostileSub sub, GameTime gameTime)
+        public bool Shoot(HostileSub sub, float totalTime)
         {
-            if (gameTime.TotalGameTime.TotalSeconds > sub.ShootTimer)
+            if (totalTime > sub.ShootTimer)
             {
                 sub.ShootTimer += 3;
                 return true;

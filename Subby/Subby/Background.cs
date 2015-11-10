@@ -36,11 +36,12 @@ namespace Subby
             ScreenHeight = device.Viewport.Height;
             ScreenWidth = device.Viewport.Width;
             WavesPosition.Y = ScreenHeight / 2.5f;
+            WaterPosition.Y = ScreenHeight / 3.5f;
         }
 
         public void UpdatePosition(int scrollingPosition, GameTime gameTime)
         {
-            WaterPosition = new Vector2((float)-scrollingPosition % WaterTexture.Width, 312);
+            WaterPosition = new Vector2((float)-scrollingPosition % WaterTexture.Width, WaterPosition.Y);
 
             float deltaX = (float)gameTime.ElapsedGameTime.TotalSeconds * 50;
             WavesPosition = new Vector2(WavesPosition.X + deltaX, WavesPosition.Y);

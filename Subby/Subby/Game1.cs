@@ -21,6 +21,11 @@ namespace Subby
 
         Level level;
         KeyboardState oldState;
+        bool paused;
+        bool pauseKeyDown;
+        Texture2D pausedTexture;
+        ClickableButton resumeButton;
+        ClickableButton quitButton;
 
         public Game1()
         {
@@ -33,6 +38,13 @@ namespace Subby
 
         protected override void Initialize()
         {
+            this.IsMouseVisible = true;
+            paused = false;
+            pauseKeyDown = false;
+            resumeButton = new ClickableButton();
+            resumeButton.Initialize();
+            quitButton = new ClickableButton();
+            quitButton.Initialize();
             Deserialize("level1.xml");
             base.Initialize();
             level.Initialize();
@@ -41,23 +53,47 @@ namespace Subby
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
+            pausedTexture = Content.Load<Texture2D>("paused");
+            Texture2D resumeButtonTexture = Content.Load<Texture2D>("resume");
+            Texture2D quitButtonTexture = Content.Load<Texture2D>("quit");
+            resumeButton.Load(resumeButtonTexture, GraphicsDevice, 
+                new Vector2(GraphicsDevice.Viewport.Width / 2 - resumeButtonTexture.Width / 2, GraphicsDevice.Viewport.Height / 2 - 40));
+            quitButton.Load(quitButtonTexture, GraphicsDevice,
+                new Vector2(GraphicsDevice.Viewport.Width / 2 - resumeButtonTexture.Width / 2, GraphicsDevice.Viewport.Height / 2 + 40));
             font = Content.Load<SpriteFont>("SpriteFontTemPlate");
             level.Load(Content, GraphicsDevice);
         }
 
         protected override void Update(GameTime gameTime)
         {
-            if (Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
+            MouseState mouse = Mouse.GetState();
 
-            CheckKeys();
-            level.Update(gameTime);
-            if (!level.IsSubbyAlive())
+            checkPauseKey(Keyboard.GetState());
+
+            if (!paused)
             {
-                ResetLevel();
+                CheckKeys();
+                level.Update(gameTime);
+                if (!level.IsSubbyAlive())
+                {
+                    ResetLevel();
+                }
+                base.Update(gameTime);
             }
-            base.Update(gameTime);
+            else
+            {
+                if (resumeButton.IsClicked)
+                {
+                    EndPause();
+                }
+                if (quitButton.IsClicked)
+                {
+                    Exit();
+                }
+                resumeButton.Update(mouse);
+                quitButton.Update(mouse);
+            }
+            
         }
         
         private void ResetLevel()
@@ -70,7 +106,7 @@ namespace Subby
             spriteBatch.DrawString(font, "Health: " + level.Subby.Health, new Vector2(20, 45), Color.White);
             spriteBatch.DrawString(font, "Fuel: " + level.Subby.Fuel, new Vector2(20, 70), Color.White);
             spriteBatch.DrawString(font, "Bullits: " + level.Subby.Bullits, new Vector2(20, 95), Color.White);
-            spriteBatch.DrawString(font, "Seconds: " + level.TotalRoundTime.TotalSeconds.ToString("0", CultureInfo.CurrentCulture), new Vector2(20, 120), Color.White);
+            spriteBatch.DrawString(font, "Seconds: " + level.TotalRoundTime.ToString("0", CultureInfo.CurrentCulture), new Vector2(20, 120), Color.White);
             spriteBatch.DrawString(font, "Score: " + level.Score, new Vector2(20, 155), Color.White);
         }
         protected override void Draw(GameTime gameTime)
@@ -81,6 +117,16 @@ namespace Subby
             
             level.Draw(spriteBatch);
             DrawText();
+
+            if (paused)
+            {
+                spriteBatch.Draw(pausedTexture, 
+                    new Rectangle((GraphicsDevice.Viewport.Width / 2) - (pausedTexture.Width /2),
+                        (GraphicsDevice.Viewport.Height / 2) - (pausedTexture.Height / 2), 
+                        pausedTexture.Width, pausedTexture.Height), Color.White);
+                resumeButton.Draw(spriteBatch);
+                quitButton.Draw(spriteBatch);
+            }
             spriteBatch.End();
 
             base.Draw(gameTime);
@@ -173,6 +219,31 @@ namespace Subby
                 DataContractSerializer ser = new DataContractSerializer(typeof(Level));
                 level = (Level)ser.ReadObject(reader);
             }
+        }
+
+        private void BeginPause()
+        {
+            paused = true;
+            resumeButton.IsClicked = false;
+        }
+
+        private void EndPause()
+        {
+            paused = false;
+        }
+
+        private void checkPauseKey(KeyboardState keyboardState)
+        {
+            bool pauseKeyDownThisFrame = keyboardState.IsKeyDown(Keys.Escape);
+
+            if (!pauseKeyDown && pauseKeyDownThisFrame)
+            {
+                if (!paused)
+                    BeginPause();
+                else
+                    EndPause();
+            }
+            pauseKeyDown = pauseKeyDownThisFrame;
         }
     }
 }

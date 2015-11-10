@@ -10,6 +10,6 @@ namespace Subby.Strategies
     public interface IHostileSubStrategy
     {
         void Move(HostileSub sub, int scrollingPosition);
-        bool Shoot(HostileSub sub, GameTime gameTime);
+        bool Shoot(HostileSub sub, float totalTime);
     }
 }

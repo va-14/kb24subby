@@ -36,9 +36,9 @@ namespace Subby.Strategies
         }
 
 
-        public bool Shoot(HostileSub sub, GameTime gameTime)
+        public bool Shoot(HostileSub sub, float totalTime)
         {
-            if (gameTime.TotalGameTime.TotalSeconds > sub.ShootTimer)
+            if (totalTime > sub.ShootTimer)
             {
                 sub.ShootTimer += 0.5f;
                 return true;

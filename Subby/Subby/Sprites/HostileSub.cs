@@ -82,10 +82,6 @@ namespace Subby.Sprites
         }
         public void Update(GameTime gameTime)
         {
-            if (ShootTimer == 0)
-            {
-                ShootTimer = (int)gameTime.TotalGameTime.TotalSeconds;
-            }
             Strategy.Move(this, ScrollingPosition);
         }
 
@@ -116,9 +112,9 @@ namespace Subby.Sprites
         {
             Velocity = new Vector2(Velocity.X, -4);
         }
-        public bool Shoot(GameTime gameTime)
+        public bool Shoot(float totalTime)
         {
-            return Strategy.Shoot(this, gameTime);
+            return Strategy.Shoot(this, totalTime);
         }
         public void StopMoveSideways()
         {

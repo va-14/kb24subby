@@ -37,9 +37,7 @@ namespace Subby
         [DataMember]
         public List<ISprite> SpriteList;
         [DataMember]
-        public DateTime StartRoundTime;
-        [DataMember]
-        public TimeSpan TotalRoundTime;
+        public float TotalRoundTime;
         [DataMember]
         public int Score;
 
@@ -50,7 +48,6 @@ namespace Subby
 
         public void Initialize()
         {
-            StartRoundTime = DateTime.Now;
             _spawnChopperSecond = 0;
         }
 
@@ -95,7 +92,7 @@ namespace Subby
         }
         public void Update(GameTime gameTime)
         {
-            TotalRoundTime = DateTime.Now - StartRoundTime;
+            TotalRoundTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
             CleanUpSpriteList();
             Subby.Update(gameTime);
             foreach (ISprite sprite in SpriteList)
@@ -120,11 +117,10 @@ namespace Subby
 	        {
 		        if (sprite is HostileSub)
 	            {
-                    if (((HostileSub)sprite).Shoot(gameTime))
+                    if (((HostileSub)sprite).Shoot(TotalRoundTime))
 	                {
-                        int x = (int)((sprite.Texture.Width / 2 + 30) * Math.Cos((((HostileSub)sprite).AngleDeg + 180) * Math.PI / 180F)) + (int)sprite.Position.X - ScrollingPosition;
-                        int y = (int)((sprite.Texture.Width / 2 + 30) * Math.Sin((((HostileSub)sprite).AngleDeg + 180) * Math.PI / 180F)) + (int)sprite.Position.Y;
-                        Point position = new Point(x, y);
+                        Point position = PointOnCircle((int)(sprite.Texture.Width / 2 + 30), (int)(((HostileSub)sprite).AngleDeg + 180), new Point((int)sprite.Position.X, (int)sprite.Position.Y));
+                        position = new Point(position.X - ScrollingPosition, position.Y);
                         Missile missile = new Missile();
                         missile.Rotation = ((HostileSub)sprite).AngleDeg;
                         missile.Speed = -7.0f;
@@ -137,8 +133,7 @@ namespace Subby
 
         private void ChopperGenerator()
         {
-            int second = (int)TotalRoundTime.TotalSeconds;
-            if (second >= _spawnChopperSecond)
+            if (TotalRoundTime >= _spawnChopperSecond)
             {
                 Random random = new Random();
                 _spawnChopperSecond = random.Next(_spawnChopperSecond + 3, _spawnChopperSecond + 7);
