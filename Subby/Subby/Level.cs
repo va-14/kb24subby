@@ -51,6 +51,8 @@ namespace Subby
         [DataMember]
         private int _spawnChopperSecond;
 
+        private int _screenWidth;
+
         public void Initialize()
         {
             _spawnChopperSecond = 0;
@@ -58,6 +60,7 @@ namespace Subby
 
         public void Load(ContentManager manager, GraphicsDevice graphicsDevice)
         {
+            _screenWidth = graphicsDevice.Viewport.Width;
             LevelBoundaries.SetByGraphicDevice(graphicsDevice);
             Subby.Texture = manager.Load<Texture2D>(Subby.TextureName);
             _chopperTexture = manager.Load<Texture2D>("chopper");
@@ -102,11 +105,18 @@ namespace Subby
             Subby.Update(gameTime);
             foreach (ISprite sprite in SpriteList)
             {
-                sprite.Update(gameTime);
                 if (sprite is HostileSub)
                 {
                     ((HostileSub)sprite).ScrollingPosition = ScrollingPosition;
+                    if (!((HostileSub)sprite).Active)
+                    {
+                        if (((HostileSub)sprite).Position.X < ScrollingPosition + _screenWidth)
+                        {
+                            ((HostileSub)sprite).Active = true;
+                        }
+                    }
                 }
+                sprite.Update(gameTime);
             }
 
             CheckCollisions();
@@ -122,8 +132,7 @@ namespace Subby
 	        {
 		        if (sprite is HostileSub)
 	            {
-
-                    if (((HostileSub)sprite).Shoot(TotalRoundTime))
+                    if (((HostileSub)sprite).Shoot(TotalRoundTime) & ((HostileSub)sprite).Active)
 	                {
                         Point position = PointOnCircle((int)(sprite.Texture.Width / 2 + 30), (int)(((HostileSub)sprite).AngleDeg + 180), new Point((int)sprite.Position.X, (int)sprite.Position.Y));
                         position = new Point(position.X - ScrollingPosition, position.Y);

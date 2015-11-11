@@ -83,6 +83,7 @@ namespace Subby.Sprites
         }
         public void Update(GameTime gameTime)
         {
+            if (Active)
             Strategy.Move(this, ScrollingPosition);
         }
 
