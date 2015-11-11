@@ -182,7 +182,7 @@ namespace Subby.Sprites
         {
             return GetBullit();
         }
-        private void UpdatePosition()
+        public void UpdatePosition()
         {
             if (_speed > 0.01)
                 _speed -= 0.01f;
