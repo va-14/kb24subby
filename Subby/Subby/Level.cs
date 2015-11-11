@@ -42,6 +42,9 @@ namespace Subby
         public int Score;
         [DataMember]
         public int End;
+        [DataMember]
+        public int TargetTime;
+
 
         private Texture2D _chopperTexture;
         private Texture2D _missileTexture;
@@ -157,7 +160,10 @@ namespace Subby
                 SpriteList.Add(chopper);
             }
         }
-
+        public int CalculateLevelScore(int roundTime, int score, int fuel, int targetTime, int health)
+        {
+            return score + (fuel / 2) + health + ((targetTime - roundTime)* 25);
+        }
         private void CleanUpSpriteList()
         {
             Boolean remove;
