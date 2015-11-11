@@ -122,6 +122,7 @@ namespace Subby
 	        {
 		        if (sprite is HostileSub)
 	            {
+
                     if (((HostileSub)sprite).Shoot(TotalRoundTime))
 	                {
                         Point position = PointOnCircle((int)(sprite.Texture.Width / 2 + 30), (int)(((HostileSub)sprite).AngleDeg + 180), new Point((int)sprite.Position.X, (int)sprite.Position.Y));
@@ -160,9 +161,9 @@ namespace Subby
                 SpriteList.Add(chopper);
             }
         }
-        public int CalculateLevelScore(int roundTime, int score, int fuel, int targetTime, int health)
+        public int CalculateLevelScore()
         {
-            return score + (fuel / 2) + health + ((targetTime - roundTime)* 25);
+            return this.Score + (this.Subby.Fuel / 2) + this.Subby.Health + ((this.TargetTime - (int)this.TotalRoundTime) * 25);
         }
         private void CleanUpSpriteList()
         {
