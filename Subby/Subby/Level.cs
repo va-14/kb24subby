@@ -216,23 +216,25 @@ namespace Subby
        
         public Missile CreateMissile(Missile missile, Point position, int Damage)
         {
+            if (missile != null)
+            {
+                missile.Texture = _missileTexture;
+                missile.TextureName = "missile";
+                missile.Color = Color.White;
+                missile.Active = false;
+                if (position != null)
+                    missile.Position = new Vector2(position.X + ScrollingPosition, position.Y);
 
-            missile.Texture = _missileTexture;
-            missile.TextureName = "missile";
-            missile.Color = Color.White;
-            missile.Active = false;
-            if (position != null)
-                missile.Position = new Vector2(position.X + ScrollingPosition, position.Y);
+                if (Damage > 0)
+                    missile.Damage = Damage;
 
-            if (Damage > 0)
-                missile.Damage = Damage;
+                SpriteList.Add(missile);
 
-            SpriteList.Add(missile);
+                if (MissileList == null)
+                    MissileList = new List<Missile>();
 
-            if (MissileList == null)
-                MissileList = new List<Missile>();
-
-            MissileList.Add(missile);
+                MissileList.Add(missile);
+            }
             return missile;
         }
         public void Draw(SpriteBatch batch)
