@@ -10,7 +10,7 @@ namespace Subby
     class HighscoreList
     {
         [DataMember]
-        int[] Highscores;
+        public int[] Highscores;
 
         public void CompareScoreWithHighscores(int score)
         {

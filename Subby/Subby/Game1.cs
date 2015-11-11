@@ -25,6 +25,7 @@ namespace Subby
         bool paused;
         bool pauseKeyDown;
         bool levelEnd;
+        bool showHighscores;
         Texture2D pausedTexture;
         Texture2D endOfLevelTexture;
         ClickableButton pausedResumeButton;
@@ -32,6 +33,8 @@ namespace Subby
         ClickableButton endNextLevelButton;
         ClickableButton endQuitButton;
         ClickableButton endReplayLevelButton;
+        ClickableButton endHighscoresButton;
+        ClickableButton highBackButton;
 
         public Game1()
         {
@@ -49,6 +52,7 @@ namespace Subby
             paused = false;
             pauseKeyDown = false;
             levelEnd = false;
+            showHighscores = false;
             pausedResumeButton = new ClickableButton();
             pausedResumeButton.Initialize();
             pausedQuitButton = new ClickableButton();
@@ -59,6 +63,10 @@ namespace Subby
             endQuitButton.Initialize();
             endReplayLevelButton = new ClickableButton();
             endReplayLevelButton.Initialize();
+            endHighscoresButton = new ClickableButton();
+            endHighscoresButton.Initialize();
+            highBackButton = new ClickableButton();
+            highBackButton.Initialize();
             DeserializeLevel(currentLevel);
             base.Initialize();
             level.Initialize();
@@ -73,6 +81,8 @@ namespace Subby
             Texture2D quitButtonTexture = Content.Load<Texture2D>("quit");
             Texture2D nextLevelButtonTexture = Content.Load<Texture2D>("nextlevel");
             Texture2D replayLevelButtonTexture = Content.Load<Texture2D>("replaylevel");
+            Texture2D highscoresButtonTexture = Content.Load<Texture2D>("highscores");
+            Texture2D backButtonTexture = Content.Load<Texture2D>("back");
             pausedResumeButton.Load(resumeButtonTexture, GraphicsDevice, 
                 new Vector2(GraphicsDevice.Viewport.Width / 2 - resumeButtonTexture.Width / 2, GraphicsDevice.Viewport.Height / 2 - 40));
             pausedQuitButton.Load(quitButtonTexture, GraphicsDevice,
@@ -80,9 +90,13 @@ namespace Subby
             endNextLevelButton.Load(nextLevelButtonTexture, GraphicsDevice,
                 new Vector2(GraphicsDevice.Viewport.Width / 2 - nextLevelButtonTexture.Width / 2, GraphicsDevice.Viewport.Height / 2 - 80));
             endQuitButton.Load(quitButtonTexture, GraphicsDevice,
-                new Vector2(GraphicsDevice.Viewport.Width / 2 - quitButtonTexture.Width / 2, GraphicsDevice.Viewport.Height / 2 + 80));
+                new Vector2(GraphicsDevice.Viewport.Width / 2 - quitButtonTexture.Width / 2, GraphicsDevice.Viewport.Height / 2 + 160));
             endReplayLevelButton.Load(replayLevelButtonTexture, GraphicsDevice,
                 new Vector2(GraphicsDevice.Viewport.Width / 2 - replayLevelButtonTexture.Width / 2, GraphicsDevice.Viewport.Height / 2));
+            endHighscoresButton.Load(highscoresButtonTexture, GraphicsDevice,
+                new Vector2(GraphicsDevice.Viewport.Width / 2 - highscoresButtonTexture.Width / 2, GraphicsDevice.Viewport.Height / 2 + 80));
+            highBackButton.Load(backButtonTexture, GraphicsDevice,
+                new Vector2(GraphicsDevice.Viewport.Width / 2 - backButtonTexture.Width / 2, GraphicsDevice.Viewport.Height / 2 + 200));
             font = Content.Load<SpriteFont>("SpriteFontTemPlate");
             level.Load(Content, GraphicsDevice);
         }
@@ -95,50 +109,50 @@ namespace Subby
 
             if (levelEnd)
             {
-                endNextLevelButton.Update(mouse);
-                endQuitButton.Update(mouse);
-                endReplayLevelButton.Update(mouse);
+                if (!showHighscores)
+                {
+                    endNextLevelButton.Update(mouse);
+                    endQuitButton.Update(mouse);
+                    endReplayLevelButton.Update(mouse);
+                    endHighscoresButton.Update(mouse);
 
-                if (endNextLevelButton.IsClicked)
-                {
-                    endNextLevelButton.IsClicked = false;
-                    if (currentLevel == "level1.xml")
+                    if (endNextLevelButton.IsClicked)
                     {
-                        SerializeScore("level1highscores.xml");
-                        currentLevel = "level2.xml";
+                        endNextLevelButton.IsClicked = false;
+                        if (currentLevel == "level1.xml")
+                        {
+                            currentLevel = "level2.xml";
+                        }
+                        else if (currentLevel == "level2.xml")
+                        {
+                            currentLevel = "level1.xml";
+                        }
+                        StartLevel();
                     }
-                    else if (currentLevel == "level2.xml")
+                    if (endQuitButton.IsClicked)
                     {
-                        SerializeScore("level2highscores.xml");
-                        currentLevel = "level1.xml";
+                        Exit();
                     }
-                    StartLevel();                   
+                    if (endReplayLevelButton.IsClicked)
+                    {
+                        endReplayLevelButton.IsClicked = false;
+                        StartLevel();
+                    }
+                    if (endHighscoresButton.IsClicked)
+                    {
+                        endHighscoresButton.IsClicked = false;
+                        showHighscores = true;
+                    }  
                 }
-                if (endQuitButton.IsClicked)
+                else
                 {
-                    if (currentLevel == "level1.xml")
+                    highBackButton.Update(mouse);
+                    if (highBackButton.IsClicked)
                     {
-                        SerializeScore("level1highscores.xml");
-                    }
-                    else if (currentLevel == "level2.xml")
-                    {
-                        SerializeScore("level2highscores.xml");
-                    }
-                    Exit();
+                        highBackButton.IsClicked = false;
+                        showHighscores = false;
+                    } 
                 }
-                if (endReplayLevelButton.IsClicked)
-                {
-                    endReplayLevelButton.IsClicked = false;
-                    if (currentLevel == "level1.xml")
-                    {
-                        SerializeScore("level1highscores.xml");
-                    }
-                    else if (currentLevel == "level2.xml")
-                    {
-                        SerializeScore("level2highscores.xml");
-                    }
-                    StartLevel();                  
-                }                
             }
             else
             {
@@ -196,13 +210,27 @@ namespace Subby
 
             if (levelEnd)
             {
-                spriteBatch.Draw(endOfLevelTexture, 
-                    new Rectangle((GraphicsDevice.Viewport.Width / 2) - (endOfLevelTexture.Width /2),
-                        (GraphicsDevice.Viewport.Height / 2) - (endOfLevelTexture.Height / 2), 
+                spriteBatch.Draw(endOfLevelTexture,
+                    new Rectangle((GraphicsDevice.Viewport.Width / 2) - (endOfLevelTexture.Width / 2),
+                        (GraphicsDevice.Viewport.Height / 2) - (endOfLevelTexture.Height / 2),
                         endOfLevelTexture.Width, endOfLevelTexture.Height), Color.White);
-                endNextLevelButton.Draw(spriteBatch);
-                endQuitButton.Draw(spriteBatch);
-                endReplayLevelButton.Draw(spriteBatch);
+
+                if (!showHighscores)
+                {                    
+                    endNextLevelButton.Draw(spriteBatch);
+                    endQuitButton.Draw(spriteBatch);
+                    endReplayLevelButton.Draw(spriteBatch);
+                    endHighscoresButton.Draw(spriteBatch);
+                }
+                else
+                {
+                    highBackButton.Draw(spriteBatch);
+                    DrawHighscoreList(new Vector2(GraphicsDevice.Viewport.Width / 2 - 80, GraphicsDevice.Viewport.Height / 2 - 130));
+                }
+                string scoreString = "Total Score: " + level.CalculateLevelScore();
+                spriteBatch.DrawString(font, scoreString, 
+                    new Vector2(GraphicsDevice.Viewport.Width / 2 - 80, GraphicsDevice.Viewport.Height / 2 - 150), 
+                    Color.White);
             }
             else
             {
@@ -221,6 +249,27 @@ namespace Subby
 
             base.Draw(gameTime);
         }
+
+        private void DrawHighscoreList(Vector2 position)
+        {
+            HighscoreList highscores = new HighscoreList();
+            if (currentLevel == "level1.xml")
+            {
+                highscores = DeserializeHighscores("level1highscores.xml");
+            }
+            else if (currentLevel == "level2.xml")
+            {
+                highscores = DeserializeHighscores("level2highscores.xml");
+            }
+
+            spriteBatch.DrawString(font, "Highscores", position, Color.White);
+
+            for (int i = 1; i < highscores.Highscores.Length + 1; i++)
+            {
+                spriteBatch.DrawString(font, i + ": " + highscores.Highscores[i - 1], new Vector2(position.X, position.Y + (i * 30)), Color.White);
+            }
+        }
+
         private Boolean CheckKeys()
         {
             KeyboardState state = Keyboard.GetState();
@@ -241,20 +290,6 @@ namespace Subby
             {
                 level.Subby.GoSlower();
             }
-            if (state.IsKeyDown(Keys.D1))
-            {
-                currentLevel = "level1.xml";
-                DeserializeLevel(currentLevel);
-                base.Initialize();
-                level.Initialize();
-            }
-            if (state.IsKeyDown(Keys.D2))
-            {
-                currentLevel = "level2.xml";
-                DeserializeLevel(currentLevel);
-                base.Initialize();
-                level.Initialize();
-            }
             if (state.IsKeyDown(Keys.Space))
             {
                 if (!oldState.IsKeyDown(Keys.Space))
@@ -263,10 +298,6 @@ namespace Subby
                     Point position = level.PointOnCircle(level.Subby.Texture.Width / 2 + 30, (int)level.Subby.AngleDegrees, new Point((int)level.Subby.Position.X, (int)level.Subby.Position.Y));
                     level.CreateMissile(missile, position, 300);
                 }
-            }
-            if (state.IsKeyDown(Keys.P))
-            {
-                SerializeScore("level1highscores.xml");
             }
             if (state.IsKeyDown(Keys.K))
             {
@@ -316,7 +347,7 @@ namespace Subby
         private void SerializeScore(string filePath)
         {
             HighscoreList highscores = DeserializeHighscores(filePath);
-            highscores.CompareScoreWithHighscores(level.Score);
+            highscores.CompareScoreWithHighscores(level.CalculateLevelScore());
             SerializeHighscores(filePath, highscores);
         }
 
@@ -365,7 +396,7 @@ namespace Subby
 
         private void CheckLevelEnd()
         {
-            if (level.Subby.Position.X + level.ScrollingPosition > level.EndPosition)
+            if (level.Subby.Position.X + level.ScrollingPosition > level.EndPosition && levelEnd == false)
             {
                 EndLevel();
             }
@@ -374,6 +405,14 @@ namespace Subby
         private void EndLevel()
         {
             levelEnd = true;
+            if (currentLevel == "level1.xml")
+            {
+                SerializeScore("level1highscores.xml");
+            }
+            else if (currentLevel == "level2.xml")
+            {
+                SerializeScore("level2highscores.xml");
+            }
         }
 
         private void StartLevel()
