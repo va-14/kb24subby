@@ -41,7 +41,10 @@ namespace Subby
         [DataMember]
         public int Score;
         [DataMember]
-        public int End;
+        public int EndPosition;
+        [DataMember]
+        public int TargetTime;
+
 
         private Texture2D _chopperTexture;
         private Texture2D _missileTexture;
@@ -157,7 +160,10 @@ namespace Subby
                 SpriteList.Add(chopper);
             }
         }
-
+        public int CalculateLevelScore(int roundTime, int score, int fuel, int targetTime, int health)
+        {
+            return score + (fuel / 2) + health + ((targetTime - roundTime)* 25);
+        }
         private void CleanUpSpriteList()
         {
             Boolean remove;
@@ -167,8 +173,7 @@ namespace Subby
                 //alle sprites die geen health meer hebben
                 if (sprite is IDamageableSprite)
                 {
-                    IDamageableSprite damageableSprite = (IDamageableSprite)sprite;
-                    if (damageableSprite.Health <= 0)
+                    if (((IDamageableSprite)sprite).Health <= 0)
                     {
                         remove = true;
                     }
@@ -176,8 +181,7 @@ namespace Subby
                 //sprites die geexplodeerd zijn
                 if (sprite is IExplodableSprite)
                 {
-                    IExplodableSprite explodableSprite = (IExplodableSprite)sprite;
-                    remove = explodableSprite.Exploded;
+                    remove = ((IExplodableSprite)sprite).Exploded;
                 }
                 //check alleen chopper en missile wanneer ze aan de rechter kant uit het scherm vliegen
                 if (sprite is Chopper || sprite is Missile)
@@ -192,8 +196,7 @@ namespace Subby
                 {
                     if (sprite is Missile)
                     {
-                        Missile missile = (Missile)sprite;
-                        if (missile.Active)
+                        if (((Missile)sprite).Active)
                         {
                             remove = true;
                         }
@@ -216,23 +219,25 @@ namespace Subby
        
         public Missile CreateMissile(Missile missile, Point position, int Damage)
         {
+            if (missile != null)
+            {
+                missile.Texture = _missileTexture;
+                missile.TextureName = "missile";
+                missile.Color = Color.White;
+                missile.Active = false;
+                if (position != null)
+                    missile.Position = new Vector2(position.X + ScrollingPosition, position.Y);
 
-            missile.Texture = _missileTexture;
-            missile.TextureName = "missile";
-            missile.Color = Color.White;
-            missile.Active = false;
-            if (position != null)
-                missile.Position = new Vector2(position.X + ScrollingPosition, position.Y);
+                if (Damage > 0)
+                    missile.Damage = Damage;
 
-            if (Damage > 0)
-                missile.Damage = Damage;
+                SpriteList.Add(missile);
 
-            SpriteList.Add(missile);
+                if (MissileList == null)
+                    MissileList = new List<Missile>();
 
-            if (MissileList == null)
-                MissileList = new List<Missile>();
-
-            MissileList.Add(missile);
+                MissileList.Add(missile);
+            }
             return missile;
         }
         public void Draw(SpriteBatch batch)
@@ -243,8 +248,7 @@ namespace Subby
             {
                 if (sprite.GetType().Name.Equals("Mine"))
                 {
-                    Mine m = (Mine)sprite;
-                    batch.Draw(sprite.Texture, new Vector2(sprite.Position.X - (float)ScrollingPosition + (m.Range / 2), sprite.Position.Y + (m.Range / 2)), sprite.Color);
+                    batch.Draw(sprite.Texture, new Vector2(sprite.Position.X - (float)ScrollingPosition + (((Mine)sprite).Range / 2), sprite.Position.Y + (((Mine)sprite).Range / 2)), sprite.Color);
                 }
                 else
                 {
@@ -346,13 +350,11 @@ namespace Subby
                 s1.CollisionWith(s2);
                 if (s2 is Chopper )
                 {
-                    Chopper chopper = (Chopper)s2;
-                    UpdateScore(chopper.Score);
+                    UpdateScore(((Chopper)s2).Score);
                 }
                 if (s2 is HostileSub)
                 {
-                    HostileSub hostileSub = (HostileSub)s2;
-                    UpdateScore(hostileSub.Score);
+                    UpdateScore(((HostileSub)s2).Score);
                 }
             }
         }

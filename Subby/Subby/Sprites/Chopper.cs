@@ -87,12 +87,11 @@ namespace Subby.Sprites
 
 
         //ISprite functions
-        public void CollisionWith(ISprite s)
+        public void CollisionWith(ISprite sprite)
         {
-            if (s.GetType().Name.Equals("Missile"))
+            if (sprite is Missile)
             {
-                Missile missile = (Missile)s;
-                TakeDamage(missile.Damage);
+                TakeDamage(((Missile)sprite).Damage);
             }
         }
         public void Update(GameTime gameTime)
