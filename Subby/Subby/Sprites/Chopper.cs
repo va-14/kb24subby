@@ -92,7 +92,7 @@ namespace Subby.Sprites
             if (s.GetType().Name.Equals("Missile"))
             {
                 Missile missile = (Missile)s;
-                DoDamage(missile.Damage);
+                TakeDamage(missile.Damage);
             }
         }
         public void Update(GameTime gameTime)
@@ -134,7 +134,7 @@ namespace Subby.Sprites
 
         
 
-        public void DoDamage(int damage)
+        public void TakeDamage(int damage)
         {
             _health -= damage;
         }

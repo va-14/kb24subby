@@ -12,6 +12,6 @@ namespace Subby
     {
         int Health { get; set; }
 
-        void DoDamage(int damage);
+        void TakeDamage(int damage);
     }
 }

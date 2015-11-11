@@ -95,7 +95,7 @@ namespace Subby.Sprites
                 if (s.GetType().Name.Equals("Player"))
                 {
                     Player p = (Player)s;
-                    p.DoDamage(Damage);
+                    p.TakeDamage(Damage);
                 }
             }
 
