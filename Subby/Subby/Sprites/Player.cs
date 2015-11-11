@@ -98,7 +98,7 @@ namespace Subby.Sprites
             if (s.GetType().Name.Equals("Wrak"))
             {
                 Wrak wrak = (Wrak)s;
-                DoDamage(wrak.Schade);
+                DoDamage(wrak.Damage);
             }
             if (s.GetType().Name.Equals("Missile"))
             {
@@ -153,27 +153,23 @@ namespace Subby.Sprites
             if (UseFuel(1))
             Rotate(-1);
         }
-        public Vector2 DamagedPositionBehavour()
+        public Vector2 GetDamagedPositionBehavour()
         {
 
+            float snelheid = 0;
             if (_health < 800)
-            {
-                return new Vector2(0, 0.1f);
-            }
-            if (_health < 600)
-            {
-                return new Vector2(0, 0.15f);
-            }
-            if (_health < 400)
-            {
-                return new Vector2(0, 0.2f);
-            }
-            if (_health < 200)
-            {
-                return new Vector2(0, 0.25f);
-            }
-            return new Vector2(0, 0);
+                snelheid = 0.25f;
 
+            if (_health < 600)
+                snelheid = 0.4f;   
+
+            if (_health < 400)
+                snelheid = 0.6f;   
+
+            if (_health < 200)
+                snelheid = 0.9f;   
+            
+            return new Vector2(0, snelheid);
         }
         private void Rotate(int degrees)
         {
@@ -192,15 +188,11 @@ namespace Subby.Sprites
         private void UpdatePosition()
         {
             if (_speed > 0.01)
-            {
                 _speed -= 0.01f;
-            }
             if (_speed < -0.01)
-            {
                 _speed += 0.01f;
-            }
 
-            Position += DamagedPositionBehavour();
+            Position += GetDamagedPositionBehavour();
 
             Position += new Vector2(_speed * (float)Math.Cos(Rotation), (_speed * (float)Math.Sin(Rotation)));
         }

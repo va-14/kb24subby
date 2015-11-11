@@ -365,14 +365,16 @@ namespace Subby
         }
         private void SubbyOnLevelBounaries(Player subby)
         {
-            if (subby.Position.Y >= LevelBoundaries.Bottom)
+            if (subby.Position.Y > LevelBoundaries.Bottom - 3)
             {
-                subby.Position -= subby.DamagedPositionBehavour();
-                subby.Speed = -subby.Speed / 2;
+                subby.Position -= subby.GetDamagedPositionBehavour();
             }
-            if (subby.Position.Y <= LevelBoundaries.Top || subby.Position.X <= LevelBoundaries.Left)
+            if (subby.Position.Y <= LevelBoundaries.Top || 
+                subby.Position.X <= LevelBoundaries.Left || 
+                subby.Position.Y >= LevelBoundaries.Bottom)
             {
-                subby.Speed = -subby.Speed / 4;
+                subby.Speed = -subby.Speed;
+
             }
             if (subby.Position.X >= LevelBoundaries.Right)
             {
