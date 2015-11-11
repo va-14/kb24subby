@@ -378,10 +378,13 @@ namespace Subby
             }
             if (subby.Position.X >= LevelBoundaries.Right)
             {
-                ScrollingPosition += (int)subby.Position.X - (int)LevelBoundaries.Right;
+                UpdateScrollingPosition(subby, LevelBoundaries);
                 subby.Position = new Vector2(LevelBoundaries.Right, subby.Position.Y);
             }
         }
-
+        private void UpdateScrollingPosition(Player subby, LevelBoundaries levelBoundaries)
+        {
+            ScrollingPosition += (int)subby.Position.X - (int)LevelBoundaries.Right;
+        }
     }
 }

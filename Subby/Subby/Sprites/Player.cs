@@ -98,12 +98,12 @@ namespace Subby.Sprites
             if (s.GetType().Name.Equals("Wrak"))
             {
                 Wrak wrak = (Wrak)s;
-                DoDamage(wrak.Damage);
+                TakeDamage(wrak.Damage);
             }
             if (s.GetType().Name.Equals("Missile"))
             {
                 Missile missile = (Missile)s;
-                DoDamage(missile.Damage);
+                TakeDamage(missile.Damage);
             }
         }
         public void Update(GameTime gameTime)
@@ -177,7 +177,7 @@ namespace Subby.Sprites
             while (this._angle < 0) this._angle += 360;
             while (this._angle > 359) this._angle -= 360;
         }
-        public void DoDamage(int damage)
+        public void TakeDamage(int damage)
         {
             _health -= damage;
         }
