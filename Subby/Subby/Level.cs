@@ -40,6 +40,8 @@ namespace Subby
         public float TotalRoundTime;
         [DataMember]
         public int Score;
+        [DataMember]
+        public int End;
 
         private Texture2D _chopperTexture;
         private Texture2D _missileTexture;

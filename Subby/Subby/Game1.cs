@@ -23,6 +23,7 @@ namespace Subby
         KeyboardState oldState;
         bool paused;
         bool pauseKeyDown;
+        bool levelEnd;
         Texture2D pausedTexture;
         ClickableButton resumeButton;
         ClickableButton quitButton;
@@ -41,6 +42,7 @@ namespace Subby
             this.IsMouseVisible = true;
             paused = false;
             pauseKeyDown = false;
+            levelEnd = false;
             resumeButton = new ClickableButton();
             resumeButton.Initialize();
             quitButton = new ClickableButton();
@@ -68,7 +70,7 @@ namespace Subby
         {
             MouseState mouse = Mouse.GetState();
 
-            checkPauseKey(Keyboard.GetState());
+            CheckPauseKey(Keyboard.GetState());
 
             if (!paused)
             {
@@ -232,7 +234,7 @@ namespace Subby
             paused = false;
         }
 
-        private void checkPauseKey(KeyboardState keyboardState)
+        private void CheckPauseKey(KeyboardState keyboardState)
         {
             bool pauseKeyDownThisFrame = keyboardState.IsKeyDown(Keys.Escape);
 
@@ -244,6 +246,20 @@ namespace Subby
                     EndPause();
             }
             pauseKeyDown = pauseKeyDownThisFrame;
+        }
+
+        private void EndLevel()
+        {
+            if (level.Subby.Position.X == level.End)
+            {
+                levelEnd = true;
+            }
+        }
+
+        private void StartLevel(string level)
+        {
+            levelEnd = false;
+            Deserialize(level);
         }
     }
 }
