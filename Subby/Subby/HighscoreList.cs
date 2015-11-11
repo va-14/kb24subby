@@ -16,7 +16,9 @@ namespace Subby
         {
             if (score > Highscores[Highscores.Length - 1])
             {
-                
+                Highscores[Highscores.Length - 1] = score;
+                Array.Sort<int>(Highscores);
+                Array.Reverse(Highscores);
             }
         }
     }

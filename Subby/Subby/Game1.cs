@@ -59,7 +59,7 @@ namespace Subby
             endQuitButton.Initialize();
             endReplayLevelButton = new ClickableButton();
             endReplayLevelButton.Initialize();
-            Deserialize(currentLevel);
+            DeserializeLevel(currentLevel);
             base.Initialize();
             level.Initialize();
         }
@@ -104,21 +104,39 @@ namespace Subby
                     endNextLevelButton.IsClicked = false;
                     if (currentLevel == "level1.xml")
                     {
+                        SerializeScore("level1highscores.xml");
                         currentLevel = "level2.xml";
                     }
                     else if (currentLevel == "level2.xml")
                     {
+                        SerializeScore("level2highscores.xml");
                         currentLevel = "level1.xml";
                     }
                     StartLevel();                   
                 }
                 if (endQuitButton.IsClicked)
                 {
+                    if (currentLevel == "level1.xml")
+                    {
+                        SerializeScore("level1highscores.xml");
+                    }
+                    else if (currentLevel == "level2.xml")
+                    {
+                        SerializeScore("level2highscores.xml");
+                    }
                     Exit();
                 }
                 if (endReplayLevelButton.IsClicked)
                 {
                     endReplayLevelButton.IsClicked = false;
+                    if (currentLevel == "level1.xml")
+                    {
+                        SerializeScore("level1highscores.xml");
+                    }
+                    else if (currentLevel == "level2.xml")
+                    {
+                        SerializeScore("level2highscores.xml");
+                    }
                     StartLevel();                  
                 }                
             }
@@ -154,7 +172,7 @@ namespace Subby
         
         private void ResetLevel()
         {
-            Deserialize(currentLevel);
+            DeserializeLevel(currentLevel);
             base.Initialize();
             level.Initialize();
         }
@@ -226,14 +244,14 @@ namespace Subby
             if (state.IsKeyDown(Keys.D1))
             {
                 currentLevel = "level1.xml";
-                Deserialize(currentLevel);
+                DeserializeLevel(currentLevel);
                 base.Initialize();
                 level.Initialize();
             }
             if (state.IsKeyDown(Keys.D2))
             {
                 currentLevel = "level2.xml";
-                Deserialize(currentLevel);
+                DeserializeLevel(currentLevel);
                 base.Initialize();
                 level.Initialize();
             }
@@ -248,7 +266,7 @@ namespace Subby
             }
             if (state.IsKeyDown(Keys.P))
             {
-                Serialize("level3.xml");
+                SerializeScore("level1highscores.xml");
             }
             if (state.IsKeyDown(Keys.K))
             {
@@ -277,7 +295,7 @@ namespace Subby
         }
       
 
-        private void Serialize(string filePath)
+        private void SerializeLevel(string filePath)
         {
             using (FileStream writer = new FileStream(filePath, FileMode.Create, FileAccess.Write))
             {
@@ -286,12 +304,37 @@ namespace Subby
             }
         }
 
-        private void Deserialize(string filePath)
+        private void SerializeHighscores(string filePath, HighscoreList highscores)
+        {
+            using (FileStream writer = new FileStream(filePath, FileMode.Create, FileAccess.Write))
+            {
+                DataContractSerializer ser = new DataContractSerializer(typeof(HighscoreList));
+                ser.WriteObject(writer, highscores);
+            }
+        }
+
+        private void SerializeScore(string filePath)
+        {
+            HighscoreList highscores = DeserializeHighscores(filePath);
+            highscores.CompareScoreWithHighscores(level.Score);
+            SerializeHighscores(filePath, highscores);
+        }
+
+        private void DeserializeLevel(string filePath)
         {
             using (FileStream reader = new FileStream(filePath, FileMode.Open, FileAccess.Read))
             {
                 DataContractSerializer ser = new DataContractSerializer(typeof(Level));
                 level = (Level)ser.ReadObject(reader);
+            }
+        }
+
+        private HighscoreList DeserializeHighscores(string filePath)
+        {
+            using (FileStream reader = new FileStream(filePath, FileMode.Open, FileAccess.Read))
+            {
+                DataContractSerializer ser = new DataContractSerializer(typeof(HighscoreList));
+                return (HighscoreList)ser.ReadObject(reader);
             }
         }
 
