@@ -13,7 +13,7 @@ namespace Subby
     {
         public void SetByGraphicDevice(GraphicsDevice graphicsDevice)
         {
-            Top = graphicsDevice.Viewport.Height / 2.5f + 20;
+            Top = graphicsDevice.Viewport.Height / 2.1f;
             Bottom = graphicsDevice.Viewport.Height - 80;
             Left = 20;
             Right = graphicsDevice.Viewport.Width / 2;
