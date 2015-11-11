@@ -168,7 +168,7 @@ namespace Subby
                 if (sprite is IDamageableSprite)
                 {
                     IDamageableSprite damageableSprite = (IDamageableSprite)sprite;
-                    if (damageableSprite.Health < 0)
+                    if (damageableSprite.Health <= 0)
                     {
                         remove = true;
                     }
