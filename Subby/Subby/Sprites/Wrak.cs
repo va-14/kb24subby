@@ -34,7 +34,7 @@ namespace Subby.Sprites
 
         //Wrak properties
         [DataMember]
-        public int Schade { get; set; }
+        public int Damage { get; set; }
 
         //ISprite functions
         public void CollisionWith(ISprite s)

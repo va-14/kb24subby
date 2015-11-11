@@ -98,7 +98,7 @@ namespace Subby.Sprites
             if (s.GetType().Name.Equals("Wrak"))
             {
                 Wrak wrak = (Wrak)s;
-                DoDamage(wrak.Schade);
+                DoDamage(wrak.Damage);
             }
             if (s.GetType().Name.Equals("Missile"))
             {
