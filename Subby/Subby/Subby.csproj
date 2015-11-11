@@ -41,6 +41,7 @@
     <Compile Include="Background.cs" />
     <Compile Include="ClickableButton.cs" />
     <Compile Include="Game1.cs" />
+    <Compile Include="HighscoreList.cs" />
     <Compile Include="IDamageableSprite.cs" />
     <Compile Include="IExplodableSprite.cs" />
     <Compile Include="LevelBoundaries.cs" />

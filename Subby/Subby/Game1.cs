@@ -20,13 +20,18 @@ namespace Subby
         SpriteFont font;
 
         Level level;
+        string currentLevel;
         KeyboardState oldState;
         bool paused;
         bool pauseKeyDown;
         bool levelEnd;
         Texture2D pausedTexture;
-        ClickableButton resumeButton;
-        ClickableButton quitButton;
+        Texture2D endOfLevelTexture;
+        ClickableButton pausedResumeButton;
+        ClickableButton pausedQuitButton;
+        ClickableButton endNextLevelButton;
+        ClickableButton endQuitButton;
+        ClickableButton endReplayLevelButton;
 
         public Game1()
         {
@@ -39,15 +44,22 @@ namespace Subby
 
         protected override void Initialize()
         {
+            currentLevel = "level1.xml";
             this.IsMouseVisible = true;
             paused = false;
             pauseKeyDown = false;
             levelEnd = false;
-            resumeButton = new ClickableButton();
-            resumeButton.Initialize();
-            quitButton = new ClickableButton();
-            quitButton.Initialize();
-            Deserialize("level1.xml");
+            pausedResumeButton = new ClickableButton();
+            pausedResumeButton.Initialize();
+            pausedQuitButton = new ClickableButton();
+            pausedQuitButton.Initialize();
+            endNextLevelButton = new ClickableButton();
+            endNextLevelButton.Initialize();
+            endQuitButton = new ClickableButton();
+            endQuitButton.Initialize();
+            endReplayLevelButton = new ClickableButton();
+            endReplayLevelButton.Initialize();
+            Deserialize(currentLevel);
             base.Initialize();
             level.Initialize();
         }
@@ -56,12 +68,21 @@ namespace Subby
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
             pausedTexture = Content.Load<Texture2D>("paused");
+            endOfLevelTexture = Content.Load<Texture2D>("endoflevel");
             Texture2D resumeButtonTexture = Content.Load<Texture2D>("resume");
             Texture2D quitButtonTexture = Content.Load<Texture2D>("quit");
-            resumeButton.Load(resumeButtonTexture, GraphicsDevice, 
+            Texture2D nextLevelButtonTexture = Content.Load<Texture2D>("nextlevel");
+            Texture2D replayLevelButtonTexture = Content.Load<Texture2D>("replaylevel");
+            pausedResumeButton.Load(resumeButtonTexture, GraphicsDevice, 
                 new Vector2(GraphicsDevice.Viewport.Width / 2 - resumeButtonTexture.Width / 2, GraphicsDevice.Viewport.Height / 2 - 40));
-            quitButton.Load(quitButtonTexture, GraphicsDevice,
-                new Vector2(GraphicsDevice.Viewport.Width / 2 - resumeButtonTexture.Width / 2, GraphicsDevice.Viewport.Height / 2 + 40));
+            pausedQuitButton.Load(quitButtonTexture, GraphicsDevice,
+                new Vector2(GraphicsDevice.Viewport.Width / 2 - quitButtonTexture.Width / 2, GraphicsDevice.Viewport.Height / 2 + 40));
+            endNextLevelButton.Load(nextLevelButtonTexture, GraphicsDevice,
+                new Vector2(GraphicsDevice.Viewport.Width / 2 - nextLevelButtonTexture.Width / 2, GraphicsDevice.Viewport.Height / 2 - 80));
+            endQuitButton.Load(quitButtonTexture, GraphicsDevice,
+                new Vector2(GraphicsDevice.Viewport.Width / 2 - quitButtonTexture.Width / 2, GraphicsDevice.Viewport.Height / 2 + 80));
+            endReplayLevelButton.Load(replayLevelButtonTexture, GraphicsDevice,
+                new Vector2(GraphicsDevice.Viewport.Width / 2 - replayLevelButtonTexture.Width / 2, GraphicsDevice.Viewport.Height / 2));
             font = Content.Load<SpriteFont>("SpriteFontTemPlate");
             level.Load(Content, GraphicsDevice);
         }
@@ -70,37 +91,72 @@ namespace Subby
         {
             MouseState mouse = Mouse.GetState();
 
-            CheckPauseKey(Keyboard.GetState());
+            CheckLevelEnd();
 
-            if (!paused)
+            if (levelEnd)
             {
-                CheckKeys();
-                level.Update(gameTime);
-                if (!level.IsSubbyAlive())
+                endNextLevelButton.Update(mouse);
+                endQuitButton.Update(mouse);
+                endReplayLevelButton.Update(mouse);
+
+                if (endNextLevelButton.IsClicked)
                 {
-                    ResetLevel();
+                    endNextLevelButton.IsClicked = false;
+                    if (currentLevel == "level1.xml")
+                    {
+                        currentLevel = "level2.xml";
+                    }
+                    else if (currentLevel == "level2.xml")
+                    {
+                        currentLevel = "level1.xml";
+                    }
+                    StartLevel();                   
                 }
-                base.Update(gameTime);
-            }
-            else
-            {
-                if (resumeButton.IsClicked)
-                {
-                    EndPause();
-                }
-                if (quitButton.IsClicked)
+                if (endQuitButton.IsClicked)
                 {
                     Exit();
                 }
-                resumeButton.Update(mouse);
-                quitButton.Update(mouse);
+                if (endReplayLevelButton.IsClicked)
+                {
+                    endReplayLevelButton.IsClicked = false;
+                    StartLevel();                  
+                }                
             }
-            
+            else
+            {
+                CheckPauseKey(Keyboard.GetState());
+
+                if (!paused)
+                {
+                    CheckKeys();
+                    level.Update(gameTime);
+                    if (!level.IsSubbyAlive())
+                    {
+                        ResetLevel();
+                    }
+                    base.Update(gameTime);
+                }
+                else
+                {
+                    if (pausedResumeButton.IsClicked)
+                    {
+                        EndPause();
+                    }
+                    if (pausedQuitButton.IsClicked)
+                    {
+                        Exit();
+                    }
+                    pausedResumeButton.Update(mouse);
+                    pausedQuitButton.Update(mouse);
+                }
+            }   
         }
         
         private void ResetLevel()
         {
-            Initialize();
+            Deserialize(currentLevel);
+            base.Initialize();
+            level.Initialize();
         }
 
         private void DrawText()
@@ -120,15 +176,29 @@ namespace Subby
             level.Draw(spriteBatch);
             DrawText();
 
-            if (paused)
+            if (levelEnd)
             {
-                spriteBatch.Draw(pausedTexture, 
-                    new Rectangle((GraphicsDevice.Viewport.Width / 2) - (pausedTexture.Width /2),
-                        (GraphicsDevice.Viewport.Height / 2) - (pausedTexture.Height / 2), 
-                        pausedTexture.Width, pausedTexture.Height), Color.White);
-                resumeButton.Draw(spriteBatch);
-                quitButton.Draw(spriteBatch);
+                spriteBatch.Draw(endOfLevelTexture, 
+                    new Rectangle((GraphicsDevice.Viewport.Width / 2) - (endOfLevelTexture.Width /2),
+                        (GraphicsDevice.Viewport.Height / 2) - (endOfLevelTexture.Height / 2), 
+                        endOfLevelTexture.Width, endOfLevelTexture.Height), Color.White);
+                endNextLevelButton.Draw(spriteBatch);
+                endQuitButton.Draw(spriteBatch);
+                endReplayLevelButton.Draw(spriteBatch);
             }
+            else
+            {
+                if (paused)
+                {
+                    spriteBatch.Draw(pausedTexture,
+                        new Rectangle((GraphicsDevice.Viewport.Width / 2) - (pausedTexture.Width / 2),
+                            (GraphicsDevice.Viewport.Height / 2) - (pausedTexture.Height / 2),
+                            pausedTexture.Width, pausedTexture.Height), Color.White);
+                    pausedResumeButton.Draw(spriteBatch);
+                    pausedQuitButton.Draw(spriteBatch);
+                }
+            }
+           
             spriteBatch.End();
 
             base.Draw(gameTime);
@@ -155,13 +225,15 @@ namespace Subby
             }
             if (state.IsKeyDown(Keys.D1))
             {
-                Deserialize("level1.xml");
+                currentLevel = "level1.xml";
+                Deserialize(currentLevel);
                 base.Initialize();
                 level.Initialize();
             }
             if (state.IsKeyDown(Keys.D2))
             {
-                Deserialize("level2.xml");
+                currentLevel = "level2.xml";
+                Deserialize(currentLevel);
                 base.Initialize();
                 level.Initialize();
             }
@@ -226,7 +298,7 @@ namespace Subby
         private void BeginPause()
         {
             paused = true;
-            resumeButton.IsClicked = false;
+            pausedResumeButton.IsClicked = false;
         }
 
         private void EndPause()
@@ -248,18 +320,23 @@ namespace Subby
             pauseKeyDown = pauseKeyDownThisFrame;
         }
 
-        private void EndLevel()
+        private void CheckLevelEnd()
         {
-            if (level.Subby.Position.X == level.End)
+            if (level.Subby.Position.X + level.ScrollingPosition > level.End)
             {
-                levelEnd = true;
+                EndLevel();
             }
         }
 
-        private void StartLevel(string level)
+        private void EndLevel()
+        {
+            levelEnd = true;
+        }
+
+        private void StartLevel()
         {
             levelEnd = false;
-            Deserialize(level);
+            ResetLevel();
         }
     }
 }

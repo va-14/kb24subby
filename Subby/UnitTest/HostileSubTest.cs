@@ -103,23 +103,23 @@ namespace UnitTest
             sub.Strategy = new AimedShots();
             sub.ShootTimer = -1;
 
-            Assert.IsTrue(sub.Shoot(gameTime));
+            Assert.IsTrue(sub.Shoot((float)gameTime.TotalGameTime.TotalSeconds));
             Assert.AreEqual(2, sub.ShootTimer, "Shoot werkt niet goed bij AimedShots strategie");
 
             sub.ShootTimer = 2;
 
-            Assert.IsFalse(sub.Shoot(gameTime));
+            Assert.IsFalse(sub.Shoot((float)gameTime.TotalGameTime.TotalSeconds));
             Assert.AreEqual(2, sub.ShootTimer, "Shoot werkt niet goed bij AimedShots strategie");
 
             sub.Strategy = new WallOfShots();
             sub.ShootTimer = -1;
 
-            Assert.IsTrue(sub.Shoot(gameTime));
+            Assert.IsTrue(sub.Shoot((float)gameTime.TotalGameTime.TotalSeconds));
             Assert.AreEqual(-0.5f, sub.ShootTimer, "Shoot werkt niet goed bij WallOfShots strategie");
 
             sub.ShootTimer = 2;
 
-            Assert.IsFalse(sub.Shoot(gameTime));
+            Assert.IsFalse(sub.Shoot((float)gameTime.TotalGameTime.TotalSeconds));
             Assert.AreEqual(2, sub.ShootTimer, "Shoot werkt niet goed bij WallOfShots strategie");
         }
 
