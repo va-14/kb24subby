@@ -88,22 +88,19 @@ namespace Subby.Sprites
 
 
         //ISprite functions
-        public void CollisionWith(ISprite s)
+        public void CollisionWith(ISprite sprite)
         {
-            if (s.GetType().Name.Equals("TankStation"))
+            if (sprite is TankStation)
             {
-                TankStation tankstation = (TankStation)s;
-                FillTank(tankstation.GetFuel());
+                FillTank(((TankStation)sprite).GetFuel());
             }
-            if (s.GetType().Name.Equals("Wrak"))
+            if (sprite is Wrak)
             {
-                Wrak wrak = (Wrak)s;
-                TakeDamage(wrak.Damage);
+                TakeDamage(((Wrak)sprite).Damage);
             }
-            if (s.GetType().Name.Equals("Missile"))
+            if (sprite is Missile)
             {
-                Missile missile = (Missile)s;
-                TakeDamage(missile.Damage);
+                TakeDamage(((Missile)sprite).Damage);
             }
         }
         public void Update(GameTime gameTime)

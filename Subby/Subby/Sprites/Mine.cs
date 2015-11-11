@@ -86,16 +86,15 @@ namespace Subby.Sprites
 
 
         //ISprite functions
-        public void CollisionWith(ISprite s)
+        public void CollisionWith(ISprite sprite)
         {
 
             _activated = true;
             if (Exploded && _timeSinceActivated < Delay +0.5 && _timeSinceActivated > Delay)
             {
-                if (s.GetType().Name.Equals("Player"))
+                if (sprite is Player)
                 {
-                    Player p = (Player)s;
-                    p.TakeDamage(Damage);
+                    ((Player)sprite).TakeDamage(Damage);
                 }
             }
 

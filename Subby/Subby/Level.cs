@@ -41,7 +41,7 @@ namespace Subby
         [DataMember]
         public int Score;
         [DataMember]
-        public int End;
+        public int EndPosition;
         [DataMember]
         public int TargetTime;
 
@@ -173,8 +173,7 @@ namespace Subby
                 //alle sprites die geen health meer hebben
                 if (sprite is IDamageableSprite)
                 {
-                    IDamageableSprite damageableSprite = (IDamageableSprite)sprite;
-                    if (damageableSprite.Health <= 0)
+                    if (((IDamageableSprite)sprite).Health <= 0)
                     {
                         remove = true;
                     }
@@ -182,8 +181,7 @@ namespace Subby
                 //sprites die geexplodeerd zijn
                 if (sprite is IExplodableSprite)
                 {
-                    IExplodableSprite explodableSprite = (IExplodableSprite)sprite;
-                    remove = explodableSprite.Exploded;
+                    remove = ((IExplodableSprite)sprite).Exploded;
                 }
                 //check alleen chopper en missile wanneer ze aan de rechter kant uit het scherm vliegen
                 if (sprite is Chopper || sprite is Missile)
@@ -198,8 +196,7 @@ namespace Subby
                 {
                     if (sprite is Missile)
                     {
-                        Missile missile = (Missile)sprite;
-                        if (missile.Active)
+                        if (((Missile)sprite).Active)
                         {
                             remove = true;
                         }
@@ -251,8 +248,7 @@ namespace Subby
             {
                 if (sprite.GetType().Name.Equals("Mine"))
                 {
-                    Mine m = (Mine)sprite;
-                    batch.Draw(sprite.Texture, new Vector2(sprite.Position.X - (float)ScrollingPosition + (m.Range / 2), sprite.Position.Y + (m.Range / 2)), sprite.Color);
+                    batch.Draw(sprite.Texture, new Vector2(sprite.Position.X - (float)ScrollingPosition + (((Mine)sprite).Range / 2), sprite.Position.Y + (((Mine)sprite).Range / 2)), sprite.Color);
                 }
                 else
                 {
@@ -354,13 +350,11 @@ namespace Subby
                 s1.CollisionWith(s2);
                 if (s2 is Chopper )
                 {
-                    Chopper chopper = (Chopper)s2;
-                    UpdateScore(chopper.Score);
+                    UpdateScore(((Chopper)s2).Score);
                 }
                 if (s2 is HostileSub)
                 {
-                    HostileSub hostileSub = (HostileSub)s2;
-                    UpdateScore(hostileSub.Score);
+                    UpdateScore(((HostileSub)s2).Score);
                 }
             }
         }

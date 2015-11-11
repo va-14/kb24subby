@@ -322,7 +322,7 @@ namespace Subby
 
         private void CheckLevelEnd()
         {
-            if (level.Subby.Position.X + level.ScrollingPosition > level.End)
+            if (level.Subby.Position.X + level.ScrollingPosition > level.EndPosition)
             {
                 EndLevel();
             }
