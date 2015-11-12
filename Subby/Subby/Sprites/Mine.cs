@@ -82,7 +82,7 @@ namespace Subby.Sprites
             }
             set { _range = value; }
         }
-        private float _timeSinceActivated;
+        public float _timeSinceActivated;
 
 
         //ISprite functions
