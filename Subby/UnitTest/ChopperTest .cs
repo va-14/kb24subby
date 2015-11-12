@@ -56,7 +56,7 @@ namespace UnitTest
             Assert.AreEqual(true, collision, "Er vindt geen collision plaats ");
         }
         [TestMethod]
-        public void CollisionWithMissilekFalse()
+        public void CollisionWithMissileFalse()
         {
             Boolean collision = false;
 
@@ -71,9 +71,9 @@ namespace UnitTest
             }
             Assert.AreEqual(false, collision, "Er vindt wel collision plaats");
         }
-       
+
         [TestMethod]
-        public void CollisionWithMissile()
+        public void CollisionWithMissileHealth()
         {
             int healthChopper;
 

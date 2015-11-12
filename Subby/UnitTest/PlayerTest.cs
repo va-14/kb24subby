@@ -227,10 +227,9 @@ namespace UnitTest
             Assert.AreEqual(expectedSpeed, actualSpeed, 0.1f, "Speed niet goed wanneer de player position wordt geupdate");
         }
         [TestMethod]
-        public void Shoot()
+        public void ShootPosition()
         {
-            float expectedBullits, actualBullits;
-            Vector2 expectedPosition,actualPosition;
+            Vector2 expectedPosition, actualPosition;
 
             level.MissileList = new List<Missile>();
             level.SpriteList = new List<ISprite>();
@@ -238,16 +237,28 @@ namespace UnitTest
             Point position = level.PointOnCircle(285 / 2 + 30, (int)level.Subby.AngleDegrees, new Point((int)level.Subby.Position.X, (int)level.Subby.Position.Y));
             level.CreateMissile(missile, position, 300);
 
-
-            expectedBullits = 9;
-            actualBullits = level.Subby.Bullits;
-
             expectedPosition = new Vector2(172, 0);
             actualPosition = missile.Position;
 
-
-            Assert.AreEqual(expectedBullits, actualBullits, "Er gaat geen kogel af wanneer er geschoten wordt");
             Assert.AreEqual(expectedPosition, actualPosition, "De kogel komt niet goed voor de player te staan.");
+        }
+
+
+        [TestMethod]
+        public void ShootBullitDown()
+        {
+            float expectedBullits, actualBullits;
+
+            level.MissileList = new List<Missile>();
+            level.SpriteList = new List<ISprite>();
+            Missile missile = level.Subby.Shoot();
+            Point position = level.PointOnCircle(285 / 2 + 30, (int)level.Subby.AngleDegrees, new Point((int)level.Subby.Position.X, (int)level.Subby.Position.Y));
+            level.CreateMissile(missile, position, 300);
+            
+            expectedBullits = 9;
+            actualBullits = level.Subby.Bullits;
+            
+            Assert.AreEqual(expectedBullits, actualBullits, "Er gaat geen kogel af wanneer er geschoten wordt");
         }
 
         [TestMethod]
