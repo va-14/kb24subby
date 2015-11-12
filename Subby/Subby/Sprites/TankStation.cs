@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 namespace Subby.Sprites
 {
     [DataContract]
-    class TankStation : ISprite
+    public class TankStation : ISprite
     {
         //ISprite properties
         [DataMember]
