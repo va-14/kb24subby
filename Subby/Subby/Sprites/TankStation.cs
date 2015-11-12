@@ -35,7 +35,7 @@ namespace Subby.Sprites
 
         //FillingStation properties
         [DataMember]
-        private int _tank;
+        public int Tank { get; set; }
 
         //ISprite functions
         public void CollisionWith(ISprite s)
@@ -48,13 +48,13 @@ namespace Subby.Sprites
         //FillingStation functions
         public int GetFuel()
         {
-            int tmpTank = _tank;
+            int tmpTank = Tank;
             EmptyTank();
             return tmpTank;
         }
         private void EmptyTank()
         {
-            _tank = 0;
+            Tank = 0;
             Color = Color.Black ;
         }
 

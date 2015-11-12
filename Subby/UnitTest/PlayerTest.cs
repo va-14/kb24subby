@@ -27,7 +27,8 @@ namespace UnitTest
                 Speed = 0, 
                 AngleDegrees = 0,
                 Position = new Vector2(0, 0), 
-                 Bullits = 10
+                 Bullits = 10,
+                 Health = 1000
             };
             
             level = new Level();
@@ -266,11 +267,74 @@ namespace UnitTest
                     collision = true;
                 }
             }
-            
-
-            Assert.AreEqual(collision, true);
-
-
+            Assert.AreEqual(true, collision, "Er vindt geen collision plaats met het wrak");
         }
+        [TestMethod]
+        public void CollisionWithWrakFalse()
+        {
+            Boolean collision = false;
+
+            Rectangle wrakRect = new Rectangle((int)wrak.Position.X, (int)wrak.Position.Y, 50, 50);
+            List<Rectangle> subbyRects = level.CalculateSubbyRect(400, 400, new Point(350, 350), 30);
+
+            foreach (Rectangle subbyRect in subbyRects)
+            {
+                Rectangle overlap = Rectangle.Intersect(wrakRect, subbyRect);
+
+                if (!overlap.IsEmpty)
+                {
+                    collision = true;
+                }
+            }
+            Assert.AreEqual(false, collision, "Er vindt wel collision plaats met het wrak");
+        }
+        [TestMethod]
+        public void CollisionWithWrak()
+        {
+            int health;
+            level.Subby.CollisionWith(wrak);
+
+            health = level.Subby.Health;
+
+            Assert.AreEqual(999, health, "De schade gaat niet van subby af");
+        }
+
+        [TestMethod]
+        public void CollisionWithTankstation()
+        {
+            int tankSubby, tankTanksation;
+            TankStation tankstation = new TankStation() { Tank = 1000 };
+
+            level.Subby.CollisionWith(tankstation);
+
+            tankSubby = level.Subby.Fuel;
+            tankTanksation = tankstation.Tank;
+
+            Assert.AreEqual(2000, tankSubby, "De fuel komt niet bij de player");
+            Assert.AreEqual(0, tankTanksation, "De fuel gaat niet weg bij tankstation");
+        }
+        [TestMethod]
+        public void CollisionWithMissile()
+        {
+            int healthSubby;
+            Missile missile = new Missile() { Damage = 300 };
+
+            level.Subby.CollisionWith(missile);
+
+            healthSubby = level.Subby.Health;
+
+            Assert.AreEqual(700, healthSubby, "Er gaat iets mis met de health en kogel collision");
+        }
+        [TestMethod]
+        public void DamagedPlayer()
+        {
+            Vector2 damagedBehavour;
+            level.Subby.Health = 6;
+
+            damagedBehavour = level.Subby.GetDamagedPositionBehavour();
+
+            Assert.AreEqual(new Vector2(0.9f, 0), damagedBehavour, "De damagedbehavour klopt niet");
+        }
+
     }
 }
