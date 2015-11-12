@@ -57,14 +57,6 @@ namespace Subby.Sprites
         [DataMember]
         private int _counter;
         [DataMember]
-        private int _damage;
-
-        public int Damage
-        {
-            get { return _damage; }
-            set { _damage = value; }
-        }
-        [DataMember]
         public int DropSecond { get; set; }
         [DataMember]
         private int _lastSecond;

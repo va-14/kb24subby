@@ -15,25 +15,47 @@ namespace UnitTest
     [TestClass]
     public class PlayerTest
     {
+        Level level;
+        Wrak wrak;
+
+        [TestInitialize]
+        public void setup()
+        {
+            Player subby;
+            subby = new Player() { 
+                Fuel = 1000, 
+                Speed = 0, 
+                AngleDegrees = 0,
+                Position = new Vector2(0, 0), 
+                 Bullits = 10,
+                 Health = 1000
+            };
+            
+            level = new Level();
+            level.Subby = subby;
+
+            wrak = new Wrak();
+            wrak.Damage = 1;
+            wrak.Position = new Vector2(0, 0);
+        }
         [TestMethod]
         public void PlayerMoveDown()
         {
             float expectedSpeed, expectedAngle, actualSpeed, actualAngle;
             int expectedFuel, actualFuel;
 
-            Player subby = new Player() { Fuel = 100, Speed = 0, AngleDegrees = 0 };
-            subby.GoDown();
-            subby.GoDown();
-            subby.GoDown();
+            level.Subby.GoDown();
+            level.Subby.GoDown();
+            level.Subby.GoDown();
 
             expectedAngle = 3;
-            actualAngle = subby.AngleDegrees;
+            actualAngle = level.Subby.AngleDegrees;
 
-            expectedFuel = 97;
-            actualFuel = subby.Fuel;
+            expectedFuel = 997;
+            actualFuel = level.Subby.Fuel;
 
             expectedSpeed = 0;
-            actualSpeed = subby.Speed;
+            actualSpeed = level.Subby.Speed;
 
             Assert.AreEqual(expectedAngle, actualAngle, "Angle niet goed wanneer subby omlaag roteert");
             Assert.AreEqual(expectedFuel, actualFuel, "Fuel niet goed wanneer subby omlaag roteert");
@@ -45,17 +67,16 @@ namespace UnitTest
             float expectedSpeed, expectedAngle, actualSpeed, actualAngle;
             int expectedFuel, actualFuel;
 
-            Player subby = new Player() { Fuel = 97, Speed = 0, AngleDegrees = 3 };
-            subby.GoUp();
+            level.Subby.GoUp();
 
-            expectedAngle = 170;
-            actualAngle = subby.AngleDegrees;
+            expectedAngle = 359;
+            actualAngle = level.Subby.AngleDegrees;
 
-            expectedFuel = 96;
-            actualFuel = subby.Fuel;
+            expectedFuel = 999;
+            actualFuel = level.Subby.Fuel;
 
             expectedSpeed = 0;
-            actualSpeed = subby.Speed;
+            actualSpeed = level.Subby.Speed;
 
             Assert.AreEqual(expectedAngle, actualAngle,1, "Angle niet goed wanneer subby omhoog roteert");
             Assert.AreEqual(expectedFuel, actualFuel, "Fuel niet goed wanneer subby omhoog roteert");
@@ -67,20 +88,19 @@ namespace UnitTest
             float expectedSpeed, expectedAngle, actualSpeed, actualAngle;
             int expectedFuel, actualFuel;
 
-            Player subby = new Player() { Fuel = 96, Speed = 0, AngleDegrees = 2 };
-            subby.GoFaster();
-            subby.GoFaster();
-            subby.GoFaster();
-            subby.GoFaster();
+            level.Subby.GoFaster();
+            level.Subby.GoFaster();
+            level.Subby.GoFaster();
+            level.Subby.GoFaster();
             
-            expectedAngle = 114;
-            actualAngle = subby.AngleDegrees;
+            expectedAngle = 1;
+            actualAngle = level.Subby.AngleDegrees;
 
-            expectedFuel = 88;
-            actualFuel = subby.Fuel;
+            expectedFuel = 992;
+            actualFuel = level.Subby.Fuel;
 
             expectedSpeed = 0.2f;
-            actualSpeed = subby.Speed;
+            actualSpeed = level.Subby.Speed;
 
             Assert.AreEqual(expectedAngle, actualAngle,1, "Angle niet goed wanneer subby harder gaat");
             Assert.AreEqual(expectedFuel, actualFuel, "Fuel niet goed wanneer subby harder gaat");
@@ -92,18 +112,17 @@ namespace UnitTest
             float expectedSpeed, expectedAngle, actualSpeed, actualAngle;
             int expectedFuel, actualFuel;
 
-            Player subby = new Player() { Fuel = 88, Speed = 0.2f, AngleDegrees = 2 };
 
-            subby.GoSlower();
+            level.Subby.GoSlower();
 
-            expectedAngle = 114;
-            actualAngle = subby.AngleDegrees;
+            expectedAngle = 1;
+            actualAngle = level.Subby.AngleDegrees;
 
-            expectedFuel = 86;
-            actualFuel = subby.Fuel;
+            expectedFuel = 998;
+            actualFuel = level.Subby.Fuel;
 
-            expectedSpeed = 0.15f;
-            actualSpeed = subby.Speed;
+            expectedSpeed = -0.05f;
+            actualSpeed = level.Subby.Speed;
 
             Assert.AreEqual(expectedAngle, actualAngle,1, "Angle niet goed wanneer subby zachter gaat");
             Assert.AreEqual(expectedFuel, actualFuel, "Fuel niet goed wanneer subby zachter gaat");
@@ -115,13 +134,12 @@ namespace UnitTest
         {
             float expectedSpeed, actualSpeed;
 
-            Player subby = new Player() { Fuel = 100000000, Speed = 0, Rotation = 0 };
-            for (int i = 0; i < 10000; i++)
-                subby.GoFaster();
+            for (int i = 0; i < 1000; i++)
+                level.Subby.GoFaster();
 
 
             expectedSpeed = 4;
-            actualSpeed = subby.Speed;
+            actualSpeed = level.Subby.Speed;
 
 
             Assert.AreEqual(expectedSpeed, actualSpeed, 0.1f, "Maximum speed is niet goed");
@@ -134,36 +152,36 @@ namespace UnitTest
 
 
             Boolean actual, expected;
-            Player subby;
-            Level level = new Level();
-
-            subby = new Player() { Fuel = 100000000, Speed = 0, Health = 0 };
-            level.Subby = subby;
+            level.Subby.Fuel = 10;
+            level.Subby.Speed = 1;
+            level.Subby.Health = 0;
 
             actual = level.IsSubbyAlive();
             expected = false;
 
             Assert.AreEqual(expected, actual, "Subby hoort dood te zijn bij 0 health");
 
-            subby = new Player() { Fuel = 0, Speed = 0, Health = 10 };
-            level.Subby = subby;
+            level.Subby.Fuel = 0;
+            level.Subby.Speed = 0;
+            level.Subby.Health =10;
 
             actual = level.IsSubbyAlive();
             expected = false;
 
             Assert.AreEqual(expected, actual, "Subby hoort dood te zijn bij 0 fuel en 0 speed");
 
-
-            subby = new Player() { Fuel = 0, Speed = 4, Health = 10 };
-            level.Subby = subby;
+            level.Subby.Fuel = 0;
+            level.Subby.Speed = 4;
+            level.Subby.Health = 10;
 
             actual = level.IsSubbyAlive();
             expected = true;
 
             Assert.AreEqual(expected, actual, "Subby hoort levend te zijn bij 0 fuel en 4 speed, zolang hij nog snelheid heeft");
 
-            subby = new Player() { Fuel = 1, Speed = 0, Health = 1 };
-            level.Subby = subby;
+            level.Subby.Fuel = 1;
+            level.Subby.Speed = 0;
+            level.Subby.Health = 1;
 
             actual = level.IsSubbyAlive();
             expected = true;
@@ -177,31 +195,30 @@ namespace UnitTest
             float expectedSpeed, expectedAngle, expectedX, expectedY, actualSpeed, actualAngle, actualX, actualY;
             int expectedFuel, actualFuel;
 
-            Player subby = new Player() { Fuel = 96, Speed = 0, AngleDegrees = 0, Position = new Vector2(0, 0) };
-            subby.GoFaster();
-            subby.GoFaster();
-            subby.GoFaster();
-            subby.GoFaster();
-            subby.GoFaster();
-            subby.GoFaster();
-            subby.GoFaster();
-            subby.GoFaster();
-            subby.UpdatePosition();
+            level.Subby.GoFaster();
+            level.Subby.GoFaster();
+            level.Subby.GoFaster();
+            level.Subby.GoFaster();
+            level.Subby.GoFaster();
+            level.Subby.GoFaster();
+            level.Subby.GoFaster();
+            level.Subby.GoFaster();
+            level.Subby.UpdatePosition();
 
             expectedAngle = 0;
-            actualAngle = subby.AngleDegrees;
+            actualAngle = level.Subby.AngleDegrees;
 
-            expectedFuel = 80;
-            actualFuel = subby.Fuel;
+            expectedFuel = 984;
+            actualFuel = level.Subby.Fuel;
 
             expectedSpeed = 0.39f;
-            actualSpeed = subby.Speed;
+            actualSpeed = level.Subby.Speed;
 
             expectedX = 0.39f;
-            actualX = subby.Position.X;
+            actualX = level.Subby.Position.X;
 
-            expectedY = 0.9f;
-            actualY = subby.Position.Y;
+            expectedY = 0;
+            actualY = level.Subby.Position.Y;
 
             Assert.AreEqual(expectedX, actualX,0.1f, "positionX niet goed wanneer de player position wordt geupdate");
             Assert.AreEqual(expectedY, actualY, 0.1f, "positionY niet goed wanneer de player position wordt geupdate");
@@ -215,9 +232,6 @@ namespace UnitTest
             float expectedBullits, actualBullits;
             Vector2 expectedPosition,actualPosition;
 
-            Player subby = new Player() { Bullits = 10, AngleDegrees = 0, Position = new Vector2(0,0)};
-            Level level = new Level();
-            level.Subby = subby;
             level.MissileList = new List<Missile>();
             level.SpriteList = new List<ISprite>();
             Missile missile = level.Subby.Shoot();
@@ -226,7 +240,7 @@ namespace UnitTest
 
 
             expectedBullits = 9;
-            actualBullits = subby.Bullits;
+            actualBullits = level.Subby.Bullits;
 
             expectedPosition = new Vector2(172, 0);
             actualPosition = missile.Position;
@@ -235,5 +249,92 @@ namespace UnitTest
             Assert.AreEqual(expectedBullits, actualBullits, "Er gaat geen kogel af wanneer er geschoten wordt");
             Assert.AreEqual(expectedPosition, actualPosition, "De kogel komt niet goed voor de player te staan.");
         }
+
+        [TestMethod]
+        public void CollisionWithWrakTrue()
+        {
+            Boolean collision = false;
+
+            Rectangle wrakRect = new Rectangle((int)wrak.Position.X, (int)wrak.Position.Y, 50, 50);
+            List<Rectangle> subbyRects = level.CalculateSubbyRect(400, 400, new Point(20, 20), 30);
+
+            foreach (Rectangle subbyRect in subbyRects)
+            {
+                Rectangle overlap = Rectangle.Intersect(wrakRect, subbyRect);
+
+                if (!overlap.IsEmpty)
+                {
+                    collision = true;
+                }
+            }
+            Assert.AreEqual(true, collision, "Er vindt geen collision plaats met het wrak");
+        }
+        [TestMethod]
+        public void CollisionWithWrakFalse()
+        {
+            Boolean collision = false;
+
+            Rectangle wrakRect = new Rectangle((int)wrak.Position.X, (int)wrak.Position.Y, 50, 50);
+            List<Rectangle> subbyRects = level.CalculateSubbyRect(400, 400, new Point(350, 350), 30);
+
+            foreach (Rectangle subbyRect in subbyRects)
+            {
+                Rectangle overlap = Rectangle.Intersect(wrakRect, subbyRect);
+
+                if (!overlap.IsEmpty)
+                {
+                    collision = true;
+                }
+            }
+            Assert.AreEqual(false, collision, "Er vindt wel collision plaats met het wrak");
+        }
+        [TestMethod]
+        public void CollisionWithWrak()
+        {
+            int health;
+            level.Subby.CollisionWith(wrak);
+
+            health = level.Subby.Health;
+
+            Assert.AreEqual(999, health, "De schade gaat niet van subby af");
+        }
+
+        [TestMethod]
+        public void CollisionWithTankstation()
+        {
+            int tankSubby, tankTanksation;
+            TankStation tankstation = new TankStation() { Tank = 1000 };
+
+            level.Subby.CollisionWith(tankstation);
+
+            tankSubby = level.Subby.Fuel;
+            tankTanksation = tankstation.Tank;
+
+            Assert.AreEqual(2000, tankSubby, "De fuel komt niet bij de player");
+            Assert.AreEqual(0, tankTanksation, "De fuel gaat niet weg bij tankstation");
+        }
+        [TestMethod]
+        public void CollisionWithMissile()
+        {
+            int healthSubby;
+            Missile missile = new Missile() { Damage = 300 };
+
+            level.Subby.CollisionWith(missile);
+
+            healthSubby = level.Subby.Health;
+
+            Assert.AreEqual(700, healthSubby, "Er gaat iets mis met de health en kogel collision");
+        }
+        [TestMethod]
+        public void DamagedPlayer()
+        {
+            Vector2 damagedBehavour;
+            level.Subby.Health = 6;
+
+            damagedBehavour = level.Subby.GetDamagedPositionBehavour();
+
+            Assert.AreEqual(new Vector2(0, 0.9f), damagedBehavour, "De damagedbehavour klopt niet");
+        }
+
     }
 }

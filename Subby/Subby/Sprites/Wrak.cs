@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 namespace Subby.Sprites
 {
     [DataContract]
-    class Wrak : ISprite
+    public class Wrak : ISprite
     {
         //ISprite properties
         [DataMember]

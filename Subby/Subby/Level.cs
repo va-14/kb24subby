@@ -155,7 +155,6 @@ namespace Subby
                 Chopper chopper = new Chopper() {
                     Texture = _chopperTexture, 
                     Color = Color.White, 
-                    Damage = 300, 
                     Position = new Vector2(ScrollingPosition-70, 60), 
                     Speed = 6f,
                     TextureName = "chopper",
@@ -266,29 +265,29 @@ namespace Subby
                 }
             }
         }
-        private List<Rectangle> CalculateSubbyRect()
+        public List<Rectangle> CalculateSubbyRect(int subbyWidth, int subbyHeight, Point position, int angle)
         {
             int pixels = 10; 
             Point size = new Point(pixels, pixels);
-            int widthRadius = Subby.Texture.Width / 2;
-            int heightRadius = Subby.Texture.Height / 2;
+            int widthRadius = subbyWidth / 2;
+            int heightRadius = subbyHeight / 2;
             List<Rectangle> values = new List<Rectangle>();
 
             for (int tmpWidthRadius = 0; tmpWidthRadius < widthRadius; tmpWidthRadius = tmpWidthRadius + pixels)
             {
                 for (int tmpHeightRadius = 0; tmpHeightRadius < heightRadius; tmpHeightRadius = tmpHeightRadius + pixels)
                 {
-                    Point radiusPoint = PointOnCircle(tmpWidthRadius, (int)Subby.AngleDegrees, new Point((int)Subby.Position.X, (int)Subby.Position.Y));
-                    Point point = PointOnCircle(tmpHeightRadius, (int)Subby.AngleDegrees - 90, new Point((int)radiusPoint.X, (int)radiusPoint.Y));
+                    Point radiusPoint = PointOnCircle(tmpWidthRadius, angle, new Point((int)position.X, (int)position.Y));
+                    Point point = PointOnCircle(tmpHeightRadius, angle - 90, new Point((int)radiusPoint.X, (int)radiusPoint.Y));
                     values.Add(new Rectangle(point, size));
-                    radiusPoint = PointOnCircle(tmpWidthRadius, (int)Subby.AngleDegrees, new Point((int)Subby.Position.X, (int)Subby.Position.Y));
-                    point = PointOnCircle(tmpHeightRadius, (int)Subby.AngleDegrees + 90, new Point((int)radiusPoint.X, (int)radiusPoint.Y));
+                    radiusPoint = PointOnCircle(tmpWidthRadius, angle, new Point((int)position.X, (int)position.Y));
+                    point = PointOnCircle(tmpHeightRadius, angle + 90, new Point((int)radiusPoint.X, (int)radiusPoint.Y));
                     values.Add(new Rectangle(point, size));
-                    radiusPoint = PointOnCircle(-tmpWidthRadius, (int)Subby.AngleDegrees, new Point((int)Subby.Position.X, (int)Subby.Position.Y));
-                    point = PointOnCircle(tmpHeightRadius, (int)Subby.AngleDegrees - 90, new Point((int)radiusPoint.X, (int)radiusPoint.Y));
+                    radiusPoint = PointOnCircle(-tmpWidthRadius, angle, new Point((int)position.X, (int)position.Y));
+                    point = PointOnCircle(tmpHeightRadius, angle - 90, new Point((int)radiusPoint.X, (int)radiusPoint.Y));
                     values.Add(new Rectangle(point, size));
-                    radiusPoint = PointOnCircle(-tmpWidthRadius, (int)Subby.AngleDegrees, new Point((int)Subby.Position.X, (int)Subby.Position.Y));
-                    point = PointOnCircle(tmpHeightRadius, (int)Subby.AngleDegrees + 90, new Point((int)radiusPoint.X, (int)radiusPoint.Y));
+                    radiusPoint = PointOnCircle(-tmpWidthRadius, angle, new Point((int)position.X, (int)position.Y));
+                    point = PointOnCircle(tmpHeightRadius, angle + 90, new Point((int)radiusPoint.X, (int)radiusPoint.Y));
                     values.Add(new Rectangle(point, size));
                 }
             }
@@ -319,7 +318,7 @@ namespace Subby
                 Rectangle overlap = Rectangle.Intersect(rectSubby, rectSprite);
                 if (!overlap.IsEmpty)
                 {
-                    List<Rectangle> partRectsSubby = CalculateSubbyRect();
+                    List<Rectangle> partRectsSubby = CalculateSubbyRect(Subby.Width,Subby.Height,new Point((int)Subby.Position.X,(int)Subby.Position.Y),(int)Subby.AngleDegrees);
 
                     foreach (Rectangle partRectSubby in partRectsSubby)
                     {
