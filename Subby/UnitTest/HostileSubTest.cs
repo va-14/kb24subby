@@ -10,191 +10,159 @@ namespace UnitTest
     [TestClass]
     public class HostileSubTest
     {
-        Vector2 expectedPosition, actualPosition, expectedVelocity, actualVelocity;
-        float expectedRotation, actualRotation;
-        private Player player = new Player() { Position = new Vector2(100, 800) };
-        HostileSub sub = new HostileSub()
+        Vector2 expectedPosition, expectedVelocity;
+        float expectedRotation;
+        Player player;
+        HostileSub sub;
+        GameTime gameTime;
+
+        [TestInitialize]
+        public void Setup()
         {
-            Position = new Vector2(0, 0),
-            ShootTimer = 0,
-            Rotation = 0,
-            ScrollingPosition = 0,
-            Boundaries = new LevelBoundaries() { Bottom = 1000, Left = 20, Right = 800, Top = 300 },
-            Velocity = new Vector2(0, 0)
-        };
-        GameTime gameTime = new GameTime();
+            player = new Player() { Position = new Vector2(100, 800) };
+            sub = new HostileSub()
+            {
+                Position = new Vector2(800, 500),
+                ShootTimer = 0,
+                Rotation = 0,
+                ScrollingPosition = 0,
+                Boundaries = new LevelBoundaries() { Bottom = 1000, Left = 20, Right = 800, Top = 300 },
+                Velocity = new Vector2(-4, 0),
+                Subby = player,
+                Health = 400,
+                Strategy = new AimedShots(),
+                Active = true
+            };
+            gameTime = new GameTime();
+        }
 
         [TestMethod]
-        public void HostileSubUpdate()
+        public void DoNotMoveWhileInactive()
         {
-            sub.Subby = player;
+            sub.Active = false;
+            sub.Update(gameTime);
+            expectedPosition = new Vector2(800, 500);
+
+            Assert.AreEqual(expectedPosition, sub.Position);
+        }
+
+        [TestMethod]
+        public void MoveWhileActive()
+        {
+            sub.Active = true;
+            sub.Update(gameTime);
+            expectedPosition = new Vector2(796, 500);
+
+            Assert.AreEqual(expectedPosition, sub.Position);
+        }
+
+        [TestMethod]
+        public void MoveWithAimedShotsStrategy()
+        {
             sub.Strategy = new AimedShots();
-
-            sub.Position = new Vector2(500, 800);
-            sub.Velocity = new Vector2(4, 0);
-
             sub.Update(gameTime);
+            expectedPosition = new Vector2(796, 500);
+            expectedRotation = -0.4069708f;
 
-            expectedPosition = new Vector2(504, 800);
-            actualPosition = sub.Position;
-            expectedVelocity = new Vector2(4, 0);
-            actualVelocity = sub.Velocity;
-            expectedRotation = 0;
-            actualRotation = sub.AngleDeg;
-
-            Assert.AreEqual(expectedPosition, actualPosition, "Positie niet goed bij AimedShots strategie");
-            Assert.AreEqual(expectedVelocity, actualVelocity, "Velocitie niet goed bij AimedShots strategie");
-            Assert.AreEqual(expectedRotation, actualRotation, "Rotation niet goed bij AimedShots strategie");
-
-            sub.Position = new Vector2(1010,900);
-            sub.Velocity = new Vector2(4, 0);
-
-            sub.Update(gameTime);
-
-            expectedPosition = new Vector2(1006, 900);
-            actualPosition = sub.Position;
-            expectedVelocity = new Vector2(-4, 0);
-            actualVelocity = sub.Velocity;
-            expectedRotation = 0.1099303f;
-            actualRotation = sub.Rotation;
-
-            Assert.AreEqual(expectedPosition, actualPosition, "Positie niet goed bij AimedShots strategie");
-            Assert.AreEqual(expectedVelocity, actualVelocity, "Velocitie niet goed bij AimedShots strategie");
-            Assert.AreEqual(expectedRotation, actualRotation, "Rotation niet goed bij AimedShots strategie");
-
-            sub.Strategy = new WallOfShots();
-
-            sub.Position = new Vector2(2000, 800);
-            sub.Velocity = new Vector2(4, 0);
-
-            sub.Update(gameTime);
-
-            expectedPosition = new Vector2(2000, 804);
-            actualPosition = sub.Position;
-            expectedVelocity = new Vector2(0, 4);
-            actualVelocity = sub.Velocity;
-            expectedRotation = 0;
-            actualRotation = sub.AngleDeg;
-
-            Assert.AreEqual(expectedPosition, actualPosition, "Positie niet goed bij WallOfShots strategie");
-            Assert.AreEqual(expectedVelocity, actualVelocity, "Velocitie niet goed bij WallOfShots strategie");
-            Assert.AreEqual(expectedRotation, actualRotation, "Rotation niet goed bij WallOfShots strategie");
-
-            sub.Position = new Vector2(499, 800);
-            sub.Velocity = new Vector2(-4, -4);
-
-            sub.Update(gameTime);
-
-            expectedPosition = new Vector2(503, 796);
-            actualPosition = sub.Position;
-            expectedVelocity = new Vector2(4, -4);
-            actualVelocity = sub.Velocity;
-            expectedRotation = 0;
-            actualRotation = sub.AngleDeg;
-
-            Assert.AreEqual(expectedPosition, actualPosition, "Positie niet goed bij WallOfShots strategie");
-            Assert.AreEqual(expectedVelocity, actualVelocity, "Velocitie niet goed bij WallOfShots strategie");
-            Assert.AreEqual(expectedRotation, actualRotation, "Rotation niet goed bij WallOfShots strategie");
+            Assert.AreEqual(expectedPosition, sub.Position);
+            Assert.AreEqual(expectedRotation, sub.Rotation);
         }
 
         [TestMethod]
-        public void HostileSubShoot()
+        public void MoveWithWallOfShotsStrategy()
         {
-            /*sub.Strategy = new AimedShots();
-            sub.ShootTimer = -1;
-
-            Assert.IsTrue(sub.Shoot((float)gameTime.TotalGameTime.TotalSeconds));
-            Assert.AreEqual(2, sub.ShootTimer, "Shoot werkt niet goed bij AimedShots strategie");
-
-            sub.ShootTimer = 2;
-
-            Assert.IsFalse(sub.Shoot((float)gameTime.TotalGameTime.TotalSeconds));
-            Assert.AreEqual(2, sub.ShootTimer, "Shoot werkt niet goed bij AimedShots strategie");
-
             sub.Strategy = new WallOfShots();
-            sub.ShootTimer = -1;
+            sub.Update(gameTime);
+            expectedPosition = new Vector2(800, 504);
+            expectedRotation = 0;
 
-            Assert.IsTrue(sub.Shoot((float)gameTime.TotalGameTime.TotalSeconds));
-            Assert.AreEqual(-0.5f, sub.ShootTimer, "Shoot werkt niet goed bij WallOfShots strategie");
-
-            sub.ShootTimer = 2;
-
-            Assert.IsFalse(sub.Shoot((float)gameTime.TotalGameTime.TotalSeconds));
-            Assert.AreEqual(2, sub.ShootTimer, "Shoot werkt niet goed bij WallOfShots strategie");*/
+            Assert.AreEqual(expectedPosition, sub.Position);
+            Assert.AreEqual(expectedRotation, sub.Rotation);
         }
 
         [TestMethod]
-        public void HostileSubMoveLeft()
+        public void ShootWithAimedShotsStrategy()
         {
-            sub.Velocity = new Vector2(2, 2);
-            expectedVelocity = new Vector2(-4, 2);
+            sub.Strategy = new AimedShots();
+            sub.Shoot(2);
 
+            Assert.AreEqual(3, sub.ShootTimer);
+
+            sub.ShootTimer = 5;
+            sub.Shoot(2);
+
+            Assert.AreEqual(5, sub.ShootTimer);
+        }
+
+        [TestMethod]
+        public void ShootWithWallOfShotsStrategy()
+        {
+            sub.Strategy = new WallOfShots();
+            sub.Shoot(2);
+
+            Assert.AreEqual(0.5f, sub.ShootTimer);
+
+            sub.ShootTimer = 5;
+            sub.Shoot(2);
+
+            Assert.AreEqual(5, sub.ShootTimer);
+        }
+
+        [TestMethod]
+        public void MoveLeft()
+        {
             sub.MoveLeft();
+            expectedVelocity = new Vector2(-4, 0);            
 
-            Assert.AreEqual(expectedVelocity, sub.Velocity, "MoveLeft werkt niet goed");
+            Assert.AreEqual(expectedVelocity, sub.Velocity);
         }
 
         [TestMethod]
-        public void HostileSubMoveRight()
+        public void MoveRight()
         {
-            sub.Velocity = new Vector2(2, 2);
-            expectedVelocity = new Vector2(4, 2);
-
             sub.MoveRight();
+            expectedVelocity = new Vector2(4, 0);            
 
-            Assert.AreEqual(expectedVelocity, sub.Velocity, "MoveRight werkt niet goed");
+            Assert.AreEqual(expectedVelocity, sub.Velocity);
         }
 
         [TestMethod]
-        public void HostileSubMoveUp()
+        public void MoveUp()
         {
-            sub.Velocity = new Vector2(2, 2);
-            expectedVelocity = new Vector2(2, -4);
-
             sub.MoveUp();
+            expectedVelocity = new Vector2(-4, -4);            
 
-            Assert.AreEqual(expectedVelocity, sub.Velocity, "MoveUp werkt niet goed");
+            Assert.AreEqual(expectedVelocity, sub.Velocity);
         }
 
         [TestMethod]
-        public void HostileSubMoveDown()
+        public void MoveDown()
         {
-            sub.Velocity = new Vector2(2, 2);
-            expectedVelocity = new Vector2(2, 4);
-
             sub.MoveDown();
+            expectedVelocity = new Vector2(-4, 4);            
 
-            Assert.AreEqual(expectedVelocity, sub.Velocity, "MoveDown werkt niet goed");
+            Assert.AreEqual(expectedVelocity, sub.Velocity);
         }
 
         [TestMethod]
-        public void HostileSubStopMoveSideways()
+        public void StopMoveSideways()
         {
-            sub.Velocity = new Vector2(2, 2);
-            expectedVelocity = new Vector2(0, 2);
-
             sub.StopMoveSideways();
+            expectedVelocity = new Vector2(0, 0);            
 
-            Assert.AreEqual(expectedVelocity, sub.Velocity, "StopMoveSideways werkt niet goed");
+            Assert.AreEqual(expectedVelocity, sub.Velocity);
         }
 
         [TestMethod]
-        public void HostileSubCollisionWith()
+        public void CollisionWithMissile()
         {
-            sub.Health = 400;
             Missile m = new Missile()
             {
                 Damage = 200
             };
             sub.CollisionWith(m);
 
-            Assert.AreEqual(200, sub.Health, "CollisionWith werkt niet goed");
-
-            sub.Health = 400;
-
-            sub.CollisionWith(new Mine());
-
-            Assert.AreEqual(400, sub.Health, "CollisionWith werkt niet goed");
+            Assert.AreEqual(200, sub.Health);
         }
     }
 }
