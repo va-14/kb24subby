@@ -155,7 +155,6 @@ namespace Subby
                 Chopper chopper = new Chopper() {
                     Texture = _chopperTexture, 
                     Color = Color.White, 
-                    Damage = 300, 
                     Position = new Vector2(ScrollingPosition-70, 60), 
                     Speed = 6f,
                     TextureName = "chopper",

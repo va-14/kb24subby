@@ -217,7 +217,7 @@ namespace UnitTest
             expectedX = 0.39f;
             actualX = level.Subby.Position.X;
 
-            expectedY = 0.9f;
+            expectedY = 0;
             actualY = level.Subby.Position.Y;
 
             Assert.AreEqual(expectedX, actualX,0.1f, "positionX niet goed wanneer de player position wordt geupdate");
@@ -333,7 +333,7 @@ namespace UnitTest
 
             damagedBehavour = level.Subby.GetDamagedPositionBehavour();
 
-            Assert.AreEqual(new Vector2(0.9f, 0), damagedBehavour, "De damagedbehavour klopt niet");
+            Assert.AreEqual(new Vector2(0, 0.9f), damagedBehavour, "De damagedbehavour klopt niet");
         }
 
     }
