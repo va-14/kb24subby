@@ -371,7 +371,7 @@ namespace Subby
         {
             Score += score;
         }
-        private void SubbyOnLevelBounaries(Player subby)
+        public void SubbyOnLevelBounaries(Player subby)
         {
             if (subby.Position.Y > LevelBoundaries.Bottom - 3)
             {

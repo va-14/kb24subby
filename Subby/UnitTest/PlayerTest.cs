@@ -17,6 +17,7 @@ namespace UnitTest
     {
         Level level;
         Wrak wrak;
+        LevelBoundaries levelboundaries;
 
         [TestInitialize]
         public void setup()
@@ -33,7 +34,9 @@ namespace UnitTest
             
             level = new Level();
             level.Subby = subby;
-
+            levelboundaries = new LevelBoundaries() { Bottom = 200, Left = 10, Right = 200, Top = 10 };
+            level.LevelBoundaries = levelboundaries;
+            level.ScrollingPosition = 0;
             wrak = new Wrak();
             wrak.Damage = 1;
             wrak.Position = new Vector2(0, 0);
@@ -346,6 +349,41 @@ namespace UnitTest
 
             Assert.AreEqual(new Vector2(0, 0.9f), damagedBehavour, "De damagedbehavour klopt niet");
         }
+        [TestMethod]
+        public void PlayerOnLeftBoundarie()
+        {
+            level.Subby.Speed = 3f;
+            level.Subby.Position = new Vector2(10,50);
+            level.SubbyOnLevelBounaries(level.Subby);
+            
+            Assert.AreEqual(-3f, level.Subby.Speed, "De left boundarie behavour klopt niet");
+        }
+        [TestMethod]
+        public void PlayerOnTopBoundarie()
+        {
+            level.Subby.Speed = 3f;
+            level.Subby.Position = new Vector2(50, 10);
+            level.SubbyOnLevelBounaries(level.Subby);
 
+            Assert.AreEqual(-3f, level.Subby.Speed, "De top boundarie behavour klopt niet");
+        }
+        [TestMethod]
+        public void PlayerOnBottomBoundarie()
+        {
+            level.Subby.Speed = 3f;
+            level.Subby.Position = new Vector2(50, 200);
+            level.SubbyOnLevelBounaries(level.Subby);
+
+            Assert.AreEqual(-3f, level.Subby.Speed, "De bottom boundarie behavour klopt niet");
+        }
+        [TestMethod]
+        public void PlayerOnRightBoundarie()
+        {
+            level.Subby.Speed = 3f;
+            level.Subby.Position = new Vector2(201, 50);
+            level.SubbyOnLevelBounaries(level.Subby);
+
+            Assert.AreEqual(1, level.ScrollingPosition, "De right boundarie behavour klopt niet");
+        }
     }
 }
