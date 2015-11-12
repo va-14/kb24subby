@@ -152,7 +152,6 @@ namespace Subby.Sprites
         }
         public Vector2 GetDamagedPositionBehavour()
         {
-
             float snelheid = 0;
             if (_health < 800)
                 snelheid = 0.25f;
