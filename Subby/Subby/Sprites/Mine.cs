@@ -88,7 +88,6 @@ namespace Subby.Sprites
         //ISprite functions
         public void CollisionWith(ISprite sprite)
         {
-
             _activated = true;
             if (Exploded && _timeSinceActivated < Delay +0.5 && _timeSinceActivated > Delay)
             {
@@ -97,11 +96,9 @@ namespace Subby.Sprites
                     ((Player)sprite).TakeDamage(Damage);
                 }
             }
-
         }
         public void Update(GameTime gameTime)
         {
-
             if (_activated)
             {
                 _timeSinceActivated += (float)gameTime.ElapsedGameTime.TotalSeconds;
