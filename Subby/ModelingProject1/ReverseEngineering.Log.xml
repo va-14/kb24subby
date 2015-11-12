@@ -6,10 +6,97 @@
   <MessageClass Name="Error" Label="Error" Option="Show errors" />
   <MessageClass Name="Property" Label="Property" Option="Show metadata" />
   <MessageClass Name="Diagnostic" Label="Message" Option="Show diagnostic messages" />
-  <Message Timestamp="2015-11-10T11:11:09" Importance="High" Text="Reverse Engineering Started." />
-  <Message Timestamp="2015-11-10T11:11:10" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Subby' -  (Package)" />
-  <Message Timestamp="2015-11-10T11:11:10" Importance="Medium" Text="Element reverse engineered into the UML model: 'ModelingProject1::Subby::Program' -  (Class)" />
-  <Message Timestamp="2015-11-10T11:11:10" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Subby::Program::Main' -  (Operation)" />
-  <Message Timestamp="2015-11-10T11:11:10" Importance="High" Text="(1) type(s) fully reverse engineered." />
-  <Message Timestamp="2015-11-10T11:11:10" Importance="High" Text="The reverse engineering operation completed with (0) error(s), and (0) warning(s)." />
+  <Message Timestamp="2015-11-12T21:11:29" Importance="High" Text="Reverse Engineering Started." />
+  <Message Timestamp="2015-11-12T21:11:32" Importance="Diagnostic" Text="Element reverse engineered into the UML model: '2d8d3d64-955d-4376-920d-e43c0fadecff' -  (ClassifierTemplateParameter)" />
+  <Message Timestamp="2015-11-12T21:11:32" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'Boolean' -  (PrimitiveType)" />
+  <Message Timestamp="2015-11-12T21:11:32" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'Integer' -  (PrimitiveType)" />
+  <Message Timestamp="2015-11-12T21:11:32" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Microsoft' -  (Package)" />
+  <Message Timestamp="2015-11-12T21:11:32" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Microsoft::Xna' -  (Package)" />
+  <Message Timestamp="2015-11-12T21:11:32" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Microsoft::Xna::Framework' -  (Package)" />
+  <Message Timestamp="2015-11-12T21:11:32" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Microsoft::Xna::Framework::Content' -  (Package)" />
+  <Message Timestamp="2015-11-12T21:11:32" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Microsoft::Xna::Framework::Content::ContentManager' -  (Class)   (partially reverse engineered - definition not updated) " />
+  <Message Timestamp="2015-11-12T21:11:32" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Microsoft::Xna::Framework::GameTime' -  (Class)   (partially reverse engineered - definition not updated) " />
+  <Message Timestamp="2015-11-12T21:11:32" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Microsoft::Xna::Framework::Graphics' -  (Package)" />
+  <Message Timestamp="2015-11-12T21:11:32" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Microsoft::Xna::Framework::Graphics::GraphicsDevice' -  (Class)   (partially reverse engineered - definition not updated) " />
+  <Message Timestamp="2015-11-12T21:11:32" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Microsoft::Xna::Framework::Graphics::SpriteBatch' -  (Class)   (partially reverse engineered - definition not updated) " />
+  <Message Timestamp="2015-11-12T21:11:32" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Microsoft::Xna::Framework::Graphics::Texture2D' -  (Class)   (partially reverse engineered - definition not updated) " />
+  <Message Timestamp="2015-11-12T21:11:32" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Microsoft::Xna::Framework::Point' -  (Class)   (partially reverse engineered - definition not updated) " />
+  <Message Timestamp="2015-11-12T21:11:32" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Microsoft::Xna::Framework::Rectangle' -  (Class)   (partially reverse engineered - definition not updated) " />
+  <Message Timestamp="2015-11-12T21:11:32" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Subby' -  (Package)" />
+  <Message Timestamp="2015-11-12T21:11:32" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Subby::Background' -  (Class)   (partially reverse engineered - definition not updated) " />
+  <Message Timestamp="2015-11-12T21:11:32" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Subby::ISprite' -  (Interface)   (partially reverse engineered - definition not updated) " />
+  <Message Timestamp="2015-11-12T21:11:32" Importance="Medium" Text="Element reverse engineered into the UML model: 'ModelingProject1::Subby::Level' -  (Class)" />
+  <Message Timestamp="2015-11-12T21:11:32" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Subby::Level::_chopperTexture' -  (Property)" />
+  <Message Timestamp="2015-11-12T21:11:32" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Subby::Level::_missileTexture' -  (Property)" />
+  <Message Timestamp="2015-11-12T21:11:32" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Subby::Level::_screenWidth' -  (Property)" />
+  <Message Timestamp="2015-11-12T21:11:32" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Subby::Level::_spawnChopperSecond' -  (Property)" />
+  <Message Timestamp="2015-11-12T21:11:32" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Subby::Level::Background' -  (Property)" />
+  <Message Timestamp="2015-11-12T21:11:32" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Subby::Level::CalculateLevelScore' -  (Operation)" />
+  <Message Timestamp="2015-11-12T21:11:32" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Subby::Level::CalculateSubbyRect' -  (Operation)" />
+  <Message Timestamp="2015-11-12T21:11:32" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Subby::Level::CalculateSubbyRect::angle' -  (Parameter)" />
+  <Message Timestamp="2015-11-12T21:11:32" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Subby::Level::CalculateSubbyRect::position' -  (Parameter)" />
+  <Message Timestamp="2015-11-12T21:11:32" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Subby::Level::CalculateSubbyRect::subbyHeight' -  (Parameter)" />
+  <Message Timestamp="2015-11-12T21:11:32" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Subby::Level::CalculateSubbyRect::subbyWidth' -  (Parameter)" />
+  <Message Timestamp="2015-11-12T21:11:32" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Subby::Level::CheckCollisions' -  (Operation)" />
+  <Message Timestamp="2015-11-12T21:11:32" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Subby::Level::CheckMissileCollision' -  (Operation)" />
+  <Message Timestamp="2015-11-12T21:11:32" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Subby::Level::CheckMissileCollision::s1' -  (Parameter)" />
+  <Message Timestamp="2015-11-12T21:11:32" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Subby::Level::CheckMissileCollision::s2' -  (Parameter)" />
+  <Message Timestamp="2015-11-12T21:11:32" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Subby::Level::ChopperGenerator' -  (Operation)" />
+  <Message Timestamp="2015-11-12T21:11:32" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Subby::Level::CleanUpSpriteList' -  (Operation)" />
+  <Message Timestamp="2015-11-12T21:11:32" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Subby::Level::CreateMissile' -  (Operation)" />
+  <Message Timestamp="2015-11-12T21:11:32" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Subby::Level::CreateMissile::Damage' -  (Parameter)" />
+  <Message Timestamp="2015-11-12T21:11:32" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Subby::Level::CreateMissile::missile' -  (Parameter)" />
+  <Message Timestamp="2015-11-12T21:11:32" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Subby::Level::CreateMissile::position' -  (Parameter)" />
+  <Message Timestamp="2015-11-12T21:11:32" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Subby::Level::Draw' -  (Operation)" />
+  <Message Timestamp="2015-11-12T21:11:32" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Subby::Level::Draw::batch' -  (Parameter)" />
+  <Message Timestamp="2015-11-12T21:11:32" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Subby::Level::EndPosition' -  (Property)" />
+  <Message Timestamp="2015-11-12T21:11:32" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Subby::Level::Highscores' -  (Property)" />
+  <Message Timestamp="2015-11-12T21:11:32" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Subby::Level::HostileSubShoot' -  (Operation)" />
+  <Message Timestamp="2015-11-12T21:11:32" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Subby::Level::HostileSubShoot::gameTime' -  (Parameter)" />
+  <Message Timestamp="2015-11-12T21:11:32" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Subby::Level::Initialize' -  (Operation)" />
+  <Message Timestamp="2015-11-12T21:11:32" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Subby::Level::IsSubbyAlive' -  (Operation)" />
+  <Message Timestamp="2015-11-12T21:11:32" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Subby::Level::Level' -  (Operation)" />
+  <Message Timestamp="2015-11-12T21:11:32" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Subby::Level::LevelBoundaries' -  (Property)" />
+  <Message Timestamp="2015-11-12T21:11:32" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Subby::Level::Load' -  (Operation)" />
+  <Message Timestamp="2015-11-12T21:11:32" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Subby::Level::Load::graphicsDevice' -  (Parameter)" />
+  <Message Timestamp="2015-11-12T21:11:32" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Subby::Level::Load::manager' -  (Parameter)" />
+  <Message Timestamp="2015-11-12T21:11:32" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Subby::Level::MissileList' -  (Property)" />
+  <Message Timestamp="2015-11-12T21:11:32" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Subby::Level::PointOnCircle' -  (Operation)" />
+  <Message Timestamp="2015-11-12T21:11:32" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Subby::Level::PointOnCircle::angleInDegrees' -  (Parameter)" />
+  <Message Timestamp="2015-11-12T21:11:32" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Subby::Level::PointOnCircle::origin' -  (Parameter)" />
+  <Message Timestamp="2015-11-12T21:11:32" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Subby::Level::PointOnCircle::radius' -  (Parameter)" />
+  <Message Timestamp="2015-11-12T21:11:32" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Subby::Level::Score' -  (Property)" />
+  <Message Timestamp="2015-11-12T21:11:32" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Subby::Level::ScrollingPosition' -  (Property)" />
+  <Message Timestamp="2015-11-12T21:11:32" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Subby::Level::SpriteList' -  (Property)" />
+  <Message Timestamp="2015-11-12T21:11:32" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Subby::Level::Subby' -  (Property)" />
+  <Message Timestamp="2015-11-12T21:11:32" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Subby::Level::SubbyOnLevelBounaries' -  (Operation)" />
+  <Message Timestamp="2015-11-12T21:11:32" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Subby::Level::SubbyOnLevelBounaries::subby' -  (Parameter)" />
+  <Message Timestamp="2015-11-12T21:11:32" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Subby::Level::TargetTime' -  (Property)" />
+  <Message Timestamp="2015-11-12T21:11:32" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Subby::Level::TotalRoundTime' -  (Property)" />
+  <Message Timestamp="2015-11-12T21:11:32" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Subby::Level::Update' -  (Operation)" />
+  <Message Timestamp="2015-11-12T21:11:32" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Subby::Level::Update::gameTime' -  (Parameter)" />
+  <Message Timestamp="2015-11-12T21:11:32" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Subby::Level::UpdateScore' -  (Operation)" />
+  <Message Timestamp="2015-11-12T21:11:32" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Subby::Level::UpdateScore::score' -  (Parameter)" />
+  <Message Timestamp="2015-11-12T21:11:32" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Subby::Level::UpdateScrollingPosition' -  (Operation)" />
+  <Message Timestamp="2015-11-12T21:11:32" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Subby::Level::UpdateScrollingPosition::levelBoundaries' -  (Parameter)" />
+  <Message Timestamp="2015-11-12T21:11:32" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Subby::Level::UpdateScrollingPosition::subby' -  (Parameter)" />
+  <Message Timestamp="2015-11-12T21:11:32" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Subby::LevelBoundaries' -  (Class)   (partially reverse engineered - definition not updated) " />
+  <Message Timestamp="2015-11-12T21:11:32" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Subby::Sprites' -  (Package)" />
+  <Message Timestamp="2015-11-12T21:11:32" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Subby::Sprites::Missile' -  (Class)   (partially reverse engineered - definition not updated) " />
+  <Message Timestamp="2015-11-12T21:11:32" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Subby::Sprites::Player' -  (Class)   (partially reverse engineered - definition not updated) " />
+  <Message Timestamp="2015-11-12T21:11:32" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::System' -  (Package)" />
+  <Message Timestamp="2015-11-12T21:11:32" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::System::Collections' -  (Package)" />
+  <Message Timestamp="2015-11-12T21:11:32" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::System::Collections::Generic' -  (Package)" />
+  <Message Timestamp="2015-11-12T21:11:32" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::System::Collections::Generic::List' -  (Class)   (partially reverse engineered - definition not updated) " />
+  <Message Timestamp="2015-11-12T21:11:32" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::System::Collections::Generic::List&lt;ISprite‎&gt;' -  (Class)   (partially reverse engineered - definition not updated) " />
+  <Message Timestamp="2015-11-12T21:11:32" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::System::Collections::Generic::List&lt;Missile‎&gt;' -  (Class)   (partially reverse engineered - definition not updated) " />
+  <Message Timestamp="2015-11-12T21:11:32" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::System::Collections::Generic::List&lt;Rectangle‎&gt;' -  (Class)   (partially reverse engineered - definition not updated) " />
+  <Message Timestamp="2015-11-12T21:11:32" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::System::Single' -  (Class)   (partially reverse engineered - definition not updated) " />
+  <Message Timestamp="2015-11-12T21:11:32" Importance="Diagnostic" Text="Relationship reverse engineered into the UML model: ModelingProject1::Subby::Sprites::Missile to ModelingProject1::Subby::IExplodableSprite (InterfaceRealization)" />
+  <Message Timestamp="2015-11-12T21:11:32" Importance="Diagnostic" Text="Relationship reverse engineered into the UML model: ModelingProject1::Subby::IDamageableSprite to ModelingProject1::Subby::ISprite (Generalization)" />
+  <Message Timestamp="2015-11-12T21:11:32" Importance="Diagnostic" Text="Relationship reverse engineered into the UML model: ModelingProject1::Subby::IExplodableSprite to ModelingProject1::Subby::ISprite (Generalization)" />
+  <Message Timestamp="2015-11-12T21:11:32" Importance="Diagnostic" Text="Relationship reverse engineered into the UML model: ModelingProject1::Subby::Sprites::Player to ModelingProject1::Subby::IDamageableSprite (InterfaceRealization)" />
+  <Message Timestamp="2015-11-12T21:11:32" Importance="High" Text="(1) type(s) fully reverse engineered." />
+  <Message Timestamp="2015-11-12T21:11:32" Importance="High" Text="(17) type(s) partially reverse engineered.  These types were not included in the original selection so their full definitions are not reverse engineered.  Instead, this shallow operation has simply ensured these types exist in the UML model because they are needed in order to fully describe other elements." />
+  <Message Timestamp="2015-11-12T21:11:32" Importance="High" Text="The reverse engineering operation completed with (0) error(s), and (0) warning(s)." />
 </Log>

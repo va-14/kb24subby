@@ -62,5 +62,56 @@
         </appliedStereotypesInternal>
       </class>
     </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="ae67b936-a91c-45f7-8181-ad21dc734ba8"
+        name="MouseState"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <referencesInternal>
+          <reference
+            Id="56ad7ac9-7378-47d9-a699-dbd2eac0a9f7"
+            handle="viewcode://./CodeSchema_Struct?Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FMonoGame%2Fv3.0%2FAssemblies%2FWindows%2FMonoGame.Framework.dll&quot; Namespace%3DMicrosoft.Xna.Framework.Input Type%3DMouseState"
+            tag="ViewCode" />
+        </referencesInternal>
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="e04452be-8b91-4da7-b613-38bcb3c1157f"
+            name="struct"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="cca0ae78-6442-45fd-a9f4-4106c502a9b4">
+                <propertyInstance
+                  Id="bb8450ee-0ee6-44db-99e6-3dcd7e33f09e"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="1de38098-c35c-4a7a-8e16-71c8d662cff7">
+                <propertyInstance
+                  Id="71bc1827-46f7-43f8-a9d3-c11016ac204f"
+                  name="IsPartial"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="08e4da5e-fbb8-439c-83d7-69ad66310b0c">
+                <propertyInstance
+                  Id="9ec3d352-3be3-410d-946f-87a4d9bf6e37"
+                  name="IsUnsafe"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="b98be5bc-4f5d-429a-be8c-ae19e3e889cc">
+                <propertyInstance
+                  Id="e2cc4c1d-d9ca-4caa-ae39-d9094fd295f5"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+      </class>
+    </packageHasNamedElement>
   </packagedElements>
 </package>
