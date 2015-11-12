@@ -25,8 +25,6 @@ namespace Subby
         [DataMember]
         public Background Background;
         [DataMember]
-        public int[] Highscores;
-        [DataMember]
         public LevelBoundaries LevelBoundaries;
         [DataMember]
         public List<Missile> MissileList;
